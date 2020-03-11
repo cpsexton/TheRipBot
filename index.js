@@ -60,6 +60,7 @@ client.on('message', message => {
 
 }});
 
+    //puts bot offline and logs to console who issued the command
 client.on('message', message => {
 
     if(message.author.id === '322974067781271572' && message.content === `${prefix}kill`) {
@@ -67,7 +68,6 @@ client.on('message', message => {
         process.exit()
     }
 });
-
 
 //from the channel the message was heard:
     //fetch online users presence activites and store in array 
@@ -110,16 +110,6 @@ client.on('message', async message => {
     //token is located in config.json to hide from public view
 client.login(token);
 
-
-
-
-// if (message.content.startsWith(`${prefix}ping`)) {
-// 	message.channel.send('Pong.');
-// } else if (message.content.startsWith(`${prefix}beep`)) {
-// 	message.channel.send('Boop.');
-// }
-
-
 //can define colors here for Embed class
     //const yellow = 16776960
     //const red = 16711680
@@ -140,7 +130,7 @@ client.login(token);
     //whois command   ($whois ripoff - should return information on ripoff. use .split .first etc to seperate the command from the user requested)
     //song command    (joins a voice channel then plays a youtube song from a link then after a timeout will leave voice channel)
     //playing command (search command to find users in channel that are online && playing the searched game in their activity status)
-    //whenever booboo keys talks in channel add emoji tiny p 
+    
 
 
     //  LINKS
