@@ -36,7 +36,7 @@ client.on('message', message => {
     }
 
 });
-        //NEEDS TO BE FINISHED
+
     //responds with requested discord users information
 client.on('message', message => {
     
@@ -62,7 +62,6 @@ client.on('message', message => {
 
     //puts bot offline and logs to console who issued the command
 client.on('message', message => {
-
     if(message.author.id === '322974067781271572' && message.content === `${prefix}kill`) {
         console.log(`TheRipBot has been terminated by ${message.author.username}`),
         process.exit()
@@ -70,29 +69,11 @@ client.on('message', message => {
 });
 
 //from the channel the message was heard:
-    //fetch online users presence activites and store in array 
+    //fetch online users presence activites and store in an object 
         //if user input is equal to any activity in the array return that username in an embed li 
-    
-    //if(message.author.presence.act-ivities = )
-
-
-
-    //ability to change the bots status to Watching or Listening to
-// client.on('message', message => {
-
-//     if(message.content == `${prefix}watching`) {
-//         client.user.setActivity()
-//     }
-
-// })
-
-
-//this should access the game in the activity || game name from a person actually playing a game if not catch the error. 
-// console.log(`${presence.game.name}`)
 
 //adds letter emojis to say whatup
 client.on('message', async message => {
-
     // if(message.author.id == '322974067781271572') {
     if(message.content == `${prefix}hello`) {
         try {
@@ -107,6 +88,7 @@ client.on('message', async message => {
         } 
     }
 });
+
     //token is located in config.json to hide from public view
 client.login(token);
 
@@ -124,15 +106,8 @@ client.login(token);
 	//<message>.channel.send(`There are currently ${totalOnline.size} members online in this guild!`);
     //});
 
-
-
 //TODO 
-    //whois command   ($whois ripoff - should return information on ripoff. use .split .first etc to seperate the command from the user requested)
-    //song command    (joins a voice channel then plays a youtube song from a link then after a timeout will leave voice channel)
-    //playing command (search command to find users in channel that are online && playing the searched game in their activity status)
-    
-
-
-    //  LINKS
-
-    //https://emojipedia.org/emoji-2.0/    discord emoji list
+    //whois <username> command   ($whois ripoff - should return information on ripoff. use .split .first etc to seperate the command from the user requested)
+    //song <url> command    (joins a voice channel then plays a youtube song from a link then after a timeout will leave voice channel)
+    //playing <game> command   (search command to find users in channel that are online && playing the searched game in their activity status)
+    //add server join link in server information to $server command
