@@ -31,7 +31,7 @@ client.on('message', message => {
     if(message.content === `${prefix}help`) {
         message.channel.send({embed: {
             color: 255,
-            description: ("TheRipBot\n\n  Commands:\n  ***$help***: List of commands\n\n  ***$whois <username>***: Will respond with requested users information\n\n  ***$server***: Will respond with the server details\n\n  $fart: Will release a deadly disgusting coronavirus fart in the channel")
+            description: ("TheRipBot\n\n  Commands:\n  **$help**: List of commands\n\n  **$whois <username>**: Will respond with requested users information\n\n  **$server**: Will respond with the server details\n\n  **$hello**: Get a what up from ya boi\n\n  **$fart**: Will release a deadly disgusting coronavirus fart in the channel")
         }})
     }
 
@@ -43,7 +43,7 @@ client.on('message', message => {
     if(message.content === `${prefix}whois`) {
         message.channel.send({embed: { 
             color: 16711680,
-            description: (`Your id is: ${message.author.id}, and your status is: ${message.author.presence.status}`)
+            description: (`Your game: ${message.author.presence.activities}\n  id: ${message.author.id}\n   name: ${message.author.username}\n  status: ${message.author.presence.status}`)
         }})
     }
 
@@ -60,18 +60,39 @@ client.on('message', message => {
 
 }});
 
-//adds a tiny penis reaction to every message written by ripoff
+//from the channel the message was heard:
+    //fetch online users presence activites and store in array 
+        //if user input is equal to any activity in the array return that username in an embed li 
+    
+    //if(message.author.presence.activities = )
+
+
+
+    //ability to change the bots status to Watching or Listening to
+// client.on('message', message => {
+
+//     if(message.content == `${prefix}watching`) {
+//         client.user.setActivity()
+//     }
+
+// })
+
+
+//this should access the game in the activity || game name from a person actually playing a game if not catch the error. 
+// console.log(`${presence.game.name}`)
+
+//adds letter emojis to say whatup
 client.on('message', async message => {
 
     // if(message.author.id == '322974067781271572') {
-    if(message.content == `${prefix}bitch`) {
+    if(message.content == `${prefix}hello`) {
         try {
-            await message.react('🤏');
-            await message.react('🇧');
-            await message.react('🇮');
-            await message.react('🇹');
-            await message.react('🇨');
+            await message.react('🇼');
             await message.react('🇭');
+            await message.react('🇦');
+            await message.react('🇹');
+            await message.react('🇺');
+            await message.react('🇵');
         } catch (error) {
             console.error('One of the emojis failed to react.')
         } 
@@ -111,3 +132,8 @@ client.login(token);
     //song command    (joins a voice channel then plays a youtube song from a link then after a timeout will leave voice channel)
     //playing command (search command to find users in channel that are online && playing the searched game in their activity status)
     //whenever booboo keys talks in channel add emoji tiny p 
+
+
+    //  LINKS
+
+    //https://emojipedia.org/emoji-2.0/    discord emoji list
