@@ -62,16 +62,18 @@ client.on('message', message => {
 
 client.on('message', message => {
 
-    if(message.author.id === '322974067781271572' && message.content === `${prefix}reset`) {
-        console.log('Bot has been terminated'),
+    if(message.author.id === '322974067781271572' && message.content === `${prefix}kill`) {
+        console.log(`TheRipBot has been terminated by ${message.author.username}`),
         process.exit()
     }
-})
+});
+
+
 //from the channel the message was heard:
     //fetch online users presence activites and store in array 
         //if user input is equal to any activity in the array return that username in an embed li 
     
-    //if(message.author.presence.activities = )
+    //if(message.author.presence.act-ivities = )
 
 
 
