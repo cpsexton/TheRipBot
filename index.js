@@ -63,8 +63,8 @@ client.on('message', message => {
 client.on('message', message => {
 
     if(message.author.id === '322974067781271572' && message.content === `${prefix}reset`) {
-        console.log('Bot has been terminated')
-        process.exit(),
+        console.log('Bot has been terminated'),
+        process.exit()
     }
 })
 //from the channel the message was heard:
