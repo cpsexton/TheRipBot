@@ -1,6 +1,7 @@
 const Discord = require('discord.js');
 const {prefix, token} = require('./config.json');
 const client = new Discord.Client();
+const embed = new Discord.MessageEmbed();
 
 client.once('ready', () => {
     console.log('Ready!');
@@ -35,16 +36,27 @@ client.on('message', message => {
         let args = message.content.slice(prefix.length).split(' ');
         let command = args.shift().toLowerCase();
         let taggedUser = message.mentions.users.first();
-        
+
         if (!args.length) {
             return message.channel.send(`You didn't provide a user, ${message.author}.`);
         } else if (!taggedUser) {
                 return message.channel.send(`That user is not in this server, ${message.author}.\nPlease use the prefix: *@*`);
             } else {
-                message.channel.send({embed: {
-                    color: 16711680,
-                    description: (`**Username**: ${taggedUser}\n**ID**: ${taggedUser.id}\n**Currently**: ${taggedUser.presence.status}\n**Currently Playing**: ${taggedUser.presence.activities}`)
-                }});
+                
+                message.channel.send(embed
+                    .setTitle(`${taggedUser.username}`)
+                    .setDescription(`**ID**:  ${taggedUser.id}\n**Currently**:  ${taggedUser.presence.status}\n**Playing**:  -${taggedUser.presence.activities}`)
+                    .setThumbnail(taggedUser.avatarURL())
+                    
+                    // .setImage()
+                    // .addField("smaller additional detail")
+                );
+                
+                
+                // message.channel.send({embed: {
+                //     color: 16711680,
+                //     description: (`**Username**: ${taggedUser}\n**ID**: ${taggedUser.id}\n**Currently**: ${taggedUser.presence.status}\n**Currently Playing**: ${taggedUser.presence.activities}`)
+                // }});
             };
         // description: (`Your game: ${message.author.presence.activities}\n  id: ${message.author.id}\n   name: ${message.author.username}\n  status: ${message.author.presence.status}`)
     }
