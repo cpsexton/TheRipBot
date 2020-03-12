@@ -8,8 +8,6 @@ client.once('ready', () => {
     client.user.setActivity("chat.", {type: "WATCHING"})
 });
 
-
-
 //responds with a direct response
 client.on('message', message => {
     
@@ -19,7 +17,7 @@ client.on('message', message => {
     
 });
 
-//responds with an embeded help message consisting of list of commands
+//responds with an embeded help message consisting of commands list
 client.on('message', message => {
     
     if(message.content === `${prefix}help`) {
@@ -39,32 +37,40 @@ client.on('message', message => {
         let args = message.content.slice(prefix.length).split(' ');
         let command = args.shift().toLowerCase();
         let taggedUser = message.mentions.users.first();
+        let tUserGame = " ";
 
         if (!args.length) {
             return message.channel.send(`${message.author}, you need to provide a user.\n    *(ex: $whois @TheRipBot)*`);
         } else if (!taggedUser) {
-                return message.channel.send(`${message.author}, that user cannot be found.\n    *(ex: $whois @TheRipBot)*`);
-            } else {
+            return message.channel.send(`${message.author}, that user cannot be found.\n    *(ex: $whois @TheRipBot)*`);
+        } else if (`${taggedUser.presence.activities}`) {
+            let tUserGame = `${taggedUser.presence.activities}`
                 
-                message.channel.send(embed
-                    .setTitle(`**${taggedUser.username}**`)
-                    .setColor(16711680)
-                    .setThumbnail(taggedUser.avatarURL())
+            message.channel.send(embed
+                .setTitle(`**${taggedUser.username}**`)
+                .setColor(16711680)
+                .setThumbnail(taggedUser.avatarURL())
+                .addField("**Username**", `${taggedUser.tag}`, true)
+                .addField("**ID**", `${taggedUser.id}`, true)
+                .addField("Status", `${taggedUser.presence.status}`)
+                .addField("Playing", tUserGame)
+                .addField("Bot", `${taggedUser.bot}`, true)
+            );
+        } else {
+            message.channel.send(embed
+                .setTitle(`**${taggedUser.username}**`)
+                .setColor(16711680)
+                .setThumbnail(taggedUser.avatarURL())
                     // .setDescription(`**ID**:  ${taggedUser.id}\n**Bot**: ${taggedUser.bot}\n**Currently**:  ${taggedUser.presence.status}\n**Playing**:  ${taggedUser.presence.activities}`)
-                    //currently online
-                    //currently playing: minecraft
-                    //setimage taggedUser presence game details
-                    .addField("**Username**", `${taggedUser.tag}`, true)
-                    .addField("**ID**", `${taggedUser.id}`, true)
                     
-                    .addField("Status", `${taggedUser.presence.status}`)
-                    .addField("Playing", `${taggedUser.presence.activities}`, true)
-                    .addField("client status", `${taggedUser.presence.clientStatus}`, true)
-                    .addField("Bot", `${taggedUser.bot}`, true)
+                .addField("**Username**", `${taggedUser.tag}`, true)
+                .addField("**ID**", `${taggedUser.id}`, true)
                     
-                );
-            };
-        // description: (`Your game: ${message.author.presence.activities}\n  id: ${message.author.id}\n   name: ${message.author.username}\n  status: ${message.author.presence.status}`)
+                .addField("Status", `${taggedUser.presence.status}`)
+                .addField("Playing", "Nothing")
+                .addField("Bot", `${taggedUser.bot}`, true) 
+            );
+        };
     }
 });
 
@@ -110,6 +116,9 @@ client.on('message', async message => {
 
     //token is located in config.json to hide from public view
 client.login(token);
+
+
+
 
 //can define colors here for Embed class
     //const yellow = 16776960
