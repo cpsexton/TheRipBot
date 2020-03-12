@@ -44,19 +44,14 @@ client.on('message', message => {
             } else {
                 
                 message.channel.send(embed
-                    .setTitle(`${taggedUser.username}`)
-                    .setDescription(`**ID**:  ${taggedUser.id}\n**Currently**:  ${taggedUser.presence.status}\n**Playing**:  -${taggedUser.presence.activities}`)
+                    .setTitle(`**${taggedUser.username}**`)
+                    // .setDescription(`**ID**:  ${taggedUser.id}\n**Bot**: ${taggedUser.bot}\n**Currently**:  ${taggedUser.presence.status}\n**Playing**:  ${taggedUser.presence.activities}`)
+                    .setColor(16711680)
                     .setThumbnail(taggedUser.avatarURL())
                     
-                    // .setImage()
-                    // .addField("smaller additional detail")
+                    .addField("ID", `${taggedUser.id}`, true)
+                    .addField("BOT", `${taggedUser.bot}`, true)
                 );
-                
-                
-                // message.channel.send({embed: {
-                //     color: 16711680,
-                //     description: (`**Username**: ${taggedUser}\n**ID**: ${taggedUser.id}\n**Currently**: ${taggedUser.presence.status}\n**Currently Playing**: ${taggedUser.presence.activities}`)
-                // }});
             };
         // description: (`Your game: ${message.author.presence.activities}\n  id: ${message.author.id}\n   name: ${message.author.username}\n  status: ${message.author.presence.status}`)
     }
