@@ -15,6 +15,7 @@ module.exports = {
             .addField("**$whois <username>**","Will respond with requested users information")
             .addField("**$server**", "Will respond with the server details")
             .addField("**$hello**", "Get a what up from ya boi")
+            .addField("**$online**", "See how many people are currently online and offline")
         )
     }
 };
