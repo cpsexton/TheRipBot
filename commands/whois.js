@@ -26,6 +26,7 @@ module.exports = {
                 .addField("**ID**", `${taggedUser.id}`, true)
                 .addField("Status", `${taggedUser.presence.status}`)
                 .addField("Playing", tUserGame)
+                .addField("**Roles**", ``)
                 .addField("Bot", `${taggedUser.bot}`, true)
             )
         } else {

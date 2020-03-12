@@ -16,6 +16,7 @@ module.exports = {
             .addField("**Total members**", `${message.guild.memberCount}`)
             .addField("**Max members**", `${message.guild.maximumMembers}`)
             .addField("**Region**", `${message.guild.region}`)
+            .addField("**Roles**", `${message.guild.roles.fetch()}`)
         ) 
-    }
+    },
 };

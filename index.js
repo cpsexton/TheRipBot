@@ -13,10 +13,23 @@ for(const file of commandFiles) {
     client.commands.set(command.name, command);
 }
 
+// for( try to collect role names )collectRoleNames()
+
     // logs to console that bot has successfully launched and sets bots activity to 'Watching chat' //
-client.once('ready', () => {
+client.on('ready', () => {
     console.log('Ready!');
-    client.user.setActivity("chat.", {type: "WATCHING"})
+    client.user.setActivity("chat.", {type: "WATCHING"});
+
+    // collectRoleNames();
+});
+
+client.on('message', message => {
+    if(message.content.startsWith(`${prefix}uptime`)) {
+        message.channel.send(embed
+            .setTitle('Uptime')
+            .setDescription(`${client.uptime} milliseconds`)
+        )
+    };
 });
 
     // command HELP. returns list of commands // takes in arguments but does not currently use them // future goal is add help <topic> func //
