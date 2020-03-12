@@ -5,7 +5,10 @@ const embed = new Discord.MessageEmbed();
 
 client.once('ready', () => {
     console.log('Ready!');
+    client.user.setActivity("chat.", {type: "WATCHING"})
 });
+
+
 
 //responds with a direct response
 client.on('message', message => {
@@ -38,19 +41,27 @@ client.on('message', message => {
         let taggedUser = message.mentions.users.first();
 
         if (!args.length) {
-            return message.channel.send(`You didn't provide a user, ${message.author}.`);
+            return message.channel.send(`${message.author}, you need to provide a user.\n    *(ex: $whois @TheRipBot)*`);
         } else if (!taggedUser) {
-                return message.channel.send(`That user is not in this server, ${message.author}.\nPlease use the prefix: *@*`);
+                return message.channel.send(`${message.author}, that user cannot be found.\n    *(ex: $whois @TheRipBot)*`);
             } else {
                 
                 message.channel.send(embed
                     .setTitle(`**${taggedUser.username}**`)
-                    // .setDescription(`**ID**:  ${taggedUser.id}\n**Bot**: ${taggedUser.bot}\n**Currently**:  ${taggedUser.presence.status}\n**Playing**:  ${taggedUser.presence.activities}`)
                     .setColor(16711680)
                     .setThumbnail(taggedUser.avatarURL())
+                    // .setDescription(`**ID**:  ${taggedUser.id}\n**Bot**: ${taggedUser.bot}\n**Currently**:  ${taggedUser.presence.status}\n**Playing**:  ${taggedUser.presence.activities}`)
+                    //currently online
+                    //currently playing: minecraft
+                    //setimage taggedUser presence game details
+                    .addField("**Username**", `${taggedUser.tag}`, true)
+                    .addField("**ID**", `${taggedUser.id}`, true)
                     
-                    .addField("ID", `${taggedUser.id}`, true)
-                    .addField("BOT", `${taggedUser.bot}`, true)
+                    .addField("Status", `${taggedUser.presence.status}`)
+                    .addField("Playing", `${taggedUser.presence.activities}`, true)
+                    .addField("client status", `${taggedUser.presence.clientStatus}`, true)
+                    .addField("Bot", `${taggedUser.bot}`, true)
+                    
                 );
             };
         // description: (`Your game: ${message.author.presence.activities}\n  id: ${message.author.id}\n   name: ${message.author.username}\n  status: ${message.author.presence.status}`)
