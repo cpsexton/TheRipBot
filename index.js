@@ -80,6 +80,15 @@ client.on('message', async message => {
     
 });
 
+    // command ONLINE. searches and returns online members //
+client.on('message', message => {
+    
+    if(message.content == `${prefix}online`) {
+        client.commands.get('online').execute(message);
+    };
+
+});
+
 // token is hidden //
 client.login(token);
 
@@ -87,7 +96,7 @@ client.login(token);
 
 //from the channel the message was heard:
     //fetch online users presence activites and store in an object 
-        //if user input is equal to any activity in the array return that username in an embed li 
+    //if user input is equal to any activity in the array return that username in an embed li 
 
 //can define colors here for Embed class
 //const yellow = 16776960
@@ -95,16 +104,11 @@ client.login(token);
 //const blue = 255
 //const green = 65280
 
-//searches and returns online members
-// First we use guild.members.fetch to make sure all members are cached
-//<message>.guild.members.fetch().then(fetchedMembers => {
-	//const totalOnline = fetchedMembers.filter(member => member.presence.status === 'online');
-	// We now have a collection with all online member objects in the totalOnline variable
-	//<message>.channel.send(`There are currently ${totalOnline.size} members online in this guild!`);
-    //});
+
 
 //TODO 
     //whois <username> command   (bug that duplicates code in responce when asked multiple times. switch case ?)
     //song <url> command    (joins a voice channel then plays a youtube song from a link then after a timeout will leave voice channel)
     //playing <game> command   (search command to find users in channel that are online && playing the searched game in their activity status)
     //add server join link in server information to $server command
+    //online (returns who in the server is online presence.status == 'online')
