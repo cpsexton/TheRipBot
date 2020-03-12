@@ -3,29 +3,19 @@ const {prefix, token} = require('./config.json');
 const client = new Discord.Client();
 
 client.once('ready', () => {
-	console.log('Ready!');
+    console.log('Ready!');
 });
 
-    //responds with a direct response
+//responds with a direct response
 client.on('message', message => {
     
     if(message.content === `${prefix}fart`) {
         message.channel.send("*toot*");
-    } else if(message.content === `${prefix}Yardmeat`) {
-        message.channel.send("That's ADHD Andrew")
-    } else if(message.content === `${prefix}Rage Gage`) {
-        message.channel.send("That's Gregarious Gage")
-    } else if(message.content === `${prefix}Ripoff`) {
-        message.channel.send("That's Coronavirus Chris")
-    } else if(message.content === `${prefix}TickTickBoom`) {
-        message.channel.send("That's Magical Muhammad")
-    } else if(message.content === `${prefix}Yung Daemon`) {
-        message.channel.send("That's Dick Diddling Damon")
     }
-
+    
 });
 
-    //responds with an embeded help message consisting of list of commands
+//responds with an embeded help message consisting of list of commands
 client.on('message', message => {
     
     if(message.content === `${prefix}help`) {
@@ -34,22 +24,36 @@ client.on('message', message => {
             description: ("TheRipBot\n\n  Commands:\n  **$help**: List of commands\n\n  **$whois <username>**: Will respond with requested users information\n\n  **$server**: Will respond with the server details\n\n  **$hello**: Get a what up from ya boi\n\n  **$fart**: Will release a deadly disgusting coronavirus fart in the channel")
         }})
     }
-
+    
 });
 
-    //responds with requested discord users information
+//responds with requested discord users information
 client.on('message', message => {
     
-    if(message.content === `${prefix}whois`) {
-        message.channel.send({embed: { 
-            color: 16711680,
-            description: (`Your game: ${message.author.presence.activities}\n  id: ${message.author.id}\n   name: ${message.author.username}\n  status: ${message.author.presence.status}`)
-        }})
+    if(message.content.startsWith(`${prefix}whois`)) {
+        
+        let args = message.content.slice(prefix.length).split(' ');
+        let command = args.shift().toLowerCase();
+        let taggedUser = message.mentions.users.first();
+       
+        if (command === 'whois') {
+            if (!args.length) {
+                return message.channel.send(`You didn't provide a user, ${message.author}.`);
+             } 
+            //else if () {
+            //     return message.channel.send(`That user is not in this server, ${message.author}.`);
+            // } 
+            else {
+                message.channel.send({embed: {
+                    color: 16711680,
+                    description: (`taggedUser: ${taggedUser}\n`)
+                }})
+            };
+        // description: (`Your game: ${message.author.presence.activities}\n  id: ${message.author.id}\n   name: ${message.author.username}\n  status: ${message.author.presence.status}`)
     }
+}});
 
-});
-
-    //responds with embedded information on the server
+//responds with embedded information on the server
 client.on('message', message => {
     
     if(message.content == `${prefix}server`) {
