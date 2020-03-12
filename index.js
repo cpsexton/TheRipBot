@@ -36,16 +36,14 @@ client.on('message', message => {
     }
 });
 
-//responds with embedded information on the server
+    // command server. returns information on the current server //
 client.on('message', message => {
+    let args = message.content.slice(prefix.length).split(' ');
     
     if(message.content == `${prefix}server`) {
-        message.channel.send({embed: {
-            color: 65280,
-            description: (`Server Information:\n\nServer name: ${message.guild.name}\nOwner: ${message.guild.owner}\nTotal members: ${message.guild.memberCount}\nMaximum Members: ${message.guild.maximumMembers}\nRegion: ${message.guild.region}`)
-        }})
-
-}});
+        client.commands.get('server').execute(message, args);
+    }
+});
 
     //puts bot offline and logs to console who issued the command
 client.on('message', message => {
