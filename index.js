@@ -1,20 +1,21 @@
 const Discord = require('discord.js');
+const fs = require('fs');
 const {prefix, token} = require('./config.json');
+
 const client = new Discord.Client();
 const embed = new Discord.MessageEmbed();
+client.commands = new Discord.Collection();
+
+const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
+
+for(const file of commandFiles) {
+    const command = require(`./commands/${file}`);
+    client.commands.set(command.name, command);
+}
 
 client.once('ready', () => {
     console.log('Ready!');
     client.user.setActivity("chat.", {type: "WATCHING"})
-});
-
-//responds with a direct response
-client.on('message', message => {
-    
-    if(message.content === `${prefix}fart`) {
-        message.channel.send("*toot*");
-    }
-    
 });
 
 //responds with an embeded help message consisting of commands list
@@ -23,54 +24,19 @@ client.on('message', message => {
     if(message.content === `${prefix}help`) {
         message.channel.send({embed: {
             color: 255,
-            description: ("TheRipBot\n\n  Commands:\n  **$help**: List of commands\n\n  **$whois <username>**: Will respond with requested users information\n\n  **$server**: Will respond with the server details\n\n  **$hello**: Get a what up from ya boi\n\n  **$fart**: Will release a deadly disgusting coronavirus fart in the channel")
+            description: ("TheRipBot\n\n  Commands:\n  **$help**: List of commands\n\n  **$whois <username>**: Will respond with requested users information\n\n  **$server**: Will respond with the server details\n\n  **$hello**: Get a what up from ya boi")
         }})
     }
-    
+
 });
 
-//responds with requested discord users information
+    // command whois <username>. returns from whois.js file
 client.on('message', message => {
+            
+    let args = message.content.slice(prefix.length).split(' ');
     
     if(message.content.startsWith(`${prefix}whois`)) {
-        
-        let args = message.content.slice(prefix.length).split(' ');
-        let command = args.shift().toLowerCase();
-        let taggedUser = message.mentions.users.first();
-        let tUserGame = " ";
-
-        if (!args.length) {
-            return message.channel.send(`${message.author}, you need to provide a user.\n    *(ex: $whois @TheRipBot)*`);
-        } else if (!taggedUser) {
-            return message.channel.send(`${message.author}, that user cannot be found.\n    *(ex: $whois @TheRipBot)*`);
-        } else if (`${taggedUser.presence.activities}`) {
-            let tUserGame = `${taggedUser.presence.activities}`
-                
-            message.channel.send(embed
-                .setTitle(`**${taggedUser.username}**`)
-                .setColor(16711680)
-                .setThumbnail(taggedUser.avatarURL())
-                .addField("**Username**", `${taggedUser.tag}`, true)
-                .addField("**ID**", `${taggedUser.id}`, true)
-                .addField("Status", `${taggedUser.presence.status}`)
-                .addField("Playing", tUserGame)
-                .addField("Bot", `${taggedUser.bot}`, true)
-            );
-        } else {
-            message.channel.send(embed
-                .setTitle(`**${taggedUser.username}**`)
-                .setColor(16711680)
-                .setThumbnail(taggedUser.avatarURL())
-                    // .setDescription(`**ID**:  ${taggedUser.id}\n**Bot**: ${taggedUser.bot}\n**Currently**:  ${taggedUser.presence.status}\n**Playing**:  ${taggedUser.presence.activities}`)
-                    
-                .addField("**Username**", `${taggedUser.tag}`, true)
-                .addField("**ID**", `${taggedUser.id}`, true)
-                    
-                .addField("Status", `${taggedUser.presence.status}`)
-                .addField("Playing", "Nothing")
-                .addField("Bot", `${taggedUser.bot}`, true) 
-            );
-        };
+        client.commands.get('whois').execute(message, args);     
     }
 });
 
@@ -135,7 +101,7 @@ client.login(token);
     //});
 
 //TODO 
-    //whois <username> command   ($whois ripoff - should return information on ripoff. use .split .first etc to seperate the command from the user requested)
+    //whois <username> command   (bug that duplicates code in responce when asked multiple times. switch case ?)
     //song <url> command    (joins a voice channel then plays a youtube song from a link then after a timeout will leave voice channel)
     //playing <game> command   (search command to find users in channel that are online && playing the searched game in their activity status)
     //add server join link in server information to $server command
