@@ -18,21 +18,17 @@ client.once('ready', () => {
     client.user.setActivity("chat.", {type: "WATCHING"})
 });
 
-//responds with an embeded help message consisting of commands list
+    // command help. returns list of commands // takes in arguments but does not currently use them // future goal is add help <topic> func //
 client.on('message', message => {
+    let args = message.content.slice(prefix.length).split(' ');
     
-    if(message.content === `${prefix}help`) {
-        message.channel.send({embed: {
-            color: 255,
-            description: ("TheRipBot\n\n  Commands:\n  **$help**: List of commands\n\n  **$whois <username>**: Will respond with requested users information\n\n  **$server**: Will respond with the server details\n\n  **$hello**: Get a what up from ya boi")
-        }})
+    if(message.content.startsWith(`${prefix}help`)) {
+        client.commands.get('help').execute(message, args);     
     }
-
 });
 
-    // command whois <username>. returns from whois.js file
-client.on('message', message => {
-            
+    // command whois <username>. returns detailed information about requested user //
+client.on('message', message => {  
     let args = message.content.slice(prefix.length).split(' ');
     
     if(message.content.startsWith(`${prefix}whois`)) {
