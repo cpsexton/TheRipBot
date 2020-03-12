@@ -35,23 +35,20 @@ client.on('message', message => {
         let args = message.content.slice(prefix.length).split(' ');
         let command = args.shift().toLowerCase();
         let taggedUser = message.mentions.users.first();
-       
-        if (command === 'whois') {
-            if (!args.length) {
-                return message.channel.send(`You didn't provide a user, ${message.author}.`);
-             } 
-            //else if () {
-            //     return message.channel.send(`That user is not in this server, ${message.author}.`);
-            // } 
-            else {
+        
+        if (!args.length) {
+            return message.channel.send(`You didn't provide a user, ${message.author}.`);
+        } else if (!taggedUser) {
+                return message.channel.send(`That user is not in this server, ${message.author}.\nPlease use the prefix: *@*`);
+            } else {
                 message.channel.send({embed: {
                     color: 16711680,
-                    description: (`taggedUser: ${taggedUser}\n`)
-                }})
+                    description: (`**Username**: ${taggedUser}\n**ID**: ${taggedUser.id}\n**Currently**: ${taggedUser.presence.status}\n**Currently Playing**: ${taggedUser.presence.activities}`)
+                }});
             };
         // description: (`Your game: ${message.author.presence.activities}\n  id: ${message.author.id}\n   name: ${message.author.username}\n  status: ${message.author.presence.status}`)
     }
-}});
+});
 
 //responds with embedded information on the server
 client.on('message', message => {
