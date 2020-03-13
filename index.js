@@ -13,14 +13,10 @@ for(const file of commandFiles) {
     client.commands.set(command.name, command);
 }
 
-// for( try to collect role names )collectRoleNames()
-
     // logs to console that bot has successfully launched and sets bots activity to 'Watching chat' //
 client.on('ready', () => {
     console.log('Ready!');
     client.user.setActivity("chat.", {type: "WATCHING"});
-
-    // collectRoleNames();
 });
 
 client.on('message', message => {
