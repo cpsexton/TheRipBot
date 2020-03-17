@@ -1,7 +1,8 @@
 const Discord = require('discord.js');
 const fs = require('fs');
 const {prefix, token} = require('./config.json');
-const ytdl = require('ytdl-core');
+// const ytdl = require('ytdl-core');
+const ytdl = require('ytdl-core-discord');
 const ffmpeg = require('ffmpeg');
 
 const client = new Discord.Client();
@@ -24,8 +25,7 @@ client.on('ready', () => {
     // command UPTIME. returns number of milliseconds 
 client.on('message', message => {
     if(message.content.startsWith(`${prefix}uptime`)) {
-        console.log(`${message.member.voice.channel}`);
-        message.channel.send(embed
+		message.channel.send(embed
             .setTitle('Uptime')
             .setDescription(`${client.uptime} milliseconds`)
         )
@@ -69,7 +69,8 @@ client.on('message', message => {
 client.on('message', message => {
     
     if(message.author.id === '322974067781271572' && message.content === `${prefix}kill`) {
-        console.log(`TheRipBot has been terminated by ${message.author.username}`),
+		console.log(`TheRipBot has been terminated by ${message.author.username}`),
+		
         process.exit()
     };
 
@@ -93,16 +94,8 @@ client.on('message', async message => {
     
 });
 
-    // command ONLINE. searches and returns online members //
-client.on('message', message => {
-    
-    if(message.content == `${prefix}online`) {
-        client.commands.get('online').execute(message);
-    };
 
-});
 
-    // command PLAY. plays song from given utube url
 const queue = new Map();
 
 
@@ -112,18 +105,29 @@ client.on('message', async message => {
 
 	const serverQueue = queue.get(message.guild.id);
 
-	if (message.content.startsWith(`${prefix}play`)) {
+	if (message.content.startsWith(`${prefix}play`)) {	// command PLAY. joins users voicechannel and plays sound from youtube link //
 		execute(message, serverQueue);
 		return;
-	} else if (message.content.startsWith(`${prefix}skip`)) {
+	} else if (message.content.startsWith(`${prefix}skip`)) {	// command SKIP. skips current song and plays next in queue //
 		skip(message, serverQueue);
 		return;
-	} else if (message.content.startsWith(`${prefix}stop`)) {
+	} else if (message.content.startsWith(`${prefix}stop`)) {	// command STOP. stops current song from playing //
 		stop(message, serverQueue);
 		return;
-	} else {
-		message.channel.send('You need to enter a valid command!')
+	} else if (message.content.startsWith(`${prefix}online`)) {	  // command ONLINE. searches and returns online members //
+		client.commands.get('online').execute(message);
+		return;
+	} else if () {
+
+	} else if () {
+		
 	}
+	
+	} else {
+		message.channel.send('You need to enter a valid command.');    // alerts user that command does not exist and points to using command HELP //
+		return;
+	}
+
 });
 
 async function execute(message, serverQueue) {
@@ -188,7 +192,7 @@ function stop(message, serverQueue) {
 	serverQueue.connection.dispatcher.end();
 }
 
-function play(guild, song) {
+async function play(guild, song) {
 	const serverQueue = queue.get(guild.id);
 
 	if (!song) {
@@ -197,7 +201,7 @@ function play(guild, song) {
 		return;
 	}
 
-	const dispatcher = serverQueue.connection.play(ytdl(song.url))
+	const dispatcher = serverQueue.connection.play(await ytdl(song.url), { type: 'opus' })
 		.on('end', () => {
 			console.log('Music ended!');
 			serverQueue.songs.shift();
