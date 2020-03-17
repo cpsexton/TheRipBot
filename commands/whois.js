@@ -31,7 +31,7 @@ module.exports = {
             message.channel.send(embed
                 .setTitle(`**${taggedUser.username}**`)
                 .setColor(16711680)
-                .setThumbnail(taggedUser.avatarURL())   
+                .setThumbnail(taggedUser.avatarURL())
                 .addField("**Username**", `${taggedUser.tag}`, true)
                 .addField("**ID**", `${taggedUser.id}`, true) 
                 .addField("**Status**", `${taggedUser.presence.status}`)
