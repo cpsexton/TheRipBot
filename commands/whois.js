@@ -24,10 +24,8 @@ module.exports = {
                 .setThumbnail(taggedUser.avatarURL())
                 .addField("**Username**", `${taggedUser.tag}`, true)
                 .addField("**ID**", `${taggedUser.id}`, true)
-                .addField("Status", `${taggedUser.presence.status}`)
+                .addField("**Status**", `${taggedUser.presence.status}`)
                 .addField("Playing", tUserGame)
-                .addField("**Roles**", ``)
-                .addField("Bot", `${taggedUser.bot}`, true)
             )
         } else {
             message.channel.send(embed
@@ -36,9 +34,8 @@ module.exports = {
                 .setThumbnail(taggedUser.avatarURL())   
                 .addField("**Username**", `${taggedUser.tag}`, true)
                 .addField("**ID**", `${taggedUser.id}`, true) 
-                .addField("Status", `${taggedUser.presence.status}`)
+                .addField("**Status**", `${taggedUser.presence.status}`)
                 .addField("Playing", tUserGame)
-                .addField("Bot", `${taggedUser.bot}`, true) 
             )
         };
     }

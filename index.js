@@ -10,85 +10,84 @@ const embed = new Discord.MessageEmbed();
 client.commands = new Discord.Collection();
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 
-    // will require the command file needed to execute the function making request //
+// will require the command file needed to execute the function making request //
 for(const file of commandFiles) {
-    const command = require(`./commands/${file}`);
+	const command = require(`./commands/${file}`);
     client.commands.set(command.name, command);
 }
 
-    // logs to console that bot has successfully launched and sets bots activity to 'Watching chat' //
+// logs to console that bot has successfully launched and sets bots activity to 'Watching chat' //
 client.on('ready', () => {
-    console.log('Ready!');
+	console.log('Ready!');
     client.user.setActivity("chat.", {type: "WATCHING"});
 });
 
-    // command UPTIME. returns number of milliseconds 
+// command UPTIME. returns number of milliseconds 
 client.on('message', message => {
-    if(message.content.startsWith(`${prefix}uptime`)) {
+	if(message.content.startsWith(`${prefix}uptime`)) {
 		message.channel.send(embed
             .setTitle('Uptime')
             .setDescription(`${client.uptime} milliseconds`)
-        )
-    };
-});
-
+			)
+		};
+	});
+	
     // command HELP. returns list of commands // takes in arguments but does not currently use them // future goal is add help <topic> func //
-client.on('message', message => {
-    
-    let args = message.content.slice(prefix.length).split(' ');
-    
-    if(message.content.startsWith(`${prefix}help`)) {
-        client.commands.get('help').execute(message, args);     
-    };
-
-});
-
-    // command WHOIS <username>. returns detailed information about requested user //
-client.on('message', message => {  
-    
-    let args = message.content.slice(prefix.length).split(' ');
-    
-    if(message.content.startsWith(`${prefix}whois`)) {
-        client.commands.get('whois').execute(message, args);     
-    };
-
-});
-
-    // command SERVER. returns information on the current server //
-client.on('message', message => {
-    
-    let args = message.content.slice(prefix.length).split(' ');
-    
-    if(message.content == `${prefix}server`) {
-        client.commands.get('server').execute(message, args);
-    };
-
-});
-
-    // command KILL. puts bot offline and logs to console who issued the command //
-client.on('message', message => {
-    
-    if(message.author.id === '322974067781271572' && message.content === `${prefix}kill`) {
-		console.log(`TheRipBot has been terminated by ${message.author.username}`),
+	// client.on('message', message => {
 		
-        process.exit()
-    };
-
-});
-
-    // command HELLO. reacts to message with emojis to say whatup //
-client.on('message', async message => {
-    
-    if(message.content == `${prefix}hello`) {
-        try {
-            await message.react('🇼');
-            await message.react('🇭');
-            await message.react('🇦');
-            await message.react('🇹');
-            await message.react('🇺');
-            await message.react('🇵');
-        } catch (error) {
-            console.error('One of the emojis failed to react.')
+		
+		//     if(message.content.startsWith(`${prefix}help`)) {
+			//         client.commands.get('help').execute(message, args);     
+			//     };
+			
+			// });
+			
+			// command WHOIS <username>. returns detailed information about requested user //
+			// client.on('message', message => {  
+				
+				//     let args = message.content.slice(prefix.length).split(' ');
+				
+				//     if(message.content.startsWith(`${prefix}whois`)) {
+					//         client.commands.get('whois').execute(message, args);     
+					//     };
+					
+					// });
+					
+					// command SERVER. returns information on the current server //
+					// client.on('message', message => {
+						
+						//     let args = message.content.slice(prefix.length).split(' ');
+						
+						//     if(message.content == `${prefix}server`) {
+							//         client.commands.get('server').execute(message, args);
+							//     };
+							
+							// });
+							
+							// command KILL. puts bot offline and logs to console who issued the command //
+							client.on('message', message => {
+								
+								if(message.author.id === '322974067781271572' && message.content === `${prefix}kill`) {
+									console.log(`TheRipBot has been terminated by ${message.author.username}`),
+									
+									process.exit()
+								};
+								
+							});
+							
+							// command HELLO. reacts to message with emojis to say whatup //
+							client.on('message', async message => {
+								
+								if(message.content == `${prefix}hello`) {
+									try {
+										await message.react('🇼');
+										await message.react('🇭');
+										await message.react('🇦');
+										await message.react('🇹');
+										await message.react('🇺');
+										await message.react('🇵');
+									} catch (error) {
+										console.error('One of the emojis failed to react.')
         }
     };
     
@@ -104,6 +103,8 @@ client.on('message', async message => {
 	if (!message.content.startsWith(prefix)) return;
 
 	const serverQueue = queue.get(message.guild.id);
+	// let args = message.content.slice(prefix.length).split(' ');
+	const args = message.content.split(' ');
 
 	if (message.content.startsWith(`${prefix}play`)) {	// command PLAY. joins users voicechannel and plays sound from youtube link //
 		execute(message, serverQueue);
@@ -117,13 +118,16 @@ client.on('message', async message => {
 	} else if (message.content.startsWith(`${prefix}online`)) {	  // command ONLINE. searches and returns online members //
 		client.commands.get('online').execute(message);
 		return;
-	} else if () {
-
-	} else if () {
-		
-	}
-	
-	} else {
+	} else if (message.content.startsWith(`${prefix}server`)) {    // command SERVER. returns information on the current server //
+        client.commands.get('server').execute(message, args);
+		return;
+	} else if (message.content.startsWith(`${prefix}whois`)) {    // command WHOIS <username>. returns detailed information about requested user //
+		client.commands.get('whois').execute(message, args);
+		return;
+	} else if (message.content.startsWith(`${prefix}help`)) {    // command HELP. returns list of commands // takes in arguments but does not currently use them // future goal is add help <topic> func //
+		client.commands.get('help').execute(message, args);
+		return;
+	} else {	
 		message.channel.send('You need to enter a valid command.');    // alerts user that command does not exist and points to using command HELP //
 		return;
 	}
