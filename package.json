@@ -1,0 +1,27 @@
+{
+  "name": "TheRipBot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cpsexton/TheRipBot.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cpsexton/TheRipBot/issues"
+  },
+  "homepage": "https://github.com/cpsexton/TheRipBot#readme",
+  "dependencies": {
+    "@discordjs/opus": "^0.1.0",
+    "discord.js": "^12.0.2",
+    "ffmpeg": "0.0.4",
+    "ffmpeg-static": "^4.0.1",
+    "opusscript": "0.0.7"
+  }
+}
