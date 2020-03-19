@@ -92,10 +92,7 @@ client.on('message', async message => {
 	} else if (message.content.startsWith(`${prefix}help`)) {    // command HELP. returns list of commands // takes in arguments but does not currently use them // future goal is add help <topic> func //
 		client.commands.get('help').execute(message, args);
 		return;
-	} else {	
-		message.channel.send('You need to enter a valid command.');    // alerts user that command does not exist and points to using command HELP //
-		return;
-	}
+	} 
 
 });
 
@@ -185,12 +182,14 @@ async function play(guild, song) {
 // token is hidden //
 client.login(token);
 
+
 ///////////////////////////////////////////////////////////////////////////////////////////
 
-
 //TODO 
-    //whois <username> command   (bug that duplicates code in responce when asked multiple times. switch case ?)
-    //song <url> command    (songs stop a minute or so in)
+    //BUG duplication. commands such as $server will continuously duplicate embed fields creating a long repeating embed
+	
+	//song <url> command    (songs stop a minute or so in)
     //playing <game> command   (search command to find users in channel that are online && playing the searched game in their activity status)
     //add server join link in server information to $server command
-    
+	//add more commands to help list
+	
