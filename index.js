@@ -192,4 +192,5 @@ client.login(token);
     //playing <game> command   (search command to find users in channel that are online && playing the searched game in their activity status)
     //add server join link in server information to $server command
 	//add more commands to help list
+	//kill command needs to exit voice channels before ending process
 	
