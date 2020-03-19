@@ -101,6 +101,9 @@ client.on('message', async message => {
 	} else if (message.content.startsWith(`${prefix}stop`)) {	// command STOP. stops current song from playing //
 		stop(message, serverQueue);
 		return;
+	} else if (message.content.startsWith(`${prefix}pfp`)) {    // command PFP. returns user's profile picture in an embed
+		client.commands.get('pfp').execute(message);
+		return;
 	} 
 });
 
