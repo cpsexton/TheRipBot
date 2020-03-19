@@ -1,6 +1,5 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
-const embed = new Discord.MessageEmbed();
 client.commands = new Discord.Collection();
 
 module.exports = {
@@ -17,8 +16,9 @@ module.exports = {
             return message.channel.send(`${message.author}, that user cannot be found.\n    *(ex: $whois @TheRipBot)*`);
         } else if (`${taggedUser.presence.activities}`) {
             let tUserGame = `${taggedUser.presence.activities}`
+            const embed = new Discord.MessageEmbed();
             
-            message.channel.send(embed
+            embed
                 .setTitle(`**${taggedUser.username}**`)
                 .setColor(16711680)
                 .setThumbnail(taggedUser.avatarURL())
@@ -26,17 +26,18 @@ module.exports = {
                 .addField("**ID**", `${taggedUser.id}`, true)
                 .addField("**Status**", `${taggedUser.presence.status}`)
                 .addField("Playing", tUserGame)
-            )
-        } else {
-            message.channel.send(embed
-                .setTitle(`**${taggedUser.username}**`)
-                .setColor(16711680)
-                .setThumbnail(taggedUser.avatarURL())
-                .addField("**Username**", `${taggedUser.tag}`, true)
-                .addField("**ID**", `${taggedUser.id}`, true) 
-                .addField("**Status**", `${taggedUser.presence.status}`)
-                .addField("Playing", tUserGame)
-            )
-        };
+            return message.channel.send(embed)
+        }
+        const embed = new Discord.MessageEmbed();
+
+        embed
+            .setTitle(`**${taggedUser.username}**`)
+            .setColor(16711680)
+            .setThumbnail(taggedUser.avatarURL())
+            .addField("**Username**", `${taggedUser.tag}`, true)
+            .addField("**ID**", `${taggedUser.id}`, true) 
+            .addField("**Status**", `${taggedUser.presence.status}`)
+            .addField("Playing", tUserGame)
+        return message.channel.send(embed)
     }
 };

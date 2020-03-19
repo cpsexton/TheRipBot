@@ -92,6 +92,9 @@ client.on('message', async message => {
 	} else if (message.content.startsWith(`${prefix}help`)) {    // command HELP. returns list of commands // takes in arguments but does not currently use them // future goal is add help <topic> func //
 		client.commands.get('help').execute(message, args);
 		return;
+	} else if (message.content.startsWith(`${prefix}pfp`)) {    // command PFP. returns user's profile picture in an embed
+		client.commands.get('pfp').execute(message);
+		return;
 	} 
 
 });
