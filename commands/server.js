@@ -14,6 +14,7 @@ module.exports = {
             console.log(roleList);
             return roleList
         }
+        const embed = new Discord.MessageEmbed();
         message.channel.send(embed
             .setColor(65280)
             .setTitle('**Server Information**')
