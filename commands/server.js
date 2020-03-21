@@ -6,7 +6,15 @@ client.commands = new Discord.Collection();
 module.exports = {
     name: 'server',
     description: 'returns details about the Guild aka Server',
-    execute(message, args) {
+    execute(message) {
+        const roles = () => {
+            let roleList = []
+            message.guild.roles.fetch().then(roles => {
+                roleList.push(roles)
+            })
+            console.log(roleList);
+            return roleList
+        }
         message.channel.send(embed
             .setColor(65280)
             .setTitle('**Server Information**')
@@ -15,7 +23,7 @@ module.exports = {
             .addField("**Owner**", `${message.guild.owner}`)
             .addField("**Total members**", `${message.guild.memberCount}`)
             .addField("**Region**", `${message.guild.region}`)
-            .addField("**Roles**", `${message.guild.roles.fetch()}`)
+            .addField("**Roles**", `${roles()} roles`)
         ) 
     },
 };
