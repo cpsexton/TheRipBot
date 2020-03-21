@@ -29,11 +29,11 @@ client.on('ready', () => {
 	// command UPTIME. returns number of milliseconds 
 client.on('message', message => {
 	if(message.content.startsWith(`${prefix}uptime`)) {
-		if((client.uptime / 1000).toFixed(0) == 60){
-			client.uptime = 0
-		}
-		console.log((client.uptime / 1000).toFixed(0));
-		client.commands.get('uptime').execute(message, (client.uptime / 1000).toFixed(0));
+		let time = { minutes: 0, seconds: 0}
+		time.seconds = (client.uptime / 1000).toFixed(0)
+		time.minutes = Math.trunc(client.uptime / 60000)
+		console.log(client.uptime / 60000)
+		client.commands.get('uptime').execute(message, time);
 	};
 });
 
@@ -116,14 +116,14 @@ client.on('message', message => {
 
 	// command SLOGON. logs in to Steam as anonymous Steam User //
 client.on('message', message => {
-	if(message.content.startsWith(`${prefix}sLogOn` || `${prefix}slogon`)){
+	if(message.content.startsWith(`${prefix}sLogOn` || `${prefix}slogon`) && message.member.hasPermission('ADMINISTRATOR')){
 		client.commands.get('slogon').execute(message);
 	return;
 }});
 
 	// command SLOGOFF. logs off Steam //
 client.on('message', message => {
-	if(message.content.startsWith(`${prefix}sLogOff` || `${prefix}slogoff`)){
+	if(message.content.startsWith(`${prefix}sLogOff` || `${prefix}slogoff`) && message.member.hasPermission('ADMINISTRATOR')){
 		client.commands.get('slogoff').execute(message);
 	return;
 }});
