@@ -15,4 +15,4 @@ module.exports = {
 		message.channel.send('Successfully logged on to Steam.');
 	}
 };
-///////////  THIS SHOULD BE ADMIN ACCESS ONLINE ///////////
+///////////  THIS SHOULD BE ADMIN ACCESS ONLY ///////////

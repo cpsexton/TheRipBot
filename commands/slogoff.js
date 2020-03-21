@@ -14,4 +14,4 @@ module.exports = {
 		message.channel.send('Successfully logged off');
 	}
 };
-///////////  THIS SHOULD BE ADMIN ACCESS ONLINE ///////////
+///////////  THIS SHOULD BE ADMIN ACCESS ONLY ///////////
