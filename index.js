@@ -29,10 +29,11 @@ client.on('ready', () => {
 	// command UPTIME. returns number of milliseconds 
 client.on('message', message => {
 	if(message.content.startsWith(`${prefix}uptime`)) {
-		let time = { minutes: 0, seconds: 0}
-		time.seconds = (client.uptime / 1000).toFixed(0)
+		let time = { hours: 0, minutes: 0, seconds: 0}
+		time.seconds = Math.trunc(client.uptime / 1000)
 		time.minutes = Math.trunc(client.uptime / 60000)
-		console.log(client.uptime / 60000)
+		time.hours = Math.trunc(client.uptime / 3600000)
+		console.log(client.uptime / 3600000)
 		client.commands.get('uptime').execute(message, time);
 	};
 });
