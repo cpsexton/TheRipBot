@@ -26,10 +26,11 @@ client.on('ready', () => {
 	// command UPTIME. returns number of milliseconds 
 client.on('message', message => {
 	if(message.content.startsWith(`${prefix}uptime`)) {
-		message.channel.send(embed
-            .setTitle('Uptime')
-            .setDescription(`${client.uptime} milliseconds`)
-		)
+		if((client.uptime / 1000).toFixed(0) == 60){
+			client.uptime = 0
+		}
+		console.log((client.uptime / 1000).toFixed(0));
+		client.commands.get('uptime').execute(message, (client.uptime / 1000).toFixed(0));
 	};
 });
 
@@ -67,14 +68,14 @@ client.on('message', message => {
 // command SERVER. returns information on the current server //
 client.on('message', message => {
 	if (message.content.startsWith(`${prefix}server`)) {    
-		client.commands.get('server').execute(message, args);
+		client.commands.get('server').execute(message);
 		return;
 }});
 
 	// command WHOIS <username>. returns detailed information about requested user //	
 client.on('message', message => {
 	if (message.content.startsWith(`${prefix}whois`)) {    
-		client.commands.get('whois').execute(message, args);
+		client.commands.get('whois').execute(message);
 		return;
 }});
 	

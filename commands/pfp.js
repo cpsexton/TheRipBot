@@ -1,6 +1,6 @@
-const Discord = require('discord.js');
-const client = new Discord.Client();
-client.commands = new Discord.Collection();
+const { MessageEmbed, Guild, Client, Collection } = require('discord.js');
+const client = new Client();
+client.commands = new Collection();
 
 module.exports = {
     name: "pfp",
@@ -12,7 +12,7 @@ module.exports = {
             return message.channel.send(`${message.author}, please tag a user`);
         }
         if(taggedUser){
-            const embed = new Discord.MessageEmbed();
+            const embed = new MessageEmbed();
             embed
                 .setTitle(`${taggedUser.username}'s profile picture`)
                 .setImage(taggedUser.avatarURL())
