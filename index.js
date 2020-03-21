@@ -2,15 +2,14 @@ const Discord = require('discord.js');
 const fs = require('fs');
 const {prefix, token} = require('./config.json');
 const ytdl = require('ytdl-core');
-const ffmpeg = require('ffmpeg');
+
 
 const client = new Discord.Client();
-const embed = new Discord.MessageEmbed();
 client.commands = new Discord.Collection();
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 const queue = new Map();
 
-	// (default = 10) // function to detect number of listens and add 1 to that value and insert it here would be fun to make //
+	// (default = 10) // 
 require('events').EventEmitter.defaultMaxListeners = 15
 
 
@@ -38,104 +37,54 @@ client.on('message', message => {
 	};
 });
 
-	//  command TIMER. gets time from argument. starts a countdown. alerts users of start and finish  //
+
+//  //
+// client.on('message', async message => {							
+// 	if(message.content.startsWith(`${prefix}hello`)) {
+// 		try {
+// 			await message.react('🇼');
+// 			await message.react('🇭');
+// 			await message.react('🇦');
+// 			await message.react('🇹');
+// 			await message.react('🇺');
+// 			await message.react('🇵');
+// 		} catch (error) {
+// 			console.error('One of the emojis failed to react.')
+//         }
+//     }
+// });
+
 client.on('message', message => {
 	let args = message.content.slice(prefix.length).split(' ');
 	
-	if(message.content === `${prefix}timer`) {
-		if(args !== parseInt(args)) {
-			console.log("Argument is not an integer")
-			//TODO message channel that timer needs numbers
-		}
-		// 
+	if(!message.content.startsWith(`${prefix}`)) return; // if message doesnt start with prefix return
+	
+	switch (args[0]) {
+		
+		case 'hello': client.commands.get('hello').async(message); break; // command HELLO. reacts to message with emojis to say whatup //
+
+		case 'help': client.commands.get('help').execute(message); break; // command PFP. returns user's profile picture in an embed //
+		case 'whois': client.commands.get('whois').execute(message); break; // command WHOIS <username>. returns detailed information about requested user //
+		case 'online': client.commands.get('online').execute(message); break; // command ONLINE. searches and returns numbers of online and offline users in current server //
+		case 'pfp': client.commands.get('pfp').execute(message, args); break; // command HELP. returns list of commands // can take in an argument for future help <topic> func //		
+		case 'timer': client.commands.get('timer').execute(message, args); break; //  command TIMER. gets time from argument. starts a countdown. alerts users of start and finish  //
+		case 'server': client.commands.get('server').execute(message); break; // command SERVER. returns detailed information on the current server //
+		case 'sLogOn' || 'slogon' && message.member.hasPermission('ADMINISTRATOR'): client.commands.get('slogon').execute(message); break; // command SLOGON. logs in to Steam as anonymous Steam User //
+		case 'sLogOff' || 'slogoff' && message.member.hasPermission('ADMINISTRATOR'): client.commands.get('slogoff').execute(message); break; // command SLOGOFF. logs off Steam //
+		case 'kill' && message.member.hasPermission('ADMINISTRATOR'): client.commands.get('kill').execute(message); break; // command KILL. puts bot offline and logs to console who issued the command. Admin only //
+		
+		default: break;
 	}
 });
 
-	// command KILL. puts bot offline and logs to console who issued the command //
-client.on('message', message => {						
-	if(message.author.id === '322974067781271572' && message.content === `${prefix}kill`) {
-		console.log(`TheRipBot has been terminated by ${message.author.username}`),	
-		// TODO needs to leave voice channels			
-		process.exit()
-	}							
-});
-
-	// command HELLO. reacts to message with emojis to say whatup //
-client.on('message', async message => {							
-	if(message.content == `${prefix}hello`) {
-		try {
-			await message.react('🇼');
-			await message.react('🇭');
-			await message.react('🇦');
-			await message.react('🇹');
-			await message.react('🇺');
-			await message.react('🇵');
-		} catch (error) {
-			console.error('One of the emojis failed to react.')
-        }
-    }
-});
-	
-	// command ONLINE. searches and returns online members //
-client.on('message', message => {
-	if (message.content.startsWith(`${prefix}online`)) {	  
-		client.commands.get('online').execute(message);
-	return;
-}});
-
-	// command SERVER. returns information on the current server //
-client.on('message', message => {
-	if (message.content.startsWith(`${prefix}server`)) {    
-		client.commands.get('server').execute(message);
-	return;
-}});
-
-	// command WHOIS <username>. returns detailed information about requested user //	
-client.on('message', message => {
-	const args = message.content.split(' ');
-
-	if (message.content.startsWith(`${prefix}whois`)) {    
-		client.commands.get('whois').execute(message);
-		return;
-}});
-	
-	// command HELP. returns list of commands // takes in arguments for future help <topic> func //
-client.on('message', message => {
-	const args = message.content.split(' ');
-
-	if (message.content.startsWith(`${prefix}help`)) {    
-		client.commands.get('help').execute(message, args);
-	return;
-}});
-
-	// command PFP. returns user's profile picture in an embed //
-client.on('message', message => {
-	if (message.content.startsWith(`${prefix}pfp`)) {    
-		client.commands.get('pfp').execute(message);
-	return;
-}});
-
-	// command SLOGON. logs in to Steam as anonymous Steam User //
-client.on('message', message => {
-	if(message.content.startsWith(`${prefix}sLogOn` || `${prefix}slogon`) && message.member.hasPermission('ADMINISTRATOR')){
-		client.commands.get('slogon').execute(message);
-	return;
-}});
-
-	// command SLOGOFF. logs off Steam //
-client.on('message', message => {
-	if(message.content.startsWith(`${prefix}sLogOff` || `${prefix}slogoff`) && message.member.hasPermission('ADMINISTRATOR')){
-		client.commands.get('slogoff').execute(message);
-	return;
-}});
-
+// below is all the music commands //
 client.on('message', async message => {
 	if (message.author.bot) return;
 	if (!message.content.startsWith(prefix)) return;
 
 	const serverQueue = queue.get(message.guild.id);
-	
-	if (message.content.startsWith(`${prefix}play`) || message.content.startsWith(`${prefix}p`)) {	// command PLAY. joins users voicechannel and plays sound from youtube link //
+
+	if (message.content.startsWith(`${prefix}play`)) {	// command PLAY. joins users voicechannel and plays sound from youtube link //
 		execute(message, serverQueue);
 		return;
 	} else if (message.content.startsWith(`${prefix}skip`)) {	// command SKIP. skips current song and plays next in queue //
@@ -148,7 +97,7 @@ client.on('message', async message => {
 });
 
 async function execute(message, serverQueue) {
-	const args = message.content.split(' ');
+	let args = message.content.split(' ');
 	const voiceChannel = message.member.voice.channel;
 	
     if (!voiceChannel) {
@@ -243,10 +192,11 @@ client.login(token);
 //BUG duplication. check which commands this happens on still
 //BUG in slogon.js when you log in, log off and log in again it will throw an error saying already logged on
 
+//TODO defaultMaxListeners	eventemitter function to detect number of listeners in file and add 1 to the default max listeners value
 //TODO song <url> command    (songs stop a minute or so in)
 //TODO playing <game> command   (search command to find users in channel that are online && playing the searched game in their activity status)
 //TODO add server join link in server information to $server command
 //TODO add all commands to help list (ongoing)
 //TODO kill command needs to exit voice channels before ending process
 
-// copyright Christopher Sexton 2020
+// copyright Christopher Sexton and Andrew Thiessen 2020

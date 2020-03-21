@@ -1,19 +1,22 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
+const { MessageEmbed } = require('discord.js');
 
 module.exports = {
     name: 'server',
     description: 'returns details about the Guild aka Server',
     execute(message) {
+        const embed = new MessageEmbed();
+        
         const roles = () => {
             let roleList = []
             message.guild.roles.fetch().then(roles => {
                 roleList.push(roles)
             })
             console.log(roleList);
-            return roleList
-        }
+            return roleList;
+        };
         message.channel.send(embed
             .setColor(65280)
             .setTitle('**Server Information**')

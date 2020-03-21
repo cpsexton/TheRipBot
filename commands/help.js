@@ -7,7 +7,7 @@ client.commands = new Discord.Collection();
 module.exports = {
     name: 'help',
     description: 'returns embed with list of commands',
-    execute(message, args) {        // can easily pass in an argument in future //
+    execute(message) {        // can easily pass in an argument in future //
         
         const embed = new Discord.MessageEmbed();
         
@@ -15,10 +15,13 @@ module.exports = {
             .setColor(255)
             .setTitle("Commands:")
             .addField("**$help**","List of commands")
-            .addField("**$whois <username>**","Will respond with requested users information")
-            .addField("**$server**", "Will respond with the server details")
             .addField("**$hello**", "Get a what up from ya boi")
+            .addField("**$whois <username>**","Will respond with requested users information")
             .addField("**$online**", "See how many people are currently online and offline")
+            .addField("**$pfp**", "Displays requested users profile picture")
+            .addField("**$server**", "Will respond with the server details")
+            .addField("**$sLogOn**", "Logs on to Steam as an anonymous user")
+            .addField("**$sLogOff**", "Logs off Steam")
         )
     }
 };
