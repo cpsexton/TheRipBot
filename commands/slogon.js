@@ -6,7 +6,7 @@ let client = new SteamUser();
 	// Logs on to Steam as an anonymous Steam user via 'steam-user' package // 
 module.exports = {
 	name: 'slogon',
-	description: "<steam log on> logs in to Steam as user Ripofff. Requires Steam Auth",
+	description: "<steam log on> logs in to Steam as an anonymous user.",
 	
 	execute(message) {
 		client.logOn();
