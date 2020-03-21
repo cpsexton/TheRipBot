@@ -1,13 +1,16 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
-const embed = new Discord.MessageEmbed();
+
 client.commands = new Discord.Collection();
 
-    
+    // this is what it does //
 module.exports = {
     name: 'help',
     description: 'returns embed with list of commands',
-    execute(message, args) {        //takes in an argument for future scaling
+    execute(message, args) {        // can easily pass in an argument in future //
+        
+        const embed = new Discord.MessageEmbed();
+        
         message.channel.send(embed
             .setColor(255)
             .setTitle("Commands:")

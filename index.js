@@ -2,7 +2,6 @@ const Discord = require('discord.js');
 const fs = require('fs');
 const {prefix, token} = require('./config.json');
 const ytdl = require('ytdl-core');
-// const ytdl = require('ytdl-core-discord');
 const ffmpeg = require('ffmpeg');
 
 const client = new Discord.Client();
@@ -11,16 +10,20 @@ client.commands = new Discord.Collection();
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 const queue = new Map();
 
+	// (default = 10) // function to detect number of listens and add 1 to that value and insert it here would be fun to make //
+require('events').EventEmitter.defaultMaxListeners = 15
+
+
 	// will require the command file needed to execute the function making request //
 for(const file of commandFiles) {
 	const command = require(`./commands/${file}`);
     client.commands.set(command.name, command);
-}
+};
 
-	// logs to console that bot has successfully launched and sets bots activity to 'Watching chat' //
+	// logs to console that bot has successfully launched and sets bots activity to 'Watching the chat' //
 client.on('ready', () => {
-	console.log('Ready!');
-    client.user.setActivity("the chat.", {type: "WATCHING"});
+	console.log('TheRipBot has launched successfully!');
+	client.user.setActivity("the chat.", {type: "WATCHING"});
 });
 
 	// command UPTIME. returns number of milliseconds 
@@ -33,12 +36,26 @@ client.on('message', message => {
 	};
 });
 
+	//  command TIMER. gets time from argument. starts a countdown. alerts users of start and finish  //
+client.on('message', message => {
+	let args = message.content.slice(prefix.length).split(' ');
+	
+	if(message.content === `${prefix}timer`) {
+		if(args !== parseInt(args)) {
+			console.log("Argument is not an integer")
+			//TODO message channel that timer needs numbers
+		}
+		// 
+	}
+});
+
 	// command KILL. puts bot offline and logs to console who issued the command //
 client.on('message', message => {						
 	if(message.author.id === '322974067781271572' && message.content === `${prefix}kill`) {
-		console.log(`TheRipBot has been terminated by ${message.author.username}`),				
+		console.log(`TheRipBot has been terminated by ${message.author.username}`),	
+		// TODO needs to leave voice channels			
 		process.exit()
-	};							
+	}							
 });
 
 	// command HELLO. reacts to message with emojis to say whatup //
@@ -54,7 +71,7 @@ client.on('message', async message => {
 		} catch (error) {
 			console.error('One of the emojis failed to react.')
         }
-    };
+    }
 });
 	
 	// command ONLINE. searches and returns online members //
@@ -64,25 +81,50 @@ client.on('message', message => {
 	return;
 }});
 
-// command SERVER. returns information on the current server //
+	// command SERVER. returns information on the current server //
 client.on('message', message => {
 	if (message.content.startsWith(`${prefix}server`)) {    
-		client.commands.get('server').execute(message, args);
-		return;
+		client.commands.get('server').execute(message);
+	return;
 }});
 
 	// command WHOIS <username>. returns detailed information about requested user //	
 client.on('message', message => {
+	const args = message.content.split(' ');
+
 	if (message.content.startsWith(`${prefix}whois`)) {    
 		client.commands.get('whois').execute(message, args);
-		return;
+	return;
 }});
 	
-	// command HELP. returns list of commands // takes in arguments but does not currently use them // future goal is add help <topic> func //
+	// command HELP. returns list of commands // takes in arguments for future help <topic> func //
 client.on('message', message => {
+	const args = message.content.split(' ');
+
 	if (message.content.startsWith(`${prefix}help`)) {    
 		client.commands.get('help').execute(message, args);
-		return;
+	return;
+}});
+
+	// command PFP. returns user's profile picture in an embed //
+client.on('message', message => {
+	if (message.content.startsWith(`${prefix}pfp`)) {    
+		client.commands.get('pfp').execute(message);
+	return;
+}});
+
+	// command SLOGON. logs in to Steam as anonymous Steam User //
+client.on('message', message => {
+	if(message.content.startsWith(`${prefix}sLogOn` || `${prefix}slogon`)){
+		client.commands.get('slogon').execute(message);
+	return;
+}});
+
+	// command SLOGOFF. logs off Steam //
+client.on('message', message => {
+	if(message.content.startsWith(`${prefix}sLogOff` || `${prefix}slogoff`)){
+		client.commands.get('slogoff').execute(message);
+	return;
 }});
 
 client.on('message', async message => {
@@ -90,9 +132,8 @@ client.on('message', async message => {
 	if (!message.content.startsWith(prefix)) return;
 
 	const serverQueue = queue.get(message.guild.id);
-	const args = message.content.split(' ');
 	
-	if (message.content.startsWith(`${prefix}play`)) {	// command PLAY. joins users voicechannel and plays sound from youtube link //
+	if (message.content.startsWith(`${prefix}play`) || message.content.startsWith(`${prefix}p`)) {	// command PLAY. joins users voicechannel and plays sound from youtube link //
 		execute(message, serverQueue);
 		return;
 	} else if (message.content.startsWith(`${prefix}skip`)) {	// command SKIP. skips current song and plays next in queue //
@@ -100,9 +141,6 @@ client.on('message', async message => {
 		return;
 	} else if (message.content.startsWith(`${prefix}stop`)) {	// command STOP. stops current song from playing //
 		stop(message, serverQueue);
-		return;
-	} else if (message.content.startsWith(`${prefix}pfp`)) {    // command PFP. returns user's profile picture in an embed
-		client.commands.get('pfp').execute(message);
 		return;
 	} 
 });
@@ -114,7 +152,7 @@ async function execute(message, serverQueue) {
     if (!voiceChannel) {
 		console.log(`${message.author.guild}`);
         message.channel.send('You need to be in a voice channel to play music!');
-    };
+    }
 	const permissions = voiceChannel.permissionsFor(message.client.user);
 	if (!permissions.has('CONNECT') || !permissions.has('SPEAK')) {
 		return message.channel.send('I need the permissions to join and speak in your voice channel!');
@@ -154,20 +192,21 @@ async function execute(message, serverQueue) {
 		console.log(serverQueue.songs);
 		return message.channel.send(`${song.title} has been added to the queue!`);
 	}
-	
-}
+};
 
 function skip(message, serverQueue) {
 	if (!message.member.voice.channel) return message.channel.send('You have to be in a voice channel to stop the music!');
 	if (!serverQueue) return message.channel.send('There is no song that I could skip!');
-	serverQueue.connection.dispatcher.end();
-}
+	serverQueue.connection.dispatcher.destroy();
+	message.channel.send(`Song has been skipped by ${message.author}`)
+};
 
 function stop(message, serverQueue) {
 	if (!message.member.voice.channel) return message.channel.send('You have to be in a voice channel to stop the music!');
 	serverQueue.songs = [];
-	serverQueue.connection.dispatcher.end();
-}
+	serverQueue.connection.dispatcher.destroy();
+	message.channel.send(`Playback has been stopped by ${message.author}`)
+};
 
 async function play(guild, song) {
 	const serverQueue = queue.get(guild.id);
@@ -177,8 +216,7 @@ async function play(guild, song) {
 		queue.delete(guild.id);
 		return;
 	}
-	
-	// const dispatcher = serverQueue.connection.play(await ytdl(song.url), { type: 'opus' })
+
 	const dispatcher = serverQueue.connection.play(await ytdl(song.url))
 	.on('end', () => {
 		console.log('Music ended!');
@@ -196,14 +234,17 @@ client.login(token);
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////
-// let args = message.content.slice(prefix.length).split(' ');
 
-//TODO 
+// Discord Webhook Ripoff's server #General https://discordapp.com/api/webhooks/690363009356529694/t54ufhokKvJOlZoDmUM-VpxKyhRkepekWgDoCbI9YQI6skeY4Wj1lt1LJV3bnVH16qnf
+
+
 //BUG duplication. check which commands this happens on still
+//BUG in slogon.js when you log in, log off and log in again it will throw an error saying already logged on
 
-//song <url> command    (songs stop a minute or so in)
-//playing <game> command   (search command to find users in channel that are online && playing the searched game in their activity status)
-//add server join link in server information to $server command
-//add all commands to help list
-//kill command needs to exit voice channels before ending process
-//uptime command needs to use hours minutes
+//TODO song <url> command    (songs stop a minute or so in)
+//TODO playing <game> command   (search command to find users in channel that are online && playing the searched game in their activity status)
+//TODO add server join link in server information to $server command
+//TODO add all commands to help list (ongoing)
+//TODO kill command needs to exit voice channels before ending process
+
+// copyright Christopher Sexton 2020

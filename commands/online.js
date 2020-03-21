@@ -5,6 +5,7 @@ client.commands = new Discord.Collection();
 module.exports = {
     name: 'online',
     description: "fetches guild member status's and filters through them. returns guild members status details",
+    
     execute(message) {
         const embed = new Discord.MessageEmbed();
 

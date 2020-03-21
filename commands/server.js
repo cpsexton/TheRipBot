@@ -1,12 +1,14 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
-const embed = new Discord.MessageEmbed();
 client.commands = new Discord.Collection();
 
 module.exports = {
     name: 'server',
     description: 'returns details about the Guild aka Server',
     execute(message, args) {
+        
+        const embed = new Discord.MessageEmbed();
+        
         message.channel.send(embed
             .setColor(65280)
             .setTitle('**Server Information**')
