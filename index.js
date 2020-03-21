@@ -29,10 +29,11 @@ client.on('ready', () => {
 	// command UPTIME. returns number of milliseconds 
 client.on('message', message => {
 	if(message.content.startsWith(`${prefix}uptime`)) {
-		message.channel.send(embed
-            .setTitle('Uptime')
-            .setDescription(`${client.uptime} milliseconds`)
-		)
+		if((client.uptime / 1000).toFixed(0) == 60){
+			client.uptime = 0
+		}
+		console.log((client.uptime / 1000).toFixed(0));
+		client.commands.get('uptime').execute(message, (client.uptime / 1000).toFixed(0));
 	};
 });
 
@@ -93,8 +94,8 @@ client.on('message', message => {
 	const args = message.content.split(' ');
 
 	if (message.content.startsWith(`${prefix}whois`)) {    
-		client.commands.get('whois').execute(message, args);
-	return;
+		client.commands.get('whois').execute(message);
+		return;
 }});
 	
 	// command HELP. returns list of commands // takes in arguments for future help <topic> func //
