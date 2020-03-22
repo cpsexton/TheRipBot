@@ -25,7 +25,7 @@ module.exports = {
 
         const capitalizeFirstLetter = (string) => {return string.charAt(0).toUpperCase() + string.slice(1);}
 
-        const customActivity = () => taggedUser.presence.activities.map(activity => {return activity.emoji.name + activity.state});
+        const customActivity = () => taggedUser.presence.activities.map(activity => {return `${ activity.emoji ? activity.emoji.name : '' }` + `${ activity.state == null ? '' : activity.state }`});
 
         const activityType = () => taggedUser.presence.activities.map(activity => {if(activity.type.toLowerCase() == 'custom_status'){activity.type = "Custom status"}return `**${capitalizeFirstLetter(activity.type.toLowerCase())}**`});
 
