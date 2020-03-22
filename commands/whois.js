@@ -22,10 +22,13 @@ module.exports = {
             case 'dnd': color = '#F04747'; break;
             default: color = "#747f8d"; break;
         }
+
         const capitalizeFirstLetter = (string) => {return string.charAt(0).toUpperCase() + string.slice(1);}
-        const custom = () => taggedUser.presence.activities.map(activity => {return activity.emoji.name + activity.state});
-        const activityType = () => taggedUser.presence.activities.map(activity => {if(activity.type.toLowerCase() == 'custom_status'){activity.type = "Custom status"}return `**${capitalizeFirstLetter(activity.type.toLowerCase())}**`})
-        console.log(taggedUser.presence.activities)
+
+        const customActivity = () => taggedUser.presence.activities.map(activity => {return activity.emoji.name + activity.state});
+
+        const activityType = () => taggedUser.presence.activities.map(activity => {if(activity.type.toLowerCase() == 'custom_status'){activity.type = "Custom status"}return `**${capitalizeFirstLetter(activity.type.toLowerCase())}**`});
+
         embed
             .setTitle(`**${taggedUser.username}**`)
             .setColor(color)
@@ -33,7 +36,7 @@ module.exports = {
             .addField("**Username**", `${taggedUser.tag}`, true)
             .addField("**ID**", `${taggedUser.id}`, true) 
             .addField("**Status**", `${taggedUser.presence.status} ${ taggedUser.presence.clientStatus ? `on ${Object.keys(taggedUser.presence.clientStatus)}` : ''}`)
-            .addField(`${ activityType().length ? activityType() : '**Activity**'}`, `${ taggedUser.presence.activities.length ? `${taggedUser.presence.activities == 'Custom Status' ? custom() : taggedUser.presence.activities}` : "Nothing"}`)
+            .addField(`${ activityType().length ? activityType() : '**Activity**'}`, `${ taggedUser.presence.activities.length ? `${taggedUser.presence.activities == 'Custom Status' ? customActivity() : taggedUser.presence.activities}` : "Nothing"}`)
         return message.channel.send(embed)
     }
 };
