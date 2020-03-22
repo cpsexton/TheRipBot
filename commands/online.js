@@ -10,14 +10,15 @@ module.exports = {
         const embed = new Discord.MessageEmbed();
 
         message.guild.members.fetch().then(fetchedMembers => {
-            let totalOnline = fetchedMembers.filter(member => member.presence.status === 'online');
-            let totalOffline = fetchedMembers.filter(member => member.presence.status === 'offline');
-
+            const filterMembers = (status) => {
+                return fetchedMembers.filter(member => member.presence.status === status).map(user => `${user}`).join(' \n');
+            }
             message.channel.send(embed
                 .setTitle('Currently')
                 .setColor(16776960)
-                .addField('**Online**', `${totalOnline.size}`, true)
-                .addField('**Offline**',`${totalOffline.size}`, true)
+                .addField('**Online**', `${filterMembers('online')}`, true)
+                .addField('**Idle**', `${filterMembers('idle')}`, true)
+                .addField('**Offline**',`${filterMembers('offline')}`, true)
             )
         })
 

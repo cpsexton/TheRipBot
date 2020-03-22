@@ -25,34 +25,14 @@ client.on('ready', () => {
 	client.user.setActivity("the chat.", {type: "WATCHING"});
 });
 
-	// command UPTIME. returns number of milliseconds 
-client.on('message', message => {
-	if(message.content.startsWith(`${prefix}uptime`)) {
-		let time = { hours: 0, minutes: 0, seconds: 0}
-		time.seconds = Math.trunc(client.uptime / 1000)
-		time.minutes = Math.trunc(client.uptime / 60000)
-		time.hours = Math.trunc(client.uptime / 3600000)
-		console.log(client.uptime / 3600000)
-		client.commands.get('uptime').execute(message, time);
-	};
-});
+function calculateTime(){
+	let time = { hours: 0, minutes: 0, seconds: 0}
+	time.seconds = Math.trunc(client.uptime / 1000)
+	time.minutes = Math.trunc(client.uptime / 60000)
+	time.hours = Math.trunc(client.uptime / 3600000)
+	return time
+};
 
-
-//  //
-// client.on('message', async message => {							
-// 	if(message.content.startsWith(`${prefix}hello`)) {
-// 		try {
-// 			await message.react('🇼');
-// 			await message.react('🇭');
-// 			await message.react('🇦');
-// 			await message.react('🇹');
-// 			await message.react('🇺');
-// 			await message.react('🇵');
-// 		} catch (error) {
-// 			console.error('One of the emojis failed to react.')
-//         }
-//     }
-// });
 
 client.on('message', message => {
 	let args = message.content.slice(prefix.length).split(' ');
@@ -61,8 +41,7 @@ client.on('message', message => {
 	
 	switch (args[0]) {
 		
-		case 'hello': client.commands.get('hello').async(message); break; // command HELLO. reacts to message with emojis to say whatup //
-
+		case 'hello': client.commands.get('hello').execute(message); break; // command HELLO. reacts to message with emojis to say whatup //
 		case 'help': client.commands.get('help').execute(message); break; // command PFP. returns user's profile picture in an embed //
 		case 'whois': client.commands.get('whois').execute(message); break; // command WHOIS <username>. returns detailed information about requested user //
 		case 'online': client.commands.get('online').execute(message); break; // command ONLINE. searches and returns numbers of online and offline users in current server //
@@ -72,7 +51,8 @@ client.on('message', message => {
 		case 'sLogOn' || 'slogon' && message.member.hasPermission('ADMINISTRATOR'): client.commands.get('slogon').execute(message); break; // command SLOGON. logs in to Steam as anonymous Steam User //
 		case 'sLogOff' || 'slogoff' && message.member.hasPermission('ADMINISTRATOR'): client.commands.get('slogoff').execute(message); break; // command SLOGOFF. logs off Steam //
 		case 'kill' && message.member.hasPermission('ADMINISTRATOR'): client.commands.get('kill').execute(message); break; // command KILL. puts bot offline and logs to console who issued the command. Admin only //
-		
+		case 'uptime': client.commands.get('uptime').execute(message, calculateTime()); break; // command UPTIME. returns uptime in hours, minutes, and seconds
+
 		default: break;
 	}
 });

@@ -1,7 +1,6 @@
-const Discord = require('discord.js');
-const client = new Discord.Client();
-client.commands = new Discord.Collection();
-const { MessageEmbed } = require('discord.js');
+const { MessageEmbed, Client, Collection } = require('discord.js');
+const client = new Client();
+client.commands = new Collection();
 
 module.exports = {
     name: 'server',
@@ -11,13 +10,12 @@ module.exports = {
         
         const roles = () => {
             let roleList = []
-            message.guild.roles.fetch().then(roles => {
-                roleList.push(roles)
+            message.guild.roles.cache.map(roles => {
+                roleList.push(roles.name)
             })
-            console.log(roleList);
-            return roleList
+            return roleList.join(' \n')
         }
-        const embed = new Discord.MessageEmbed();
+
         message.channel.send(embed
             .setColor(65280)
             .setTitle('**Server Information**')
@@ -26,7 +24,7 @@ module.exports = {
             .addField("**Owner**", `${message.guild.owner}`)
             .addField("**Total members**", `${message.guild.memberCount}`)
             .addField("**Region**", `${message.guild.region}`)
-            .addField("**Roles**", `${roles()} roles`)
+            .addField("**Roles**", `${roles()}`)
         ) 
-    },
+    }
 };

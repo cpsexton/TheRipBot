@@ -7,8 +7,7 @@ client.commands = new Discord.Collection();
 module.exports = {
     name: 'hello',
     description: 'gets a what up from ya boi',
-    async(message) => {  // needs to be an async function //
-        execute = {
+    async execute(message) {  // needs to be an async function //
         try {
             await message.react('🇼');
             await message.react('🇭');
@@ -19,6 +18,5 @@ module.exports = {
         } catch (error) {
             console.error('One of the emojis failed to react.')
         }
-    }
     }
 }
