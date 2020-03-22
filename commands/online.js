@@ -13,12 +13,13 @@ module.exports = {
             const filterMembers = (status) => {
                 return fetchedMembers.filter(member => member.presence.status === status).map(user => `${user}`).join(' \n');
             }
+            console.log(filterMembers('idle'))
             message.channel.send(embed
                 .setTitle('Currently')
                 .setColor(16776960)
                 .addField('**Online**', `${filterMembers('online')}`, true)
-                .addField('**Idle**', `${filterMembers('idle')}`, true)
-                .addField('**Offline**',`${filterMembers('offline')}`, true)
+                .addField('**Idle**', `${ filterMembers('idle') ? filterMembers('idle') : 'N/A'}`, true)
+                .addField('**Offline**',`${ filterMembers('offline') ? filterMembers('offline') : 'N/A'}`, true)
             )
         })
 
