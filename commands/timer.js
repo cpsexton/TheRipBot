@@ -17,6 +17,7 @@ module.exports = {
         }
         
         // in future except arguments with seconds minutes hours $timer 5minutes
-        console.log(`This command is not complete, ${message.author.username}`)
+        console.log(`This command is not complete, ${message.author.username}`);
+        message.channel.send(`Sorry ${message.author.username}, this command is under construction. Please pardon our dust. 🧰`);
     }
 };
