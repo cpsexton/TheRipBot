@@ -10,7 +10,7 @@ const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('
 const queue = new Map();
 
 	// (default = 10) // 
-require('events').EventEmitter.defaultMaxListeners = 15
+require('events').EventEmitter.defaultMaxListeners = 20
 
 
 	// will require the command file needed to execute the function making request //
@@ -33,30 +33,33 @@ function calculateTime(){
 	return time
 };
 
-//TODO add server join link in server information to $server command
+
+// kick ban unban mute commands // make test bot to test kicking
 
 client.on('message', message => {
 	let args = message.content.slice(prefix.length).split(' ');
 	
 	let commandExe = () => client.commands.get(args[0].toLowerCase()).execute(message);
-	let commandExeArgs = () => client.commands.get(args[0]).execute(message, args);
-
+	let commandExeArgs = () => client.commands.get(args[0].toLowerCase()).execute(message, args);
 
 	if(!message.content.startsWith(`${prefix}`)) return; // if message doesnt start with prefix return
 
 	switch (args[0]) {
 
-		case 'hello': commandExe();break;
-		// case 'hello': client.commands.get('hello').execute(message); break; // command HELLO. reacts to message with emojis to say whatup //
-		case 'help': commandExe(); break; // command PFP. returns user's profile picture in an embed //
-		case 'whois': commandExeArgs(); break; // command WHOIS <username>. returns detailed information about requested user //
-		case 'online': commandExe(); break; // command ONLINE. searches and returns numbers of online and offline users in current server //
-		case 'pfp': commandExe(); break; // command HELP. returns list of commands // can take in an argument for future help <topic> func //		
-		case 'timer': commandExeArgs(); break; //  command TIMER. gets time from argument. starts a countdown. alerts users of start and finish  //
-		case 'server': commandExe(); break; // command SERVER. returns detailed information on the current server //
+		case 'hello':  // command HELLO. reacts to message with emojis to say whatup //
+		case 'help':  // command HELP. returns user's profile picture in an embed //
+		case 'whois':  // command WHOIS <username>. returns detailed information about requested user //
+		case 'online':  // command ONLINE. searches and returns numbers of online and offline users in current server //
+		case 'pfp':  // command PFP <username>. returns list of commands // can take in an argument for future help <topic> func //		
+		case 'server': // command SERVER. returns detailed information on the current server //
+		commandExe(); 
+		break; 
+		
+		case 'timer': commandExeArgs(); break;  //  command TIMER. gets time from argument. starts a countdown. alerts users of start and finish  //
+		case 'kick' && message.member.hasPermission('ADMINISTRATOR'): commandExeArgs(); break; // command KICK <username>. kicks the specified user. ADMIN ONLY //
 		case 'sLogOn' || 'slogon' && message.member.hasPermission('ADMINISTRATOR'): commandExe(); break; // command SLOGON. logs in to Steam as anonymous Steam User //
 		case 'sLogOff' || 'slogoff' && message.member.hasPermission('ADMINISTRATOR'): commandExe(); break; // command SLOGOFF. logs off Steam //
-		case 'kill' && message.member.hasPermission('ADMINISTRATOR'): commandExe(); break; // command KILL. puts bot offline and logs to console who issued the command. Admin only //
+		case 'kill' && message.member.hasPermission('ADMINISTRATOR'): commandExe(); break; // command KILL. puts bot offline and logs to console who issued the command. ADMIN ONLY //
 		case 'uptime': client.commands.get('uptime').execute(message, calculateTime()); break; // command UPTIME. returns uptime in hours, minutes, and seconds
 
 		default: break;

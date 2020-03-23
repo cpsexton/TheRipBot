@@ -7,14 +7,14 @@ module.exports = {
     description: 'returns details about the Guild aka Server',
     execute(message) {
         const embed = new MessageEmbed();
-        
+
         const roles = () => {
             let roleList = []
             message.guild.roles.cache.map(roles => {
                 roleList.push(roles.name)
             })
             return roleList.join(' \n')
-        }
+        };
 
         message.channel.send(embed
             .setColor(65280)
