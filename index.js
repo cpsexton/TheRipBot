@@ -34,7 +34,7 @@ function calculateTime(){
 };
 
 
-// kick ban unban mute commands // make test bot to test kicking
+// ban unban mute commands // make test bot to test kicking
 
 client.on('message', message => {
 	let args = message.content.slice(prefix.length).split(' ');
@@ -55,6 +55,7 @@ client.on('message', message => {
 		commandExe(); 
 		break; 
 		
+		case 'ban' && message.member.hasPermission('ADMINISTRATOR'): commandExeArgs(); break; // bans user
 		case 'timer': commandExeArgs(); break;  //  command TIMER. gets time from argument. starts a countdown. alerts users of start and finish  //
 		case 'kick' && message.member.hasPermission('ADMINISTRATOR'): commandExeArgs(); break; // command KICK <username>. kicks the specified user. ADMIN ONLY //
 		case 'sLogOn' || 'slogon' && message.member.hasPermission('ADMINISTRATOR'): commandExe(); break; // command SLOGON. logs in to Steam as anonymous Steam User //
