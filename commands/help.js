@@ -9,7 +9,7 @@ module.exports = {
         const embed = new Discord.MessageEmbed();
             message.channel.send(embed
                 .setColor(255)
-                // .setThumbnail("./thumbnails/POW.png")
+                .setThumbnail("https://github.com/cpsexton/TheRipBot/blob/97f8dcce7ffaeafc11216e23af19c6ae5f658ff3/thumbnails/POW.png")
                 .setTitle("Categories:")
                 .addField("**```$help basic```**", "Basic commands anyone can use")
                 .addField("**```$help mod```**", "Special commands for mods")

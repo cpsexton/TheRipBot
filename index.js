@@ -22,7 +22,7 @@ for(const file of commandFiles) {
 	// logs to console that bot has successfully launched and sets bots activity to 'Watching the chat' //
 client.on('ready', () => {
 	console.log('TheRipBot has launched successfully!');
-	client.user.setActivity("the chat.", {type: "WATCHING"});
+	client.user.setActivity("chat. $help", {type: "WATCHING"});
 });
 
 function calculateTime(){
@@ -60,16 +60,16 @@ client.on('message', message => {
 		case 'whois':	// command WHOIS <username>. returns detailed information about requested user //
 		case 'online':	// command ONLINE. searches and returns numbers of online and offline users in current server //
 		case 'pfp':		// command PFP <username>. returns list of commands // can take in an argument for future help <topic> func //		
-		case 'server':	// command SERVER. returns detailed information on the current server //
+		case 'serverinfo':	// command SERVER INFO. returns detailed information on the current server //
 		commandExe(); 
 		break; 
-		
+
 		case message.member.hasPermission('ADMINISTRATOR') && 'kick':	// command KICK <username>. kicks the specified user. ADMIN ONLY //
 		case message.member.hasPermission('ADMINISTRATOR') && 'ban':	// bans user
 		case 'timer':	//  command TIMER. gets time from argument. starts a countdown. alerts users of start and finish  //
 		commandExeArgs();
 		break;
-		
+
 		case 'sLogOn' || 'slogon' && message.member.hasPermission('ADMINISTRATOR'): commandExe(); break; // command SLOGON. logs in to Steam as anonymous Steam User //
 		case 'sLogOff' || 'slogoff' && message.member.hasPermission('ADMINISTRATOR'): commandExe(); break; // command SLOGOFF. logs off Steam //
 		case 'kill' && message.member.hasPermission('ADMINISTRATOR'): commandExe(); break; // command KILL. puts bot offline and logs to console who issued the command. ADMIN ONLY //

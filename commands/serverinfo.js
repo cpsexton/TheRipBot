@@ -3,7 +3,7 @@ const client = new Client();
 client.commands = new Collection();
 
 module.exports = {
-    name: 'server',
+    name: 'serverinfo',
     description: 'returns details about the Guild aka Server',
     execute(message) {
         const embed = new MessageEmbed();
