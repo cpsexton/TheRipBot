@@ -32,7 +32,16 @@ function calculateTime(){
 	time.hours = Math.trunc(client.uptime / 3600000)
 	return time
 };
+client.on('message', message => {
+	if(message.content.startsWith(`${prefix}isAdmin`)){
 
+		let userInQuestion = message.member
+
+		userInQuestion.hasPermission('KICK_MEMBERS', true) ? message.channel.send(`${userInQuestion} has kick member permission`) : message.channel.send(`${userInQuestion} does not have kick member permissions`)
+		}
+
+	}
+)
 
 // ban unban mute commands // make test bot to test kicking
 
@@ -43,21 +52,24 @@ client.on('message', message => {
 	let commandExeArgs = () => client.commands.get(args[0].toLowerCase()).execute(message, args);
 
 	if(!message.content.startsWith(`${prefix}`)) return; // if message doesnt start with prefix return
-
+// console.log(message.member.hasPermission('KICK_MEMBERS'))
 	switch (args[0]) {
 
-		case 'hello':  // command HELLO. reacts to message with emojis to say whatup //
-		case 'help':  // command HELP. returns user's profile picture in an embed //
-		case 'whois':  // command WHOIS <username>. returns detailed information about requested user //
-		case 'online':  // command ONLINE. searches and returns numbers of online and offline users in current server //
-		case 'pfp':  // command PFP <username>. returns list of commands // can take in an argument for future help <topic> func //		
-		case 'server': // command SERVER. returns detailed information on the current server //
+		case 'hello':	// command HELLO. reacts to message with emojis to say whatup //
+		case 'help':	// command HELP. returns user's profile picture in an embed //
+		case 'whois':	// command WHOIS <username>. returns detailed information about requested user //
+		case 'online':	// command ONLINE. searches and returns numbers of online and offline users in current server //
+		case 'pfp':		// command PFP <username>. returns list of commands // can take in an argument for future help <topic> func //		
+		case 'server':	// command SERVER. returns detailed information on the current server //
 		commandExe(); 
 		break; 
 		
-		case 'ban' && message.member.hasPermission('ADMINISTRATOR'): commandExeArgs(); break; // bans user
-		case 'timer': commandExeArgs(); break;  //  command TIMER. gets time from argument. starts a countdown. alerts users of start and finish  //
-		case 'kick' && message.member.hasPermission('ADMINISTRATOR'): commandExeArgs(); break; // command KICK <username>. kicks the specified user. ADMIN ONLY //
+		case message.member.hasPermission('ADMINISTRATOR') && 'kick':	// command KICK <username>. kicks the specified user. ADMIN ONLY //
+		case message.member.hasPermission('ADMINISTRATOR') && 'ban':	// bans user
+		case 'timer':	//  command TIMER. gets time from argument. starts a countdown. alerts users of start and finish  //
+		commandExeArgs();
+		break;
+		
 		case 'sLogOn' || 'slogon' && message.member.hasPermission('ADMINISTRATOR'): commandExe(); break; // command SLOGON. logs in to Steam as anonymous Steam User //
 		case 'sLogOff' || 'slogoff' && message.member.hasPermission('ADMINISTRATOR'): commandExe(); break; // command SLOGOFF. logs off Steam //
 		case 'kill' && message.member.hasPermission('ADMINISTRATOR'): commandExe(); break; // command KILL. puts bot offline and logs to console who issued the command. ADMIN ONLY //
