@@ -32,51 +32,55 @@ function calculateTime(){
 	return time
 };
 
-client.on('message', message => {
-	if(message.content.startsWith(`${prefix}isAdmin`)){
-
-		let userInQuestion = message.member
-
-		userInQuestion.hasPermission('KICK_MEMBERS', true) ? message.channel.send(`${userInQuestion} has kick member permission`) : message.channel.send(`${userInQuestion} does not have kick member permissions`)
-		}
-
-	}
-)
-
-
-client.on('message', message => {
+client.on('message', async message => {
 	let args = message.content.slice(prefix.length).split(' ');
+	const serverQueue = queue.get(message.guild.id);
 	
-	let commandExe = () => client.commands.get(args[0].toLowerCase()).execute(message);
-	let commandExeArgs = () => client.commands.get(args[0].toLowerCase()).execute(message, args);
-	
-	if(!message.content.startsWith(`${prefix}`)) return; // if message doesnt start with prefix return
-	// console.log(message.member.hasPermission('KICK_MEMBERS'))
+	const adminRole = message.member.roles.cache.some(r => r.permissions.has('ADMINISTRATOR'));
+	const commandExe = () => client.commands.get(args[0].toLowerCase()).execute(message);
+	const commandExeArgs = () => client.commands.get(args[0].toLowerCase()).execute(message, args);
+	const commandExeSong = () => client.commands.get(args[0].toLowerCase()).execute(message, serverQueue);
+	const commandExeAdmin = () =>  adminRole ? commandExeArgs() : message.channel.send('That command is for Admin use only');
+
+	if(!message.content.startsWith(`${prefix}`)) return; // if message doesnt start with prefix return //
 	switch (args[0]) {
 		
-		case 'hello':	// command HELLO. reacts to message with emojis to say whatup //
-		case 'help':	// command HELP. returns user's profile picture in an embed //
-		case 'whois':	// command WHOIS <username>. returns detailed information about requested user //
-		case 'online':	// command ONLINE. searches and returns numbers of online and offline users in current server //
-		case 'pfp':		// command PFP <username>. returns list of commands // can take in an argument for future help <topic> func //		
-		case 'serverinfo':	// command SERVER INFO. returns detailed information on the current server //
+		case 'hello':		// reacts to message with emojis to say whatup //
+		case 'help':		// returns list of commands //
+		case 'whois':		// returns detailed information about requested user //
+		case 'online':  	// searches and returns users that are online and offline //
+		case 'pfp':  		// returns a users profile picture //	
+		case 'serverinfo':  // returns detailed information on the current server //
 		commandExe(); 
 		break; 
 		
-		case message.member.hasPermission('ADMINISTRATOR') && 'kick':	// command KICK <username>. kicks the specified user. ADMIN ONLY //
-		case message.member.hasPermission('ADMINISTRATOR') && 'ban':	// bans user
-		case 'timer':	//  command TIMER. gets time from argument. starts a countdown. alerts users of start and finish  //
+		
+		case 'timer':		//  gets time from argument. starts a countdown. alerts users of start and finish  //
 		commandExeArgs();
 		break;
 		
-		case 'sLogOn' || 'slogon' && message.member.hasPermission('ADMINISTRATOR'): commandExe(); break; // command SLOGON. logs in to Steam as anonymous Steam User //
-		case 'sLogOff' || 'slogoff' && message.member.hasPermission('ADMINISTRATOR'): commandExe(); break; // command SLOGOFF. logs off Steam //
-		case 'kill' && message.member.hasPermission('ADMINISTRATOR'): commandExe(); break; // command KILL. puts bot offline and logs to console who issued the command. ADMIN ONLY //
-		case 'uptime': client.commands.get('uptime').execute(message, calculateTime()); break; // command UPTIME. returns uptime in hours, minutes, and seconds
+		case 'play':  		// joins users voicechannel and plays sound from youtube link //
+		case 'skip':  		// skips current song //
+		case 'stop':  		// stops audio from playing //
+		commandExeSong();
+		break;
+		
+		case 'ban':  		// bans user
+		case 'kick': 		// kicks the specified user. ADMIN ONLY //
+		case 'sLogOn': 		// logs in to Steam as anonymous Steam User. ADMIN ONLY //
+		case 'sLogOff': 	// logs off Steam. ADMIN ONLY //
+		case 'kill':  		// puts bot offline and logs to console who issued the command. ADMIN ONLY //
+		commandExeAdmin();
+		
+		case 'uptime': client.commands.get('uptime').execute(message, calculateTime()); break; // returns uptime in hours, minutes, and seconds
 		
 		default: break;
 	}
 });
+
+
+
+
 
 // below is all the music commands //
 client.on('message', async message => {
@@ -85,66 +89,62 @@ client.on('message', async message => {
 	
 	const serverQueue = queue.get(message.guild.id);
 	
-	if (message.content.startsWith(`${prefix}play`)) {	// command PLAY. joins users voicechannel and plays sound from youtube link //
-		execute(message, serverQueue);
-		return;
-	} else if (message.content.startsWith(`${prefix}skip`)) {	// command SKIP. skips current song and plays next in queue //
+	if (message.content.startsWith(`${prefix}skip`)) {	// skips current song and plays next in queue //
 		skip(message, serverQueue);
 		return;
-	} else if (message.content.startsWith(`${prefix}stop`)) {	// command STOP. stops current song from playing //
+	} else if (message.content.startsWith(`${prefix}stop`)) {	// stops current song from playing //
 		stop(message, serverQueue);
 		return;
 	} 
 });
 
-async function execute(message, serverQueue) {
-	let args = message.content.split(' ');
-	const voiceChannel = message.member.voice.channel;
+// async function execute(message, serverQueue) {
+// 	let args = message.content.split(' ');
+// 	const voiceChannel = message.member.voice.channel;
 	
-    if (!voiceChannel) {
-		console.log(`${message.author.guild}`);
-        message.channel.send('You need to be in a voice channel to play music!');
-    }
-	const permissions = voiceChannel.permissionsFor(message.client.user);
-	if (!permissions.has('CONNECT') || !permissions.has('SPEAK')) {
-		return message.channel.send('I need the permissions to join and speak in your voice channel!');
-	}
+//     if (!voiceChannel) {
+// 		console.log(`${message.author.guild}`);
+//         message.channel.send('You need to be in a voice channel to play music!');
+//     }
+// 	const permissions = voiceChannel.permissionsFor(message.client.user);
+// 	if (!permissions.has('CONNECT') || !permissions.has('SPEAK')) {
+// 		return message.channel.send('I need the permissions to join and speak in your voice channel!');
+// 	}
 	
-	const songInfo = await ytdl.getInfo(args[1]);
-	const song = {
-		title: songInfo.title,
-		url: songInfo.video_url,
-	};
+// 	const songInfo = await ytdl.getInfo(args[1]);
+// 	const song = {
+// 		title: songInfo.title,
+// 		url: songInfo.video_url,
+// 	};
 	
-	if (!serverQueue) {
-		const queueContruct = {
-			textChannel: message.channel,
-			voiceChannel: voiceChannel,
-			connection: null,
-			songs: [],
-			volume: 5,
-			playing: true,
-		};
+// 	if (!serverQueue) {
+// 		const queueContruct = {
+// 			textChannel: message.channel,
+// 			voiceChannel: voiceChannel,
+// 			connection: null,
+// 			songs: [],
+// 			volume: 5,
+// 			playing: true,
+// 		};
 		
-		queue.set(message.guild.id, queueContruct);
+// 		queue.set(message.guild.id, queueContruct);
+// 		queueContruct.songs.push(song);
 		
-		queueContruct.songs.push(song);
-		
-		try {
-			let connection = await voiceChannel.join();
-			queueContruct.connection = connection;
-			play(message.guild, queueContruct.songs[0]);
-		} catch (err) {
-			console.log(err);
-			queue.delete(message.guild.id);
-			return message.channel.send(err);
-		}
-	} else {
-		serverQueue.songs.push(song);
-		console.log(serverQueue.songs);
-		return message.channel.send(`${song.title} has been added to the queue!`);
-	}
-};
+// 		try {
+// 			let connection = await voiceChannel.join();
+// 			queueContruct.connection = connection;
+// 			play(message.guild, queueContruct.songs[0]);
+// 		} catch (err) {
+// 			console.log(err);
+// 			queue.delete(message.guild.id);
+// 			return message.channel.send(err);
+// 		}
+// 	} else {
+// 		serverQueue.songs.push(song);
+// 		console.log(serverQueue.songs);
+// 		return message.channel.send(`${song.title} has been added to the queue!`);
+// 	}
+// };
 
 function skip(message, serverQueue) {
 	if (!message.member.voice.channel) return message.channel.send('You have to be in a voice channel to stop the music!');

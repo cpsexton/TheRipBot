@@ -10,7 +10,6 @@ module.exports = {
 
         if(args[1] != parseInt(args[1])) {
             console.log('User: ' + `${message.author.username}` + ' entered ' + args[1] + ' instead of a number.');
-            console.log("Argument is not an integer");
             message.channel.send(`${message.author.username}, please enter a number.\n *( ex: $timer 60 )* `)    
         return
         };

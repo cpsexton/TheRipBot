@@ -22,7 +22,7 @@ module.exports = {
         await taggedUser.kick(reason)
             .catch(error => message.reply(`Sorry ${message.author} I couldn't kick because of: ${error}`));
         
-        console.log(`User ${taggedUser.username} was kicked by admin ${message.author.username} for the following reason: ${reason}`);
+        console.log(`User ${taggedUser} was kicked by admin ${message.author.username} for the following reason: ${reason}`);
         
         const embed = new Discord.MessageEmbed();
         embed
