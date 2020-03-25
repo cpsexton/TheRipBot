@@ -12,7 +12,6 @@ const queue = new Map();
 	// (default = 10) // 
 require('events').EventEmitter.defaultMaxListeners = 20
 
-
 	// will require the command file needed to execute the function making request //
 for(const file of commandFiles) {
 	const command = require(`./commands/${file}`);
@@ -32,6 +31,7 @@ function calculateTime(){
 	time.hours = Math.trunc(client.uptime / 3600000)
 	return time
 };
+
 client.on('message', message => {
 	if(message.content.startsWith(`${prefix}isAdmin`)){
 
@@ -43,18 +43,17 @@ client.on('message', message => {
 	}
 )
 
-// ban unban mute commands // make test bot to test kicking
 
 client.on('message', message => {
 	let args = message.content.slice(prefix.length).split(' ');
 	
 	let commandExe = () => client.commands.get(args[0].toLowerCase()).execute(message);
 	let commandExeArgs = () => client.commands.get(args[0].toLowerCase()).execute(message, args);
-
+	
 	if(!message.content.startsWith(`${prefix}`)) return; // if message doesnt start with prefix return
-// console.log(message.member.hasPermission('KICK_MEMBERS'))
+	// console.log(message.member.hasPermission('KICK_MEMBERS'))
 	switch (args[0]) {
-
+		
 		case 'hello':	// command HELLO. reacts to message with emojis to say whatup //
 		case 'help':	// command HELP. returns user's profile picture in an embed //
 		case 'whois':	// command WHOIS <username>. returns detailed information about requested user //
@@ -63,18 +62,18 @@ client.on('message', message => {
 		case 'serverinfo':	// command SERVER INFO. returns detailed information on the current server //
 		commandExe(); 
 		break; 
-
+		
 		case message.member.hasPermission('ADMINISTRATOR') && 'kick':	// command KICK <username>. kicks the specified user. ADMIN ONLY //
 		case message.member.hasPermission('ADMINISTRATOR') && 'ban':	// bans user
 		case 'timer':	//  command TIMER. gets time from argument. starts a countdown. alerts users of start and finish  //
 		commandExeArgs();
 		break;
-
+		
 		case 'sLogOn' || 'slogon' && message.member.hasPermission('ADMINISTRATOR'): commandExe(); break; // command SLOGON. logs in to Steam as anonymous Steam User //
 		case 'sLogOff' || 'slogoff' && message.member.hasPermission('ADMINISTRATOR'): commandExe(); break; // command SLOGOFF. logs off Steam //
 		case 'kill' && message.member.hasPermission('ADMINISTRATOR'): commandExe(); break; // command KILL. puts bot offline and logs to console who issued the command. ADMIN ONLY //
 		case 'uptime': client.commands.get('uptime').execute(message, calculateTime()); break; // command UPTIME. returns uptime in hours, minutes, and seconds
-
+		
 		default: break;
 	}
 });
@@ -83,9 +82,9 @@ client.on('message', message => {
 client.on('message', async message => {
 	if (message.author.bot) return;
 	if (!message.content.startsWith(prefix)) return;
-
+	
 	const serverQueue = queue.get(message.guild.id);
-
+	
 	if (message.content.startsWith(`${prefix}play`)) {	// command PLAY. joins users voicechannel and plays sound from youtube link //
 		execute(message, serverQueue);
 		return;

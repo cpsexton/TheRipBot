@@ -9,20 +9,23 @@ module.exports = {
         const embed = new Discord.MessageEmbed();
             message.channel.send(embed
                 .setColor(255)
-                .setThumbnail("https://github.com/cpsexton/TheRipBot/blob/97f8dcce7ffaeafc11216e23af19c6ae5f658ff3/thumbnails/POW.png")
-                .setTitle("Categories:")
-                .addField("**```$help basic```**", "Basic commands anyone can use")
-                .addField("**```$help mod```**", "Special commands for mods")
-                .addField("**```$help admin```**", "Admin commands")
-                // .addField("**```$whois <username>```**", "Will respond with requested users information")
-                // .addField("**```$pfp <username>```**", "Displays requested users profile picture")
-                // .addField("**```$online```**", "See how many people are currently online and offline")
-                // .addField("**```$uptime```**", "Shows how long the bot has been up")
-                // .addField("**```$server```**", "Will respond with the server details")
-                // .addField("**```$sLogOn```**", "Logs on to Steam as an anonymous user")
-                // .addField("**```$sLogOff```**", "Logs off Steam")
-                // .addField("**```$kick <username>```**", "Logs off Steam")
-                // .addField("**```$ban <username>```**", "Logs off Steam")
+                .setTitle("Command Help:")
+                .addFields({ 
+                    name: "prefix $",
+                    value: "**Basic Commands**" 
+                },{ 
+                    name: "```hello``` ```online``` ```pfp``` ```serverinfo``` ```timer``` ```uptime``` ```whois```",
+                    value: "**Mod Commands**" 
+                },{ 
+                    name: "```kick``` ```ban``` ```kill``` ",
+                    value: "**Admin Commands**" 
+                },{ 
+                    name: "```sLogOn``` ```sLogOff```",
+                    value: "Under Construction" 
+                },{
+                    name: "```mute``` ```ping``` ```about``` ```rssfeed``` ```roll``` ```comic``` ```prune``` ```role``` ```pole``` ```profiles``` ```gamestats``` ```curecoronavirus```",
+                    value: "kbye" 
+                })
             )
     }
 };
