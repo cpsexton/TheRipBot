@@ -46,16 +46,16 @@ client.on('message', async message => {
 	switch (args[0]) {
 		
 		case 'hello':		// reacts to message with emojis to say whatup //
-		case 'help':		// returns list of commands //
-		case 'whois':		// returns detailed information about requested user //
+		case 'help':		// list of commands //
+		case 'whois':		// detailed information about requested user //
 		case 'online':  	// searches and returns users that are online and offline //
 		case 'pfp':  		// returns a users profile picture //	
-		case 'serverinfo':  // returns detailed information on the current server //
+		case 'serverinfo':  // detailed information on the current server //
 		commandExe(); 
 		break; 
 		
 		
-		case 'timer':		//  gets time from argument. starts a countdown. alerts users of start and finish  //
+		case 'timer':		// gets time from argument. starts a countdown. alerts users of start and finish  //
 		commandExeArgs();
 		break;
 		
@@ -71,7 +71,8 @@ client.on('message', async message => {
 		case 'sLogOff': 	// logs off Steam. ADMIN ONLY //
 		case 'kill':  		// puts bot offline and logs to console who issued the command. ADMIN ONLY //
 		commandExeAdmin();
-		
+		break;
+
 		case 'uptime': client.commands.get('uptime').execute(message, calculateTime()); break; // returns uptime in hours, minutes, and seconds
 		
 		default: break;
