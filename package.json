@@ -36,7 +36,7 @@
     "node-steam": "0.0.1",
     "opusscript": "0.0.7",
     "readline-sync": "^1.4.10",
-    "steam-resources": "^1.0.0",
+    "steam-resources": "1.0.0",
     "steam-user": "^4.13.2",
     "svn": "^0.3.0",
     "ytdl-core-discord": "^1.1.0"
