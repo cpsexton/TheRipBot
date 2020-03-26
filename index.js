@@ -32,19 +32,16 @@ function calculateTime(){
 	return time
 };
 
-client.on('message', async message => {
-	let args = message.content.slice(prefix.length).split(' ');
-	const serverQueue = queue.get(message.guild.id);
-	
+client.on('message', message => {
+	const args = message.content.slice(prefix.length).split(' ');
 	const adminRole = message.member.roles.cache.some(r => r.permissions.has('ADMINISTRATOR'));
+	
 	const commandExe = () => client.commands.get(args[0].toLowerCase()).execute(message);
 	const commandExeArgs = () => client.commands.get(args[0].toLowerCase()).execute(message, args);
-	const commandExeSong = () => client.commands.get(args[0].toLowerCase()).execute(message, serverQueue);
 	const commandExeAdmin = () =>  adminRole ? commandExeArgs() : message.channel.send('That command is for Admin use only');
 
-	if(!message.content.startsWith(`${prefix}`)) return; // if message doesnt start with prefix return //
+	if(!message.content.startsWith(`${prefix}`)) return;
 	switch (args[0]) {
-		
 		case 'hello':		// reacts to message with emojis to say whatup //
 		case 'help':		// list of commands //
 		case 'whois':		// detailed information about requested user //
@@ -52,36 +49,22 @@ client.on('message', async message => {
 		case 'pfp':  		// returns a users profile picture //	
 		case 'serverinfo':  // detailed information on the current server //
 		commandExe(); 
-		break; 
-		
-		
+	break; 
 		case 'timer':		// gets time from argument. starts a countdown. alerts users of start and finish  //
 		commandExeArgs();
 		break;
-		
-		case 'play':  		// joins users voicechannel and plays sound from youtube link //
-		case 'skip':  		// skips current song //
-		case 'stop':  		// stops audio from playing //
-		commandExeSong();
-		break;
-		
-		case 'ban':  		// bans user
+		case 'ban':  		// bans user. ADMIN ONLY //
 		case 'kick': 		// kicks the specified user. ADMIN ONLY //
+		case 'prune':		// deletes requested number of messages from the current channel. ADMIN ONLY //
 		case 'sLogOn': 		// logs in to Steam as anonymous Steam User. ADMIN ONLY //
 		case 'sLogOff': 	// logs off Steam. ADMIN ONLY //
 		case 'kill':  		// puts bot offline and logs to console who issued the command. ADMIN ONLY //
 		commandExeAdmin();
-		break;
-
+	break;
 		case 'uptime': client.commands.get('uptime').execute(message, calculateTime()); break; // returns uptime in hours, minutes, and seconds
-		
-		default: break;
+	default: break;
 	}
 });
-
-
-
-
 
 // below is all the music commands //
 client.on('message', async message => {
@@ -89,8 +72,10 @@ client.on('message', async message => {
 	if (!message.content.startsWith(prefix)) return;
 	
 	const serverQueue = queue.get(message.guild.id);
-	
-	if (message.content.startsWith(`${prefix}skip`)) {	// skips current song and plays next in queue //
+	if(message.content.startsWith(`${prefix}play`)){
+		execute(message, serverQueue);
+		return;
+	} else if (message.content.startsWith(`${prefix}skip`)) {	// skips current song and plays next in queue //
 		skip(message, serverQueue);
 		return;
 	} else if (message.content.startsWith(`${prefix}stop`)) {	// stops current song from playing //
@@ -99,53 +84,53 @@ client.on('message', async message => {
 	} 
 });
 
-// async function execute(message, serverQueue) {
-// 	let args = message.content.split(' ');
-// 	const voiceChannel = message.member.voice.channel;
+async function execute(message, serverQueue) {
+	let args = message.content.split(' ');
+	const voiceChannel = message.member.voice.channel;
 	
-//     if (!voiceChannel) {
-// 		console.log(`${message.author.guild}`);
-//         message.channel.send('You need to be in a voice channel to play music!');
-//     }
-// 	const permissions = voiceChannel.permissionsFor(message.client.user);
-// 	if (!permissions.has('CONNECT') || !permissions.has('SPEAK')) {
-// 		return message.channel.send('I need the permissions to join and speak in your voice channel!');
-// 	}
+    if (!voiceChannel) {
+		console.log(`${message.author.guild}`);
+        message.channel.send('You need to be in a voice channel to play music!');
+    }
+	const permissions = voiceChannel.permissionsFor(message.client.user);
+	if (!permissions.has('CONNECT') || !permissions.has('SPEAK')) {
+		return message.channel.send('I need the permissions to join and speak in your voice channel!');
+	}
 	
-// 	const songInfo = await ytdl.getInfo(args[1]);
-// 	const song = {
-// 		title: songInfo.title,
-// 		url: songInfo.video_url,
-// 	};
+	const songInfo = await ytdl.getInfo(args[1]);
+	const song = {
+		title: songInfo.title,
+		url: songInfo.video_url,
+	};
 	
-// 	if (!serverQueue) {
-// 		const queueContruct = {
-// 			textChannel: message.channel,
-// 			voiceChannel: voiceChannel,
-// 			connection: null,
-// 			songs: [],
-// 			volume: 5,
-// 			playing: true,
-// 		};
+	if (!serverQueue) {
+		const queueContruct = {
+			textChannel: message.channel,
+			voiceChannel: voiceChannel,
+			connection: null,
+			songs: [],
+			volume: 5,
+			playing: true,
+		};
 		
-// 		queue.set(message.guild.id, queueContruct);
-// 		queueContruct.songs.push(song);
+		queue.set(message.guild.id, queueContruct);
+		queueContruct.songs.push(song);
 		
-// 		try {
-// 			let connection = await voiceChannel.join();
-// 			queueContruct.connection = connection;
-// 			play(message.guild, queueContruct.songs[0]);
-// 		} catch (err) {
-// 			console.log(err);
-// 			queue.delete(message.guild.id);
-// 			return message.channel.send(err);
-// 		}
-// 	} else {
-// 		serverQueue.songs.push(song);
-// 		console.log(serverQueue.songs);
-// 		return message.channel.send(`${song.title} has been added to the queue!`);
-// 	}
-// };
+		try {
+			let connection = await voiceChannel.join();
+			queueContruct.connection = connection;
+			play(message.guild, queueContruct.songs[0]);
+		} catch (err) {
+			console.log(err);
+			queue.delete(message.guild.id);
+			return message.channel.send(err);
+		}
+	} else {
+		serverQueue.songs.push(song);
+		console.log(serverQueue.songs);
+		return message.channel.send(`${song.title} has been added to the queue!`);
+	}
+};
 
 function skip(message, serverQueue) {
 	if (!message.member.voice.channel) return message.channel.send('You have to be in a voice channel to stop the music!');
@@ -162,6 +147,7 @@ function stop(message, serverQueue) {
 };
 
 async function play(guild, song) {
+
 	const serverQueue = queue.get(guild.id);
 	
 	if (!song) {
@@ -180,6 +166,7 @@ async function play(guild, song) {
 		console.error(error);
 	});
 	dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
+	serverQueue.textChannel.send(`Start playing: **${song.title}**`);
 };
 
 // token is hidden //

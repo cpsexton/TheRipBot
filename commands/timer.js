@@ -13,7 +13,21 @@ module.exports = {
             message.channel.send(`${message.author.username}, please enter a number.\n *( ex: $timer 60 )* `)    
         return
         };
+
         
+        // get time from user
+            // set Timeout for that long
+                // after timeout execute message to channel that times over
+
+
+
+
+
+
+
+
+
+
         // in future except arguments with seconds minutes hours $timer 5minutes
         console.log(`This command is not complete, ${message.author.username}`);
         message.channel.send(
