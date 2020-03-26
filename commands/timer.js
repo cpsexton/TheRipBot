@@ -18,7 +18,7 @@ module.exports = {
         // get time from user
             // set Timeout for that long
                 // after timeout execute message to channel that times over
-
+        // clear timeout
 
 
 

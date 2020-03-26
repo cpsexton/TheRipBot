@@ -47,6 +47,7 @@ client.on('message', message => {
 		case 'whois':		// detailed information about requested user //
 		case 'online':  	// searches and returns users that are online and offline //
 		case 'pfp':  		// returns a users profile picture //	
+		case 'ping':		// returns users and api's latency //
 		case 'serverinfo':  // detailed information on the current server //
 		commandExe(); 
 	break; 

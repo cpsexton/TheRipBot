@@ -14,7 +14,7 @@ module.exports = {
                     name: "prefix $",
                     value: "**Basic Commands**" 
                 },{ 
-                    name: "```hello``` ```online``` ```pfp``` ```serverinfo``` ```timer``` ```uptime``` ```whois```",
+                    name: "```hello``` ```online``` ```pfp``` ```serverinfo``` ```timer``` ```ping ``` ```uptime``` ```whois```",
                     value: "**Mod Commands**" 
                 },{ 
                     name: "```kick``` ```ban``` ```kill``` ```prune```",
@@ -23,7 +23,7 @@ module.exports = {
                     name: "```sLogOn``` ```sLogOff```",
                     value: "Under Construction" 
                 },{
-                    name: "```mute``` ```ping``` ```about``` ```rssfeed``` ```roll``` ```comic``` ```role``` ```pole``` ```profiles``` ```gamestats``` ```curecoronavirus```",
+                    name: "```mute``` ```about``` ```rssfeed``` ```roll``` ```comic``` ```role``` ```pole``` ```profiles``` ```gamestats``` ```curecoronavirus```",
                     value: "kbye" 
                 })
             )
