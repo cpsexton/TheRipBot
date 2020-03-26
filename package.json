@@ -33,7 +33,7 @@
     "node-steam": "0.0.1",
     "readline-sync": "^1.4.10",
     "steam-user": "^4.13.2",
-    "node-steam-resources": "^1.2.0",
+    "node-steam-resources": "1.2.0",
     "svn": "^0.3.0"
   }
 }
