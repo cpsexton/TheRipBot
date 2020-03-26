@@ -8,31 +8,29 @@ module.exports = {
     description: 'gets time from argument. starts a countdown. alerts users of start and finish',
     execute(message, args){
 
-        if(args[1] != parseInt(args[1])) {
-            console.log('User: ' + `${message.author.username}` + ' entered ' + args[1] + ' instead of a number.');
-            message.channel.send(`${message.author.username}, please enter a number.\n *( ex: $timer 60 )* `)    
-        return
+        // get time from user
+        const timerAmount = args[1]
+        
+        if(timerAmount != parseInt(timerAmount) || timerAmount < 1 || timerAmount > 900) {
+            console.log('User: ' + `${message.author.username}` + ' entered ' + timerAmount + ' instead of a number.');
+            message.reply(` please enter a number.\n (1- 900seconds)`);   
+        return;
         };
 
-        
-        // get time from user
+        message.reply(` started a ${timerAmount} second timer..`);
+        client.setTimeout(() => {
+            message.reply('TIME HAS EXPIRED!') 
+        }, timerAmount * 1000)
+
+    }
+};
+
             // set Timeout for that long
                 // after timeout execute message to channel that times over
         // clear timeout
 
-
-
-
-
-
-
-
-
-        // in future except arguments with seconds minutes hours $timer 5minutes
-        console.log(`This command is not complete, ${message.author.username}`);
-        message.channel.send(
-            `This command is under construction. sorry... `,
-            {files: ["./thumbnails/sorry.png"]}
-        )
-    }
-};
+        // console.log(`This command is not complete, ${message.author.username}`);
+        // message.channel.send(
+        //     `This command is under construction. sorry... `,
+        //     {files: ["./thumbnails/sorry.png"]}
+        // )

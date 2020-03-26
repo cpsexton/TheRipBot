@@ -13,13 +13,13 @@ module.exports = {
                 .addFields({ 
                     name: "prefix $",
                     value: "**Basic Commands**" 
-                },{ 
+                },{
                     name: "```hello``` ```online``` ```pfp``` ```serverinfo``` ```timer``` ```ping ``` ```uptime``` ```whois```",
                     value: "**Mod Commands**" 
-                },{ 
+                },{
                     name: "```kick``` ```ban``` ```kill``` ```prune```",
                     value: "**Admin Commands**" 
-                },{ 
+                },{
                     name: "```sLogOn``` ```sLogOff```",
                     value: "Under Construction" 
                 },{
