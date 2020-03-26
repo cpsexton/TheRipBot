@@ -26,19 +26,14 @@
     "@discordjs/opus": "^0.1.0",
     "brackify": "^1.0.1",
     "bytebuffer": "^5.0.1",
-    "csgo": "^1.5.14",
     "dateformat": "^3.0.3",
     "discord.js": "^12.0.2",
     "events": "^3.1.0",
     "ffmpeg": "0.0.4",
     "ffmpeg-static": "^4.0.1",
     "node-fetch": "^2.6.0",
-    "node-steam": "0.0.1",
     "opusscript": "0.0.7",
     "readline-sync": "^1.4.10",
-    "steam-resources": "1.0.0",
-    "steam-user": "^4.13.2",
-    "svn": "^0.3.0",
     "ytdl-core-discord": "^1.1.0"
   }
 }
