@@ -24,6 +24,8 @@ client.on('ready', () => {
 	client.user.setActivity("chat. $help", {type: "WATCHING"});
 });
 
+client.login(process.env.DISCORD_TOKEN);
+
 function calculateTime(){
 	let time = { hours: 0, minutes: 0, seconds: 0}
 	time.seconds = Math.trunc(client.uptime / 1000)
