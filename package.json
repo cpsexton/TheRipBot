@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "engines": {
+    "node": "12.16.1",
+    "npm": "6.13.4"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js"
@@ -12,8 +16,8 @@
     "url": "git+https://github.com/cpsexton/TheRipBot.git"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "cpsexton",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/cpsexton/TheRipBot/issues"
   },

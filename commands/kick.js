@@ -6,7 +6,6 @@ module.exports = {
     name: "kick",
     description: " takes in a username and kicks them from the server. does not ban user. ADMIN ONLY ",
     async execute(message, args) {
-
         let taggedUser = message.mentions.members.first();
 
         if (!taggedUser) {

@@ -54,8 +54,10 @@ client.on('message', message => {
 		case 'timer':		// gets time from argument. starts a countdown. alerts users of start and finish  //
 		commandExeArgs();
 		break;
-		case 'ban':  		// bans user. ADMIN ONLY //
+		
+		case 'mute':		// mutes a user for a certain time. ADMIN ONLY //
 		case 'kick': 		// kicks the specified user. ADMIN ONLY //
+		case 'ban':  		// bans user. ADMIN ONLY //
 		case 'prune':		// deletes requested number of messages from the current channel. ADMIN ONLY //
 		case 'sLogOn': 		// logs in to Steam as anonymous Steam User. ADMIN ONLY //
 		case 'sLogOff': 	// logs off Steam. ADMIN ONLY //
