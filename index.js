@@ -185,7 +185,6 @@ client.login(token);
 //BUG in slogon.js when you log in, log off and log in again it will throw an error saying already logged on
 
 //TODO defaultMaxListeners	eventemitter function to detect number of listeners in file and add 1 to the default max listeners value
-//TODO song <url> command    (songs stop a minute or so in)
 //TODO playing <game> command   (search command to find users in channel that are online && playing the searched game in their activity status)
 //TODO add all commands to help list (ongoing)
 //TODO kill command needs to exit voice channels before ending process
