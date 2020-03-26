@@ -15,4 +15,4 @@
 // 		message.channel.send('Successfully logged on to Steam.');
 // 	}
 // };
-///////////  THIS SHOULD BE ADMIN ACCESS ONLY ///////////
+/////////// ADMIN ACCESS ONLY ///////////
