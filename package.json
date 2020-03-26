@@ -31,9 +31,9 @@
     "ffmpeg-static": "^4.0.1",
     "node-fetch": "^2.6.0",
     "node-steam": "0.0.1",
+    "node-steam-resources": "1.2.0",
     "readline-sync": "^1.4.10",
     "steam-user": "^4.13.2",
-    "node-steam-resources": "1.2.0",
     "svn": "^0.3.0"
   }
 }
