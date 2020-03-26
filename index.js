@@ -59,8 +59,8 @@ client.on('message', message => {
 		case 'kick': 		// kicks the specified user. ADMIN ONLY //
 		case 'ban':  		// bans user. ADMIN ONLY //
 		case 'prune':		// deletes requested number of messages from the current channel. ADMIN ONLY //
-		case 'sLogOn': 		// logs in to Steam as anonymous Steam User. ADMIN ONLY //
-		case 'sLogOff': 	// logs off Steam. ADMIN ONLY //
+		// case 'sLogOn': 		// logs in to Steam as anonymous Steam User. ADMIN ONLY //
+		// case 'sLogOff': 	// logs off Steam. ADMIN ONLY //
 		case 'kill':  		// puts bot offline and logs to console who issued the command. ADMIN ONLY //
 		commandExeAdmin();
 	break;
