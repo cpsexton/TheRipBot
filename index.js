@@ -24,7 +24,6 @@ client.on('ready', () => {
 	client.user.setActivity("chat. $help", {type: "WATCHING"});
 });
 
-client.login(process.env.DISCORD_TOKEN);
 
 function calculateTime(){
 	let time = { hours: 0, minutes: 0, seconds: 0}
@@ -41,7 +40,7 @@ client.on('message', message => {
 	const commandExe = () => client.commands.get(args[0].toLowerCase()).execute(message);
 	const commandExeArgs = () => client.commands.get(args[0].toLowerCase()).execute(message, args);
 	const commandExeAdmin = () =>  adminRole ? commandExeArgs() : message.channel.send('That command is for Admin use only');
-
+	
 	if(!message.content.startsWith(`${prefix}`)) return;
 	switch (args[0]) {
 		case 'hello':		// reacts to message with emojis to say whatup //
@@ -52,7 +51,7 @@ client.on('message', message => {
 		case 'ping':		// returns users and api's latency //
 		case 'serverinfo':  // detailed information on the current server //
 		commandExe(); 
-	break; 
+		break; 
 		case 'timer':		// gets time from argument. starts a countdown. alerts users of start and finish  //
 		commandExeArgs();
 		break;
@@ -65,9 +64,9 @@ client.on('message', message => {
 		// case 'sLogOff': 	// logs off Steam. ADMIN ONLY //
 		case 'kill':  		// puts bot offline and logs to console who issued the command. ADMIN ONLY //
 		commandExeAdmin();
-	break;
+		break;
 		case 'uptime': client.commands.get('uptime').execute(message, calculateTime()); break; // returns uptime in hours, minutes, and seconds
-	default: break;
+		default: break;
 	}
 });
 
@@ -152,7 +151,7 @@ function stop(message, serverQueue) {
 };
 
 async function play(guild, song) {
-
+	
 	const serverQueue = queue.get(guild.id);
 	
 	if (!song) {
@@ -160,7 +159,7 @@ async function play(guild, song) {
 		queue.delete(guild.id);
 		return;
 	}
-
+	
 	const dispatcher = serverQueue.connection.play(await ytdl(song.url))
 	.on('end', () => {
 		console.log('Music ended!');
@@ -175,7 +174,8 @@ async function play(guild, song) {
 };
 
 // token is hidden //
-client.login(token);
+client.login(process.env.BOT_TOKEN);
+// client.login(token);
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////
