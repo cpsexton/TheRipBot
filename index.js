@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 const fs = require('fs');
-const {prefix, token} = require('./config.json');
+const {prefix} = require('./config.json');
 const ytdl = require('ytdl-core');
 
 
@@ -175,7 +175,7 @@ async function play(guild, song) {
 
 // token is hidden //
 client.login(process.env.BOT_TOKEN);
-// client.login(token);
+
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////
