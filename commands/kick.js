@@ -26,7 +26,6 @@ module.exports = {
         const embed = new Discord.MessageEmbed();
         embed
             .setTitle('USER KICKED')
-            // .setThumbnail('.\thumbnails\POW.png')
             .addField(`${message.author.username} kicked:`, `${taggedUser}`)
             .addField('Reason',reason)
 
