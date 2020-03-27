@@ -29,6 +29,6 @@ module.exports = {
             .addField(`${message.author.username} kicked:`, `${taggedUser}`)
             .addField('Reason',reason)
 
-        return message.channel.send(embed)
+        return message.channel.send(embed, {files: ["./thumbnails/POW.png"]})
     }
 };
