@@ -4,7 +4,6 @@ const fs = require('fs');
 const ytdl = require('ytdl-core');
 
 const prefix = '$';
-const ytdl = require('ytdl-core');
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 const queue = new Map();
 
