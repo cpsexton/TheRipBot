@@ -1,11 +1,11 @@
 const Discord = require('discord.js');
+const client = new Discord.Client();
 const fs = require('fs');
 // const {prefix} = require('./config.json');
-const ytdl = require('ytdl-core');
+client.commands = new Discord.Collection();
 
 const prefix = '$';
-const client = new Discord.Client();
-client.commands = new Discord.Collection();
+const ytdl = require('ytdl-core');
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 const queue = new Map();
 
@@ -24,7 +24,6 @@ client.on('ready', () => {
 	client.user.setActivity("chat. $help", {type: "WATCHING"});
 });
 
-
 function calculateTime(){
 	let time = { hours: 0, minutes: 0, seconds: 0}
 	time.seconds = Math.trunc(client.uptime / 1000)
@@ -36,11 +35,11 @@ function calculateTime(){
 client.on('message', message => {
 	const args = message.content.slice(prefix.length).split(' ');
 	const adminRole = message.member.roles.cache.some(r => r.permissions.has('ADMINISTRATOR'));
-	
+
 	const commandExe = () => client.commands.get(args[0].toLowerCase()).execute(message);
 	const commandExeArgs = () => client.commands.get(args[0].toLowerCase()).execute(message, args);
 	const commandExeAdmin = () =>  adminRole ? commandExeArgs() : message.channel.send('That command is for Admin use only');
-	
+
 	if(!message.content.startsWith(`${prefix}`)) return;
 	switch (args[0]) {
 		case 'hello':		// reacts to message with emojis to say whatup //
@@ -55,12 +54,12 @@ client.on('message', message => {
 		case 'timer':		// gets time from argument. starts a countdown. alerts users of start and finish  //
 		commandExeArgs();
 		break;
-		
+
 		case 'mute':		// mutes a user for a certain time. ADMIN ONLY //
 		case 'kick': 		// kicks the specified user. ADMIN ONLY //
 		case 'ban':  		// bans user. ADMIN ONLY //
 		case 'prune':		// deletes requested number of messages from the current channel. ADMIN ONLY //
-		// case 'sLogOn': 		// logs in to Steam as anonymous Steam User. ADMIN ONLY //
+		// case 'sLogOn': 	// logs in to Steam as anonymous Steam User. ADMIN ONLY //
 		// case 'sLogOff': 	// logs off Steam. ADMIN ONLY //
 		case 'kill':  		// puts bot offline and logs to console who issued the command. ADMIN ONLY //
 		commandExeAdmin();
@@ -74,7 +73,7 @@ client.on('message', message => {
 client.on('message', async message => {
 	if (message.author.bot) return;
 	if (!message.content.startsWith(prefix)) return;
-	
+
 	const serverQueue = queue.get(message.guild.id);
 	if(message.content.startsWith(`${prefix}play`)){
 		execute(message, serverQueue);
@@ -90,8 +89,8 @@ client.on('message', async message => {
 
 async function execute(message, serverQueue) {
 	let args = message.content.split(' ');
+
 	const voiceChannel = message.member.voice.channel;
-	
     if (!voiceChannel) {
 		console.log(`${message.author.guild}`);
         message.channel.send('You need to be in a voice channel to play music!');
@@ -100,13 +99,12 @@ async function execute(message, serverQueue) {
 	if (!permissions.has('CONNECT') || !permissions.has('SPEAK')) {
 		return message.channel.send('I need the permissions to join and speak in your voice channel!');
 	}
-	
+
 	const songInfo = await ytdl.getInfo(args[1]);
 	const song = {
 		title: songInfo.title,
 		url: songInfo.video_url,
 	};
-	
 	if (!serverQueue) {
 		const queueContruct = {
 			textChannel: message.channel,
@@ -116,10 +114,10 @@ async function execute(message, serverQueue) {
 			volume: 5,
 			playing: true,
 		};
-		
+
 		queue.set(message.guild.id, queueContruct);
 		queueContruct.songs.push(song);
-		
+
 		try {
 			let connection = await voiceChannel.join();
 			queueContruct.connection = connection;
@@ -151,15 +149,14 @@ function stop(message, serverQueue) {
 };
 
 async function play(guild, song) {
-	
+
 	const serverQueue = queue.get(guild.id);
-	
 	if (!song) {
 		serverQueue.voiceChannel.leave();
 		queue.delete(guild.id);
 		return;
 	}
-	
+
 	const dispatcher = serverQueue.connection.play(await ytdl(song.url))
 	.on('end', () => {
 		console.log('Music ended!');
@@ -190,5 +187,6 @@ client.login(process.env.BOT_TOKEN);
 //TODO playing <game> command   (search command to find users in channel that are online && playing the searched game in their activity status)
 //TODO add all commands to help list (ongoing)
 //TODO kill command needs to exit voice channels before ending process
+//TODO spam filter
 
 // copyright Christopher Sexton and Andrew Thiessen 2020
