@@ -173,19 +173,4 @@ async function play(guild, song) {
 client.login(process.env.BOT_TOKEN);
 
 
-
-///////////////////////////////////////////////////////////////////////////////////////////
-
-// Discord Webhook Ripoff's server #General https://discordapp.com/api/webhooks/690363009356529694/t54ufhokKvJOlZoDmUM-VpxKyhRkepekWgDoCbI9YQI6skeY4Wj1lt1LJV3bnVH16qnf
-
-
-
-//BUG in slogon.js when you log in, log off and log in again it will throw an error saying already logged on
-
-//TODO defaultMaxListeners	eventemitter function to detect number of listeners in file and add 1 to the default max listeners value
-//TODO playing <game> command   (search command to find users in channel that are online && playing the searched game in their activity status)
-//TODO add all commands to help list (ongoing)
-//TODO kill command needs to exit voice channels before ending process
-//TODO spam filter
-
 // copyright Christopher Sexton and Andrew Thiessen 2020

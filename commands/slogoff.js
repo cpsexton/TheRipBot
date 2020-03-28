@@ -14,4 +14,4 @@
 // 		message.channel.send('Successfully logged off');
 // 	}
 // };
-///////////  THIS SHOULD BE ADMIN ACCESS ONLY ///////////
+/////////// ADMIN ACCESS ONLY ///////////
