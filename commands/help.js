@@ -17,13 +17,13 @@ module.exports = {
                     name: "```hello``` ```online``` ```pfp``` ```serverinfo``` ```timer``` ```ping ``` ```uptime``` ```whois```",
                     value: "**Mod Commands**" 
                 },{
-                    name: "```kick``` ```ban``` ```kill``` ```prune```",
+                    name: "```kick``` ```ban``` ```kill``` ```prune``` ```mute```",
                     value: "**Admin Commands**" 
                 },{
                     name: "```sLogOn``` ```sLogOff```",
                     value: "Under Construction" 
                 },{
-                    name: "```mute``` ```about``` ```rssfeed``` ```roll``` ```comic``` ```role``` ```pole``` ```profiles``` ```gamestats``` ```curecoronavirus```",
+                    name: "```about``` ```rssfeed``` ```rolldice``` ```comic``` ```role``` ```pole``` ```profiles``` ```gamestats``` ```curecoronavirus```",
                     value: "kbye" 
                 })
             )
