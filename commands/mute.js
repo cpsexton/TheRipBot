@@ -1,7 +1,6 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
-const role = new Discord.Role();
 
 module.exports = {
     name: "mute",
@@ -11,6 +10,9 @@ module.exports = {
         let timeoutFromCommand = parseInt(args[2]);
         const embed = new Discord.MessageEmbed();
         
+        await message.delete({
+            timeout: 1000
+        });
         
         if (!taggedUser) {
             return message.reply(`that user cannot be found.\n    *(ex: $mute @TheRipBot 5)*`)
@@ -52,9 +54,9 @@ module.exports = {
             return message.reply(`${taggedUser} is already muted.`); // YES so tell chat   
         };
         if (!guildHasRole) { // does the guild have the role                 
-            createMutedRole(); // create the role
+            const role = await createMutedRole(); // create the role
             
-            addRoleToUser() = await createMutedRole();
+            await addRoleToUser(role);
             
         } else {
             return addRoleToUser();
