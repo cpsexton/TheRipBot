@@ -8,7 +8,7 @@ module.exports = {
     async execute(message) {
         const embed = new Discord.MessageEmbed();
             message.channel.send(embed
-                .setColor(255)
+                .setColor('ORANGE')
                 .setTitle("Command Help:")
                 .addFields({ 
                     name: "prefix $",
