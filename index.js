@@ -175,8 +175,7 @@ async function play(guild, song) {
 };
 
 // token is hidden //
-// client.login(process.env.BOT_TOKEN);
-client.login('Njg2NjUyOTUzNTA3MDA0NTI4.Xn1ilA.KnMDSUG0EKEXP8Bv4e_YNT41Fgk')
+client.login(process.env.BOT_TOKEN);
 
 
 // copyright Christopher Sexton and Andrew Thiessen 2020
