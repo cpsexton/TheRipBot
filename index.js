@@ -1,23 +1,22 @@
 const Discord = require('discord.js');
 const fs = require('fs');
 const ytdl = require('ytdl-core');
-
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 const queue = new Map();
 const prefix = '$';
-
-	// (default = 10) // 
+const { reactionList } = require('./commands/poll.js');
+// (default = 10) // 
 require('events').EventEmitter.defaultMaxListeners = 20
 
-	// will require the command file needed to execute the function making request //
+// will require the command file needed to execute the function making request //
 for(const file of commandFiles) {
 	const command = require(`./commands/${file}`);
     client.commands.set(command.name, command);
 };
 
-	// logs to console that bot has successfully launched and sets bots activity to 'Watching the chat' //
+// logs to console that bot has successfully launched and sets bots activity to 'Watching the chat' //
 client.on('ready', () => {
 	console.log('TheRipBot has launched successfully!');
 	client.user.setActivity("chat. $help", {type: "WATCHING"});
@@ -31,16 +30,16 @@ function calculateTime(){
 	return time
 };
 
-
+	// this is the main listener block //
 client.on('message', message => {
 	
 	const args = message.content.slice(prefix.length).split(' ');
 	const adminRole = message.member.roles.cache.some(r => r.permissions.has('ADMINISTRATOR'));
-
+	
 	const commandExe = () => client.commands.get(args[0].toLowerCase()).execute(message);
 	const commandExeArgs = () => client.commands.get(args[0].toLowerCase()).execute(message, args);
 	const commandExeAdmin = () =>  adminRole ? commandExeArgs() : message.channel.send('That command is for Admin use only');
-
+	
 	if(!message.content.startsWith(`${prefix}`)) return;
 	switch (args[0]) {
 		case 'hello':		// reacts to message with emojis to say whatup //
@@ -57,16 +56,18 @@ client.on('message', message => {
 		case 'poll':	// gets time from argument. starts a countdown. alerts users of start and finish  //
 		commandExeArgs();
 		break;
-
+		
 		case 'mute': 		// mutes a user for a certain time. ADMIN ONLY //
 		case 'kick': 		// kicks the specified user. ADMIN ONLY //
 		case 'ban':  		// bans user. ADMIN ONLY //
 		case 'prune':		// deletes requested number of messages from the current channel. ADMIN ONLY //
+		case 'kill':  		// puts bot offline and logs to console who issued the command. ADMIN ONLY //
 		// case 'sLogOn': 	// logs in to Steam as anonymous Steam User. ADMIN ONLY //
 		// case 'sLogOff': 	// logs off Steam. ADMIN ONLY //
-		case 'kill':  		// puts bot offline and logs to console who issued the command. ADMIN ONLY //
 		commandExeAdmin();
 		break;
+		
+		case 'reactions': client.commands.get('poll').reactionList(message); break; // sends channel the list of reaction sets from the poll command
 		case 'uptime': client.commands.get('uptime').execute(message, calculateTime()); break; // returns uptime in hours, minutes, and seconds
 		default: break;
 	}
@@ -174,8 +175,8 @@ async function play(guild, song) {
 };
 
 // token is hidden //
-client.login(process.env.BOT_TOKEN);
-
+// client.login(process.env.BOT_TOKEN);
+client.login('Njg2NjUyOTUzNTA3MDA0NTI4.Xn1ilA.KnMDSUG0EKEXP8Bv4e_YNT41Fgk')
 
 
 // copyright Christopher Sexton and Andrew Thiessen 2020

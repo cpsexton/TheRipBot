@@ -7,6 +7,7 @@ module.exports = {
     execute(message, time){
 		message.channel.send(embed
             .setTitle('Uptime')
+            .setColor('GREEN')
             .setDescription(` ${time.hours} ${ time.hours == 1 ? 'hour' : 'hours' } ${time.minutes - (time.hours * 60)} ${ time.minutes == 1 ? 'minute' : 'minutes' } ${time.seconds - (time.minutes * 60)} seconds`)
 		)
     }

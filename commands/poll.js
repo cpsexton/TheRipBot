@@ -19,11 +19,15 @@ module.exports = {
         const embed = new Discord.MessageEmbed();
         let reactChoice = args.pop();
         if(!reactChoice.startsWith('set')){
+            reactionList();
+        }
+        
+        function reactionList() {
             return message.reply(embed
-                .setAuthor(`    customize your poll with a reaction combination`)
-                .setColor('ORANGE')
-                    // .setFooter( 'to see this list again use $reactions' ) // create listener for reactions
-                .setDescription(' ex: $poll question set4')
+                .setAuthor( `customize your poll with a reaction combination` )
+                .setColor( 'ORANGE' )
+                    .setFooter( 'to see this list again use $reactions' ) // create listener for reactions
+                .setDescription( ' ex: $poll question set4' )
                 .addFields({
                     name: 'set1',
                     value: '`▶️` - `⏹`',
@@ -79,11 +83,11 @@ module.exports = {
         let reactSet = [];
         if (reactChoice == 'set1') { reactSet = [`▶️`,`⏹`]};
         if (reactChoice == 'set2') { reactSet = [`✅`,`⛔`]};
-        if (reactChoice == 'set3') { reactSet = [`🔈`,`🔊`]};
+        if (reactChoice == 'set3') { reactSet = [`😊`,`☹️`]};
         if (reactChoice == 'set4') { reactSet = [`🏃‍♂️`,`👨‍🦽`]};
         if (reactChoice == 'set5') { reactSet = [`🅰`,`🅱`]};
         if (reactChoice == 'set6') { reactSet = [`🟢`,`🔴`]};
-        if (reactChoice == 'set7') { reactSet = [`😊`,`☹️`]};
+        if (reactChoice == 'set7') { reactSet = [`🔈`,`🔊`]};
         if (reactChoice == 'set8') { reactSet = [`🏳️`,`🏴`]};
         if (reactChoice == 'set9') { reactSet = [`👍`,`👎`]};
         if (reactChoice == 'set0') { reactSet = [`👱`,`👩‍🦰`]};
@@ -104,5 +108,66 @@ module.exports = {
             timeout: 1000
         });
 
-    }
-};
+    },
+    // put emojis in a single arr[ , , , , , ]
+        // await msg.react(arr[0])
+    
+    reactionList(message) {
+        const embed = new Discord.MessageEmbed();
+        return message.channel.send(embed
+
+        .setAuthor( `customize your poll with a reaction combination` )
+        .setColor( 'ORANGE' )
+            // .setFooter( 'to see this list again use $reactions' ) // create listener for reactions
+        .setDescription( 'ex: $poll question set4' )
+        .addFields({
+            name: '-  set0  -',
+            value: '`👱` - `👩‍🦰`',
+            inline: true
+        },{
+            name: '-  set1  -',
+            value: '`▶️` - `⏹`',
+            inline: true
+        },{
+            name: '-  set2  -',
+            value: '`✅` - `⛔`',
+            inline: true
+        },{
+            name: '-  set3  -',
+            value: '`😊` - `☹️`',
+            inline: true
+        },{
+            name: '-  set4  -',
+            value: '`🏃‍♂️` - `👨‍🦽`',
+            inline: true
+        },{
+            name: '-  set5  -',
+            value: '`🅰` - `🅱`',
+            inline: true
+        },{
+            name: '-  set6  -',
+            value: '`🟢` - `🔴`',
+            inline: true
+        },{
+            name: '-  set7  -',
+            value: '`🔈` - `🔊`',
+            inline: true
+        },{
+            name: '-  set8  -',
+            value: '`🏳️` - `🏴`',
+            inline: true
+        },{
+            name: '-  set9  -',
+            value: '`👍` - `👎`',
+            inline: true
+        },{
+            name: '-  set10  -',
+            value: '`🧁` - `🧂`',
+            inline: true
+        },{
+            name: '-  set11  -',
+            value: '`🍆` - `🍑`',
+            inline: true
+        })
+    )}   
+}
