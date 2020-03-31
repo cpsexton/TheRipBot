@@ -97,7 +97,7 @@ module.exports = {
         const pollQuestion = args.slice(1).join(' ');
         const msg = await message.channel.send(embed
             .setAuthor(`Poll created by ${message.author.username}`, message.guild.iconURL)
-            .setColor('BLUE')
+            .setColor('YELLOW')
             .setFooter("React to vote.")
             .setDescription(pollQuestion)
         );
