@@ -26,9 +26,13 @@ module.exports = {
             return message.reply(embed
                 .setAuthor( `customize your poll with a reaction combination` )
                 .setColor( 'ORANGE' )
-                    .setFooter( 'to see this list again use $reactions' ) // create listener for reactions
+                .setFooter( 'to see this list again use $reactions' ) // create listener for reactions
                 .setDescription( ' ex: $poll question set4' )
                 .addFields({
+                    name: 'set0',
+                    value: '`👱` - `👩‍🦰`',
+                    inline: true
+                },{
                     name: 'set1',
                     value: '`▶️` - `⏹`',
                     inline: true
@@ -38,7 +42,7 @@ module.exports = {
                     inline: true
                 },{
                     name: 'set3',
-                    value: '`🔈` - `🔊`',
+                    value: '`😊` - `☹️`',
                     inline: true
                 },{
                     name: 'set4',
@@ -54,7 +58,7 @@ module.exports = {
                     inline: true
                 },{
                     name: 'set7',
-                    value: '`😊` - `☹️`',
+                    value: '`🔈` - `🔊`',
                     inline: true
                 },{
                     name: 'set8',
@@ -63,10 +67,6 @@ module.exports = {
                 },{
                     name: 'set9',
                     value: '`👍` - `👎`',
-                    inline: true
-                },{
-                    name: 'set0',
-                    value: '`👱` - `👩‍🦰`',
                     inline: true
                 },{
                     name: 'set10',
