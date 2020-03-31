@@ -19,7 +19,7 @@ module.exports = {
         const embed = new Discord.MessageEmbed();
         let reactChoice = args.pop();
         if(!reactChoice.startsWith('set')){
-            reactionList();
+            return reactionList();
         }
 
         function reactionList() {
