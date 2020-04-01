@@ -81,18 +81,18 @@ module.exports = {
         };
 
         let reactSet = [];
-        if (reactChoice == '-  set0  -') { reactSet = [`👱`,`👩‍🦰`] };
-        if (reactChoice == '-  set1  -') { reactSet = [`▶️`,`⏹`] };
-        if (reactChoice == '-  set2  -') { reactSet = [`✅`,`⛔`] };
-        if (reactChoice == '-  set3  -') { reactSet = [`😊`,`☹️`] };
-        if (reactChoice == '-  set4  -') { reactSet = [`🏃‍♂️`,`👨‍🦽`] };
-        if (reactChoice == '-  set5  -') { reactSet = [`🅰`,`🅱`] };
-        if (reactChoice == '-  set6  -') { reactSet = [`🟢`,`🔴`] };
-        if (reactChoice == '-  set7  -') { reactSet = [`🔈`,`🔊`] };
-        if (reactChoice == '-  set8  -') { reactSet = [`🏳️`,`🏴`] };
-        if (reactChoice == '-  set9  -') { reactSet = [`👍`,`👎`] };
-        if (reactChoice == '-  set10  -') { reactSet = [`🧁`,`🧂`] };
-        if (reactChoice == '-  set11  -') { reactSet = [`🍆`,`🍑`] };
+        if (reactChoice == 'set0') { reactSet = [`👱`,`👩‍🦰`] };
+        if (reactChoice == 'set1') { reactSet = [`▶️`,`⏹`] };
+        if (reactChoice == 'set2') { reactSet = [`✅`,`⛔`] };
+        if (reactChoice == 'set3') { reactSet = [`😊`,`☹️`] };
+        if (reactChoice == 'set4') { reactSet = [`🏃‍♂️`,`👨‍🦽`] };
+        if (reactChoice == 'set5') { reactSet = [`🅰`,`🅱`] };
+        if (reactChoice == 'set6') { reactSet = [`🟢`,`🔴`] };
+        if (reactChoice == 'set7') { reactSet = [`🔈`,`🔊`] };
+        if (reactChoice == 'set8') { reactSet = [`🏳️`,`🏴`] };
+        if (reactChoice == 'set9') { reactSet = [`👍`,`👎`] };
+        if (reactChoice == 'set10') { reactSet = [`🧁`,`🧂`] };
+        if (reactChoice == 'set11') { reactSet = [`🍆`,`🍑`] };
 
         const pollQuestion = args.slice(1).join(' ');
         const msg = await message.channel.send(embed
