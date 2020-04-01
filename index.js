@@ -52,8 +52,8 @@ client.on('message', message => {
 		commandExe(); 
 		break; 
 		
-		case 'timer':	
-		case 'poll':	// gets time from argument. starts a countdown. alerts users of start and finish  //
+		case 'poll':		// starts a poll with custom reactions
+		case 'timer':		// gets time from argument. starts a countdown. alerts users of start and finish  //
 		commandExeArgs();
 		break;
 		
