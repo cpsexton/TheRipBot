@@ -23,12 +23,8 @@ module.exports = {
         
         console.log(`User ${taggedUser} was kicked by admin ${message.author.username} for the following reason: ${reason}`);
         
-        const embed = new Discord.MessageEmbed();
-        embed
-            .setTitle('USER KICKED')
-            .addField(`${message.author.username} kicked:`, `${taggedUser}`)
-            .addField('Reason',reason)
+		const attachment = new Discord.MessageAttachment('./thumbnails/dogbye.jpg');
 
-        return message.channel.send(embed, {files: ["./thumbnails/POW.png"]})
+        return message.channel.send(`${taggedUser.displayName} has been **kicked** by admin: ${message.author.username}\nReason: ${reason}`, attachment);
     }
 };

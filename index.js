@@ -6,7 +6,8 @@ client.commands = new Discord.Collection();
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 const queue = new Map();
 const prefix = '$';
-const { reactionList } = require('./commands/poll.js');
+const Canvas = require('canvas');
+
 // (default = 10) // 
 require('events').EventEmitter.defaultMaxListeners = 20
 
@@ -46,9 +47,10 @@ client.on('message', message => {
 		case 'help':		// list of commands //
 		case 'whois':		// detailed information about requested user //
 		case 'online':  	// searches and returns users that are online and offline //
-		case 'pfp':  		// returns a users profile picture //	
+		case 'pfp':			// returns a users profile picture //	
 		case 'ping':		// returns users and api's latency //
 		case 'serverinfo':  // detailed information on the current server //
+		case 'heal':		// heals with just a gaze //
 		commandExe(); 
 		break; 
 		
@@ -57,13 +59,14 @@ client.on('message', message => {
 		commandExeArgs();
 		break;
 		
+		case 'warn':		// warns a user with reason. ADMIN ONLY //
 		case 'mute': 		// mutes a user for a certain time. ADMIN ONLY //
 		case 'kick': 		// kicks the specified user. ADMIN ONLY //
 		case 'ban':  		// bans user. ADMIN ONLY //
 		case 'prune':		// deletes requested number of messages from the current channel. ADMIN ONLY //
 		case 'kill':  		// puts bot offline and logs to console who issued the command. ADMIN ONLY //
-		// case 'sLogOn': 	// logs in to Steam as anonymous Steam User. ADMIN ONLY //
-		// case 'sLogOff': 	// logs off Steam. ADMIN ONLY //
+		// case 'sLogOn': 	// logs in to Steam as anonymous Steam User. ADMIN ONLY //  temporarily unavailbale
+		// case 'sLogOff': 	// logs off Steam. ADMIN ONLY // temporarily unavailable
 		commandExeAdmin();
 		break;
 		
@@ -175,7 +178,8 @@ async function play(guild, song) {
 };
 
 // token is hidden //
-client.login(process.env.BOT_TOKEN);
+// client.login(process.env.BOT_TOKEN);
+client.login('Njg2NjUyOTUzNTA3MDA0NTI4.XoKo_g.0JmRxSn-c62VdFjVwgqS9kUeUeE')
 
 
 // copyright Christopher Sexton and Andrew Thiessen 2020

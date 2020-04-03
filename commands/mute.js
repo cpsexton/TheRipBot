@@ -31,7 +31,7 @@ module.exports = {
         function addRoleToUser() { // must also set timeout and remove role
             taggedUser.roles.add(theMuteRole);
             message.channel.send(embed
-                .setColor(255)
+                .setColor('ORANGE')
                 .addField('Mute Successful',`${taggedUser} has been muted for ${timeoutFromCommand} minutes by ${message.author.username}`)
             );
 
