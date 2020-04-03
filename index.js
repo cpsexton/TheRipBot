@@ -6,7 +6,6 @@ client.commands = new Discord.Collection();
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 const queue = new Map();
 const prefix = '$';
-const Canvas = require('canvas');
 
 // (default = 10) // 
 require('events').EventEmitter.defaultMaxListeners = 20
@@ -17,7 +16,7 @@ for(const file of commandFiles) {
     client.commands.set(command.name, command);
 };
 
-// logs to console that bot has successfully launched and sets bots activity to 'Watching the chat' //
+// logs to console that bot has successfully launched and sets bots activity //
 client.on('ready', () => {
 	console.log('TheRipBot has launched successfully!');
 	client.user.setActivity("chat. $help", {type: "WATCHING"});
@@ -38,7 +37,7 @@ client.on('message', message => {
 	const adminRole = message.member.roles.cache.some(r => r.permissions.has('ADMINISTRATOR'));
 	
 	const commandExe = () => client.commands.get(args[0].toLowerCase()).execute(message);
-	const commandExeArgs = () => client.commands.get(args[0].toLowerCase()).execute(message, args);
+	const commandExeArgs = () => client.commands.get(args[0].toLowerCase()).execute(message, args, client);
 	const commandExeAdmin = () =>  adminRole ? commandExeArgs() : message.channel.send('That command is for Admin use only');
 	
 	if(!message.content.startsWith(`${prefix}`)) return;
@@ -65,7 +64,9 @@ client.on('message', message => {
 		case 'ban':  		// bans user. ADMIN ONLY //
 		case 'prune':		// deletes requested number of messages from the current channel. ADMIN ONLY //
 		case 'kill':  		// puts bot offline and logs to console who issued the command. ADMIN ONLY //
-		// case 'sLogOn': 	// logs in to Steam as anonymous Steam User. ADMIN ONLY //  temporarily unavailbale
+		case 'activity':	// changes bot presence and activity. ADMIN ONLY //
+		case 'status':		// changes bots status. ADMIN ONLY //
+		// case 'sLogOn': 	// logs in to Steam as anonymous Steam User. ADMIN ONLY //  temporarily unavailable
 		// case 'sLogOff': 	// logs off Steam. ADMIN ONLY // temporarily unavailable
 		commandExeAdmin();
 		break;
@@ -179,7 +180,7 @@ async function play(guild, song) {
 
 // token is hidden //
 // client.login(process.env.BOT_TOKEN);
-client.login('Njg2NjUyOTUzNTA3MDA0NTI4.XoKo_g.0JmRxSn-c62VdFjVwgqS9kUeUeE')
+client.login('Njg2NjUyOTUzNTA3MDA0NTI4.XoeAJw.9gfwPt1U56ay02aTHKewBvAqkT4')
 
 
 // copyright Christopher Sexton and Andrew Thiessen 2020
