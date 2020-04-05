@@ -13,12 +13,11 @@ module.exports = {
         const embed = new Discord.MessageEmbed();
         //fetch calls
         const theReport = await fetch('https://covid19-server.chrismichael.now.sh/api/v1/AllReports').then(res => res.json());
-        const theDeaths = await fetch('https://covid19-server.chrismichael.now.sh/api/v1/Deaths').then(res => res.json());      
         const theUsReport = await fetch('https://covid19-server.chrismichael.now.sh/api/v1/ReportsByCountries/us/').then(res => res.json());
         const usStatesReport = await fetch('https://covid19-server.chrismichael.now.sh/api/v1/CasesInAllUSStates/').then(res => res.json());
 
         //world
-        const totalDeaths = theDeaths.deaths.deaths;
+        const totalDeaths = theReport.reports[0].table[0][0].TotalDeaths;
         const totalConfirmedCases = theReport.reports[0].table[0][0].TotalCases;
         const totalRecovered = theReport.reports[0].table[0][0].TotalRecovered;
         const activeCases = theReport.reports[0].table[0][0].ActiveCases;
