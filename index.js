@@ -51,10 +51,10 @@ client.on('message', message => {
 		case 'ping':		// returns users and api's latency //
 		case 'serverinfo':  // detailed information on the current server //
 		case 'heal':		// heals with just a gaze //
-		case 'covid':		// detailed information about the virus //
 		commandExe(); 
 		break; 
 		
+		case 'covid':		// detailed information about the virus //
 		case 'poll':		// starts a poll with custom reactions //
 		case 'timer':		// gets time from argument. starts a countdown. alerts users of start and finish  //
 		commandExeArgs();
@@ -182,9 +182,6 @@ async function play(guild, song) {
 
 // token is hidden //
 client.login(process.env.BOT_TOKEN);
-
-
-
 
 
 

@@ -2,42 +2,87 @@ const Discord = require('discord.js');
 const { Client, Collection } = require('discord.js');
 const client = new Client();
 client.commands = new Collection();
-const fetch = require('node-fetch')
-
+const fetch = require('node-fetch');
 
 module.exports = {
 	name: 'covid',
 	description: "current covid 19 information",
 	
-	async execute(message) {
-        //fetch calls
-        const theDeaths = await fetch('https://covid19-server.chrismichael.now.sh/api/v1/Deaths').then(res => res.json());      
-        const theConfirmedCases = await fetch('https://covid2019-api.herokuapp.com/v2/confirmed').then(response => response.json());
-        const theUsCases = await fetch('https://covid19-server.chrismichael.now.sh/api/v1/ReportsByCountries/us/').then(r => r.json());
-        //world
-        const totalDeaths = theDeaths.deaths.deaths;
-        const totalConfirmedCases = theConfirmedCases.data;
-        const confCasesDate = theConfirmedCases.dt;
-        //usa
-        const totalUsCases = theUsCases.report.cases;
-        const totalUsDeaths = theUsCases.report.deaths;
+	async execute(message, args) {
 
         const embed = new Discord.MessageEmbed();
+        //fetch calls
+        const theReport = await fetch('https://covid19-server.chrismichael.now.sh/api/v1/AllReports').then(res => res.json());
+        const theDeaths = await fetch('https://covid19-server.chrismichael.now.sh/api/v1/Deaths').then(res => res.json());      
+        const theConfirmedCases = await fetch('https://covid2019-api.herokuapp.com/v2/confirmed').then(res => res.json());
+        const theUsReport = await fetch('https://covid19-server.chrismichael.now.sh/api/v1/ReportsByCountries/us/').then(res => res.json());
+        const usStatesReport = await fetch('https://covid19-server.chrismichael.now.sh/api/v1/CasesInAllUSStates/').then(res => res.json());
+
+        //world
+        const totalDeaths = theDeaths.deaths.deaths;
+        const totalConfirmedCases = theReport.reports[0].table[0][0].TotalCases;
+        const totalRecovered = theReport.reports[0].table[0][0].TotalRecovered;
+        const activeCases = theReport.reports[0].table[0][0].ActiveCases;
+        const severeCases = theReport.reports[0].table[0][0].Serious_Critical;
+        //usa
+        const totalUsCases = theUsReport.report.cases;
+        const totalUsDeaths = theUsReport.report.deaths;
+        const totalUsRecovered = theUsReport.report.recovered;
+        //top 5 countries
+        const top5Countries = theReport.reports[0].table[0].slice(1,6);
+            if(args[1] == 'top5') {
+                console.log(`Covid top 5 countries requested by ${message.author.username}`);
+                return message.channel.send(embed
+                    .setTitle('Top 5 Affected Countries')
+                    .setColor('RED')
+                    .setThumbnail('https://images.newscientist.com/wp-content/uploads/2020/02/11165812/c0481846-wuhan_novel_coronavirus_illustration-spl.jpg')
+                    .addFields(
+                        { name: `${top5Countries[0].Country}`, value: `${top5Countries[0].TotalCases} cases\n${top5Countries[0].TotalDeaths} deaths` },
+                        { name: `${top5Countries[1].Country}`, value: `${top5Countries[1].TotalCases} cases\n${top5Countries[1].TotalDeaths} deaths` },
+                        { name: `${top5Countries[2].Country}`, value: `${top5Countries[2].TotalCases} cases\n${top5Countries[2].TotalDeaths} deaths` },
+                        { name: `${top5Countries[3].Country}`, value: `${top5Countries[3].TotalCases} cases\n${top5Countries[3].TotalDeaths} deaths` },
+                        { name: `${top5Countries[4].Country}`, value: `${top5Countries[4].TotalCases} cases\n${top5Countries[4].TotalDeaths} deaths` }
+                    )
+                )
+            };
+        //top 5 states
+        const top5States = usStatesReport.data[0].table.slice(1, 6);
+            if (args[1] == 'top5us') {
+                console.log(`Covid top 5 states requested by ${message.author.username}`);
+                return message.channel.send(embed
+                    .setTitle('Top 5 Affected States - :flag_us:')
+                    .setColor('RED')
+                    .setThumbnail('https://images.newscientist.com/wp-content/uploads/2020/02/11165812/c0481846-wuhan_novel_coronavirus_illustration-spl.jpg')
+                    .addFields(
+                        { name: `${top5States[0].USAState}`, value: `${top5States[0].TotalCases} cases\n${top5States[0].TotalDeaths} deaths` },
+                        { name: `${top5States[1].USAState}`, value: `${top5States[1].TotalCases} cases\n${top5States[1].TotalDeaths} deaths` },
+                        { name: `${top5States[2].USAState}`, value: `${top5States[2].TotalCases} cases\n${top5States[2].TotalDeaths} deaths` },
+                        { name: `${top5States[3].USAState}`, value: `${top5States[3].TotalCases} cases\n${top5States[3].TotalDeaths} deaths` },
+                        { name: `${top5States[4].USAState}`, value: `${top5States[4].TotalCases} cases\n${top5States[4].TotalDeaths} deaths` }
+                    ) 
+                )
+            };
+        //main covid response
         await message.channel.send(embed
             .setTitle('Latest on Covid-19')
-            .setColor('YELLOW')
+            .setColor('RED')
             .setThumbnail('https://images.newscientist.com/wp-content/uploads/2020/02/11165812/c0481846-wuhan_novel_coronavirus_illustration-spl.jpg')
-            .addField(`**Total Confirmed Cases**`, totalConfirmedCases)
-            .addField(`**Total Deaths**`, totalDeaths)
             .addFields(
-                { name: 'Countries', value: '**-USA-**' },
-                { name: 'Total Cases', value: totalUsCases, inline: true },
-                { name: 'Total Deaths', value: totalUsDeaths, inline: true },
+                { name: '**Total Confirmed Cases**', value: totalConfirmedCases },
+                { name: '**Total Deaths**', value: totalDeaths },
+                { name: '**Total Recovered**', value: totalRecovered },
+                { name: '**Active Cases**', value: activeCases },
+                { name: '**Severe/Critical Cases**', value: severeCases },
+                { name: ':flag_us: :flag_us: :flag_us:', value: '**-USA-**' },
+                { name: '**Cases**', value: totalUsCases, inline: true },
+                { name: '**Deaths**', value: totalUsDeaths, inline: true },
+                { name: '**Recovered**', value: totalUsRecovered, inline: true },
+                { name: '*for further details use:*', value: '*$covid top5,   $covid top5us*' }
             )
-            .addField(` *last updated*`, confCasesDate)
-            .setFooter('sources: CDC, WHO, Johns-Hopkins - CRC')
-        )
-            
-        console.log(`totalDeaths : ${totalDeaths}\n totalConfirmedCases : ${totalConfirmedCases}\n confCasesDate :  ${confCasesDate}\n totalUsCases : ${totalUsCases}`);
+            .setFooter('sources: CDC, WHO, Johns-Hopkins-CRC')
+        );
+        
+        console.log(`Covid information requested by ${message.author.username}`);
     }
 }
+            
