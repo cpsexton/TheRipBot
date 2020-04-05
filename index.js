@@ -19,7 +19,7 @@ for(const file of commandFiles) {
 
 // logs to console that bot has successfully launched and sets bots activity //
 client.on('ready', () => {
-	console.log('TheRipBot has launched successfully!');
+	console.log('Success! RipBot is now awake and listening');
 	client.user.setActivity("chat. $help", {type: "WATCHING"});
 });
 
