@@ -14,7 +14,6 @@ module.exports = {
         //fetch calls
         const theReport = await fetch('https://covid19-server.chrismichael.now.sh/api/v1/AllReports').then(res => res.json());
         const theDeaths = await fetch('https://covid19-server.chrismichael.now.sh/api/v1/Deaths').then(res => res.json());      
-        const theConfirmedCases = await fetch('https://covid2019-api.herokuapp.com/v2/confirmed').then(res => res.json());
         const theUsReport = await fetch('https://covid19-server.chrismichael.now.sh/api/v1/ReportsByCountries/us/').then(res => res.json());
         const usStatesReport = await fetch('https://covid19-server.chrismichael.now.sh/api/v1/CasesInAllUSStates/').then(res => res.json());
 
