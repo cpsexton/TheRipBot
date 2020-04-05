@@ -44,6 +44,7 @@ client.on('message', message => {
 	if(!message.content.startsWith(`${prefix}`)) return;
 	switch (args[0]) {
 		case 'hello':		// reacts to message with emojis to say whatup //
+		case 'hi':			// reacts to a message with emojis to say whatup even cooler //
 		case 'help':		// list of commands //
 		case 'whois':		// detailed information about requested user //
 		case 'online':  	// searches and returns users that are online and offline //
