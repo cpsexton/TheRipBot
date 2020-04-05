@@ -11,6 +11,6 @@ module.exports = {
         const theStatus = args[1];
 
         await client.user.setStatus(theStatus);
-        await message.channel.send(`${message.author.username} set my status to ${theStatus}`);
+        await message.reply('status change successful');
     }
 };

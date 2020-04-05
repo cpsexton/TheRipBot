@@ -10,6 +10,11 @@ module.exports = {
     
         const actType = args[1].toUpperCase();
         const actName = args.slice(2).join(' ')
+        const typeArr = ['PLAYING','STREAMING','LISTENING','WATCHING','CUSTOM_STATUS']
+
+        if (!typeArr.includes(actType)) {
+            return message.reply(`**${actType.toLowerCase()}** is not an available activity. \n (playing, streaming, listening, watching)`)
+        }
 
         client.user.setPresence({
             activity: {
@@ -18,11 +23,7 @@ module.exports = {
             }
         });
 
-        if (actType === 'LISTENING') {
-            await message.channel.send(`${message.author.username} set my activity to ${actType.toLowerCase()} to ${actName}`)
-        } else {
-            await message.channel.send(`${message.author.username} set my activity to ${actType.toLowerCase()} ${actName}`)
-        }
+        await message.reply('activity change successful')
 
     }
 };

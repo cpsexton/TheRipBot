@@ -5,6 +5,7 @@ const client = new Discord.Client();
 client.commands = new Discord.Collection();
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 const queue = new Map();
+
 const prefix = '$';
 
 // (default = 10) // 
@@ -50,10 +51,11 @@ client.on('message', message => {
 		case 'ping':		// returns users and api's latency //
 		case 'serverinfo':  // detailed information on the current server //
 		case 'heal':		// heals with just a gaze //
+		case 'covid':		// detailed information about the virus //
 		commandExe(); 
 		break; 
 		
-		case 'poll':		// starts a poll with custom reactions
+		case 'poll':		// starts a poll with custom reactions //
 		case 'timer':		// gets time from argument. starts a countdown. alerts users of start and finish  //
 		commandExeArgs();
 		break;
@@ -180,6 +182,9 @@ async function play(guild, song) {
 
 // token is hidden //
 client.login(process.env.BOT_TOKEN);
+
+
+
 
 
 
