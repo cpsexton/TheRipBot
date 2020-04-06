@@ -15,12 +15,12 @@ module.exports = {
             await message.react('🇹');
             await message.react('🇺');
             await message.react('🇵');
-            await message.reactions.removeAll('🇼');
-            await message.reactions.removeAll('🇭');
-            await message.reactions.removeAll('🇦');
-            await message.reactions.removeAll('🇹');
-            await message.reactions.removeAll('🇺');
-            await message.reactions.removeAll('🇵');
+            await message.reactions.cache.get('🇼').remove();
+            await message.reactions.cache.get('🇭').remove();
+            await message.reactions.cache.get('🇦').remove();
+            await message.reactions.cache.get('🇹').remove();
+            await message.reactions.cache.get('🇺').remove();
+            await message.reactions.cache.get('🇵').remove();
         } catch (error) {
             console.error('One of the emojis failed to react.')
         }
