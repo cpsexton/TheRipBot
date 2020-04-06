@@ -16,11 +16,19 @@ module.exports = {
             await message.react('🇺');
             await message.react('🇵');
             await message.reactions.cache.get('🇼').remove();
+            await message.react('👍');
             await message.reactions.cache.get('🇭').remove();
+            await message.react('🇼');
             await message.reactions.cache.get('🇦').remove();
+            await message.react('🇭');
             await message.reactions.cache.get('🇹').remove();
+            await message.react('🇦');
             await message.reactions.cache.get('🇺').remove();
+            await message.react('🇹');
             await message.reactions.cache.get('🇵').remove();
+            await message.react('🇺');
+            await message.reactions.cache.get('👍').remove();
+            await message.react('🇵');
         } catch (error) {
             console.error('One of the emojis failed to react.')
         }

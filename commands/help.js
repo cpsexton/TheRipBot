@@ -14,7 +14,7 @@ module.exports = {
                     name: "prefix $",
                     value: "**Basic Commands**" 
                 },{
-                    name: "```hello``` ```online``` ```poll``` ```pfp``` ```serverinfo``` ```timer``` ```heal``` ```ping``` ```uptime``` ```whois``` ```covid```",
+                    name: "```hello``` ```online``` ```poll``` ```pfp``` ```serverinfo``` ```hi``` ```timer``` ```heal``` ```ping``` ```uptime``` ```whois``` ```covid```",
                     value: "**Mod Commands**" 
                 },{
                     name: "```kick``` ```ban``` ```kill``` ```prune``` ```mute``` ```warn```",
