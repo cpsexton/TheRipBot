@@ -14,13 +14,13 @@ module.exports = {
                     name: "prefix $",
                     value: "**Basic Commands**" 
                 },{
-                    name: "```hello``` ```online``` ```poll``` ```pfp``` ```serverinfo``` ```hi``` ```timer``` ```heal``` ```ping``` ```uptime``` ```whois``` ```covid```",
+                    name: "```hello``` ```online``` ```poll``` ```pfp``` ```serverinfo``` ```timer``` ```heal``` ```ping``` ```uptime``` ```whois``` ```covid```",
                     value: "**Mod Commands**" 
                 },{
-                    name: "```kick``` ```ban``` ```kill``` ```prune``` ```mute``` ```warn```",
+                    name: "```kick``` ```ban``` ```unban``` ```prune``` ```mute``` ```warn```",
                     value: "**Admin Commands**" 
                 },{
-                    name: "```sLogOn``` ```sLogOff``` ```status``` ```activity```",
+                    name: "```sLogOn``` ```sLogOff``` ```status``` ```kill``` ```activity```",
                     value: "Under Construction" 
                 },{
                     name: "```about``` ```rolldice``` ```comic``` ```role``` ```profiles``` ```gamestats```",

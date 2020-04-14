@@ -6,8 +6,8 @@ module.exports = {
     name: 'status',
     description: 'changes the bots status. options include: online, idle, dnd',
     async execute(message, args, bot) {
-        
-        if(!args) { return message.reply(' please add a status. *(ex: $status idle/online/dnd)*')}
+
+        if(!args) { return message.reply(' please add a status. *(ex: $status idle/online/dnd)*') }
 
         const theStatus = args[0];
 

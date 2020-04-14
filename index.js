@@ -24,7 +24,7 @@ bot.on('ready', () => {
 });
 
 function calculateTime(){
-	let time = { hours: 0, minutes: 0, seconds: 0}
+	let time = { hours: 0, minutes: 0, seconds: 0 }
 	time.seconds = Math.trunc(bot.uptime / 1000)
 	time.minutes = Math.trunc(bot.uptime / 60000)
 	time.hours = Math.trunc(bot.uptime / 3600000)
