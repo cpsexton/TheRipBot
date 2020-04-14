@@ -184,8 +184,8 @@ async function play(guild, song) {
 };
 
 // token is hidden //
-// bot.login(process.env.BOT_TOKEN);
-bot.login('Njg2NjUyOTUzNTA3MDA0NTI4.XoeSaw.A5wkJGrFObbnEI8FWhqKO3aI3Ek')
+bot.login(process.env.BOT_TOKEN);
+
 
 
 
