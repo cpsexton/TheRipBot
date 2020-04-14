@@ -27,7 +27,7 @@ module.exports = {
         const totalUsRecovered = theUsReport.report.recovered;
         //top 5 countries
         const top5Countries = theReport.reports[0].table[0].slice(1,6);
-            if(args[1] == 'top5') {
+            if(args[0] == 'top5') {
                 console.log(`Covid top 5 countries requested by ${message.author.username}`);
                 return message.channel.send(embed
                     .setTitle('Top 5 Affected Countries')
@@ -44,7 +44,7 @@ module.exports = {
             };
         //top 5 states
         const top5States = usStatesReport.data[0].table.slice(1, 6);
-            if (args[1] == 'top5us') {
+            if (args[0] == 'top5us') {
                 console.log(`Covid top 5 states requested by ${message.author.username}`);
                 return message.channel.send(embed
                     .setTitle('Top 5 Affected States - :flag_us:')
