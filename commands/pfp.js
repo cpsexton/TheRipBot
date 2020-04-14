@@ -1,6 +1,6 @@
-const { MessageEmbed, Guild, Client, Collection } = require('discord.js');
-const client = new Client();
-client.commands = new Collection();
+const { Client, Collection, MessageEmbed } = require('discord.js');
+const bot = new Client();
+bot.commands = new Collection();
 
 module.exports = {
     name: "pfp",

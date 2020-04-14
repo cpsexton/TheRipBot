@@ -1,6 +1,6 @@
-const Discord = require('discord.js');
-const client = new Discord.Client();
-client.commands = new Discord.Collection();
+const { Client, Collection, MessageAttachment } = require('discord.js');
+const bot = new Client();
+bot.commands = new Collection();
 
 module.exports = {
     name: "kick",
@@ -23,7 +23,7 @@ module.exports = {
         
         console.log(`User ${taggedUser} was kicked by admin ${message.author.username} for the following reason: ${reason}`);
         
-		const attachment = new Discord.MessageAttachment('./thumbnails/dogbye.jpg');
+		const attachment = new MessageAttachment('./thumbnails/dogbye.jpg');
 
         return message.channel.send(`${taggedUser.displayName} has been **kicked** by admin: ${message.author.username}\nReason: ${reason}`, attachment);
     }

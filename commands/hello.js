@@ -1,7 +1,7 @@
-const Discord = require('discord.js');
-const client = new Discord.Client();
+const { Client, Collection } = require('discord.js');
+const bot = new Client();
 
-client.commands = new Discord.Collection();
+bot.commands = new Collection();
 
     // reacts to users message with whatup in emojis //
 module.exports = {

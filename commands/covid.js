@@ -1,16 +1,15 @@
-const Discord = require('discord.js');
-const { Client, Collection } = require('discord.js');
-const client = new Client();
-client.commands = new Collection();
+const { Client, Collection, MessageEmbed } = require('discord.js');
+const bot = new Client();
+bot.commands = new Collection();
 const fetch = require('node-fetch');
 
 module.exports = {
 	name: 'covid',
 	description: "current covid 19 information",
-	
+
 	async execute(message, args) {
 
-        const embed = new Discord.MessageEmbed();
+        const embed = new MessageEmbed();
         //fetch calls
         const theReport = await fetch('https://covid19-server.chrismichael.now.sh/api/v1/AllReports').then(res => res.json());
         const theUsReport = await fetch('https://covid19-server.chrismichael.now.sh/api/v1/ReportsByCountries/us/').then(res => res.json());
@@ -60,7 +59,8 @@ module.exports = {
                     ) 
                 )
             };
-        //main covid response
+
+            //main covid response
         await message.channel.send(embed
             .setTitle('Latest on Covid-19')
             .setColor('RED')

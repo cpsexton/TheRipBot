@@ -1,6 +1,6 @@
 const { Client, Collection } = require('discord.js');
-const client = new Client();
-client.commands = new Collection();
+const bot = new Client();
+bot.commands = new Collection();
 
     // get a timer int as argument. start a countdown. alert user of start and finish and respond to check time command
 module.exports = {
@@ -9,8 +9,8 @@ module.exports = {
     execute(message, args){
 
         // get time from user
-        const timerAmount = args[1]
-        
+        const timerAmount = args[0]
+
         if(timerAmount != parseInt(timerAmount) || timerAmount < 1 || timerAmount > 900) {
             console.log('User: ' + `${message.author.username}` + ' entered ' + timerAmount + ' instead of a number.');
             message.reply(` please enter a number.\n (1- 900seconds)`);   
@@ -18,19 +18,9 @@ module.exports = {
         };
 
         message.reply(` started a ${timerAmount} second timer..`);
-        client.setTimeout(() => {
+        bot.setTimeout(() => {
             message.reply('TIME HAS EXPIRED!') 
         }, timerAmount * 1000)
 
     }
 };
-
-            // set Timeout for that long
-                // after timeout execute message to channel that times over
-        // clear timeout
-
-        // console.log(`This command is not complete, ${message.author.username}`);
-        // message.channel.send(
-        //     `This command is under construction. sorry... `,
-        //     {files: ["./thumbnails/sorry.png"]}
-        // )

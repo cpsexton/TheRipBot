@@ -1,16 +1,17 @@
-const Discord = require('discord.js');
-const { Collection } = require('discord.js');
-const client = new Discord.Client();
-client.commands = new Collection();
+const { Client, Collection } = require('discord.js');
+const bot = new Client();
+bot.commands = new Collection();
 
 module.exports = {
     name: 'status',
     description: 'changes the bots status',
-    async execute(message, args, client) {
+    async execute(message, args, bot) {
         
-        const theStatus = args[1];
+        if(!args) { return message.reply(' please add a status. *(ex: $status idle)*')}
 
-        await client.user.setStatus(theStatus);
+        const theStatus = args[0];
+
+        await bot.user.setStatus(theStatus);
         await message.reply('status change successful');
     }
 };

@@ -1,12 +1,12 @@
-const Discord = require('discord.js');
-const client = new Discord.Client();
-client.commands = new Discord.Collection();
+const { Client, Collection, MessageEmbed } = require('discord.js');
+const client = new Client();
+client.commands = new Collection();
 
 module.exports = {
     name: 'help',
     description: 'returns embed with list of commands',
     async execute(message) {
-        const embed = new Discord.MessageEmbed();
+        const embed = new MessageEmbed();
             message.channel.send(embed
                 .setColor('ORANGE')
                 .setTitle("Command Help:")
@@ -23,7 +23,7 @@ module.exports = {
                     name: "```sLogOn``` ```sLogOff``` ```status``` ```activity```",
                     value: "Under Construction" 
                 },{
-                    name: "```about``` ```rssfeed``` ```rolldice``` ```comic``` ```role``` ```profiles``` ```gamestats``` ```curecoronavirus```",
+                    name: "```about``` ```rolldice``` ```comic``` ```role``` ```profiles``` ```gamestats```",
                     value: "kbye" 
                 })
             )

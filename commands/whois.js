@@ -1,6 +1,6 @@
-const Discord = require('discord.js');
-const client = new Discord.Client();
-client.commands = new Discord.Collection();
+const { Client, Collection, MessageEmbed } = require('discord.js');
+const bot = new Client();
+bot.commands = new Collection();
 
 module.exports = {
     name: 'whois',
@@ -12,18 +12,18 @@ module.exports = {
             return message.channel.send(`${message.author}, that user cannot be found.\n    *(ex: $whois @TheRipBot)*`);
         } 
 
-        const embed = new Discord.MessageEmbed();
+        const embed = new MessageEmbed();
         switch(taggedUser.presence.status){
-            case 'online': color = '#43B581'; break;
-            case 'idle': color = '#FAA61A'; break;
-            case 'dnd': color = '#F04747'; break;
-            default: color = "#747f8d"; break;
+            case 'online': color = 'GREEN'; break;
+            case 'idle': color = 'YELLOW'; break;
+            case 'dnd': color = 'RED'; break;
+            default: color = "GRAY"; break;
         }
-        
+
         const capitalizeFirstLetter = (string) => {return string.charAt(0).toUpperCase() + string.slice(1);}
         const customActivity = () => taggedUser.presence.activities.map(activity => {return `${ activity.emoji ? activity.emoji.name : '' }` + `${ activity.state == null ? '' : activity.state }`});
         const activityType = () => taggedUser.presence.activities.map(activity => {if(activity.type.toLowerCase() == 'custom_status'){activity.type = "Custom status"}return `**${capitalizeFirstLetter(activity.type.toLowerCase())}**`});
-        
+
         embed
             .setTitle(`**${taggedUser.username}**`)
             .setColor(color)

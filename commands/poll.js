@@ -1,7 +1,6 @@
-const Discord = require('discord.js');
-const { Client, Collection } = require('discord.js');
-const client = new Client();
-client.commands = new Collection();
+const { Client, Collection, MessageEmbed } = require('discord.js');
+const bot = new Client();
+bot.commands = new Collection();
 
 
 module.exports = {
@@ -10,13 +9,13 @@ module.exports = {
 
     async execute(message, args) {
 
-        if(!args[1]) {
+        if(!args[0]) {
             console.log('User: ' + `${message.author.username}` + ' attempted to start a poll but failed because no question was entered. ');
             message.reply(` what is your poll question?`);   
             return;
         }; 
 
-        const embed = new Discord.MessageEmbed();
+        const embed = new MessageEmbed();
         let reactChoice = args.pop();
         if(!reactChoice.startsWith('set')){
             return reactionList();
@@ -94,7 +93,7 @@ module.exports = {
         if (reactChoice == 'set10') { reactSet = [`🧁`,`🧂`] };
         if (reactChoice == 'set11') { reactSet = [`🍆`,`🍑`] };
 
-        const pollQuestion = args.slice(1).join(' ');
+        const pollQuestion = args.slice(0).join(' ');
         const msg = await message.channel.send(embed
             .setAuthor(`Poll created by ${message.author.username}`, message.guild.iconURL)
             .setColor('YELLOW')
@@ -111,7 +110,7 @@ module.exports = {
     },
 
     reactionList(message) {
-        const embed = new Discord.MessageEmbed();
+        const embed = new MessageEmbed();
         return message.channel.send(embed
 
         .setAuthor( `customize your poll with a reaction combination` )
