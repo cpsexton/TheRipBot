@@ -20,28 +20,28 @@ for(const file of commandFiles) {
 // logs to console that bot has successfully launched and sets bots activity //
 bot.on('ready', () => {
 	console.log('Success! RipBot is now awake and listening');
-	bot.user.setActivity("chat. $help", {type: "WATCHING"});
+	bot.user.setActivity("chat. $help $covid", {type: "WATCHING"});
 });
 
 function calculateTime(){
 	let time = { hours: 0, minutes: 0, seconds: 0 }
-	time.seconds = Math.trunc(bot.uptime / 1000)
-	time.minutes = Math.trunc(bot.uptime / 60000)
-	time.hours = Math.trunc(bot.uptime / 3600000)
+	time.seconds = Math.trunc( bot.uptime / 1000 )
+	time.minutes = Math.trunc( bot.uptime / 60000 )
+	time.hours = Math.trunc( bot.uptime / 3600000 )
 	return time
 };
 
 	// this is the main listener block //
 bot.on('message', message => {
-	
+
 	const args = message.content.slice(prefix.length).split(' ');
 	const command = args.shift();
 	const adminRole = message.member.roles.cache.some(r => r.permissions.has('ADMINISTRATOR'));
-	
+
 	const commandExe = () => bot.commands.get(command.toLowerCase()).execute(message);
 	const commandExeArgs = () => bot.commands.get(command.toLowerCase()).execute(message, args, bot);
 	const commandExeAdmin = () =>  adminRole ? commandExeArgs() : message.channel.send('That command is for Admin use only');
-	
+
 	if(!message.content.startsWith(`${prefix}`)) return;
 	switch (command) {
 		case 'hello':		// reacts to message with emojis to say whatup //
@@ -52,16 +52,17 @@ bot.on('message', message => {
 		case 'ping':		// returns users and api's latency //
 		case 'serverinfo':  // detailed information on the current server //
 		case 'heal':		// heals with just a gaze //
+		case 'date':	    // sends current dayofweek, month day year, time in EST //
 		commandExe(); 
 		break; 
-		
+
 		case 'rolldice':	// rolls a die takes in number of sides and number of dice to roll //
 		case 'covid':		// detailed information about the virus //
 		case 'poll':		// starts a poll with custom reactions //
 		case 'timer':		// gets time from argument. starts a countdown. alerts users of start and finish  //
 		commandExeArgs();
 		break;
-		
+
 		case 'warn':		// warns a user with reason. ADMIN ONLY //
 		case 'mute': 		// mutes a user for a certain time. ADMIN ONLY //
 		case 'kick': 		// kicks the specified user. ADMIN ONLY //
@@ -75,7 +76,7 @@ bot.on('message', message => {
 		// case 'sLogOff': 	// logs off Steam. ADMIN ONLY // temporarily unavailable
 		commandExeAdmin();
 		break;
-		
+
 		case 'reactions': bot.commands.get('poll').reactionList(message); break; // sends channel the list of reaction sets from the poll command //
 		case 'uptime': bot.commands.get('uptime').execute(message, calculateTime()); break; // returns uptime in hours, minutes, and seconds //
 		default: break;
@@ -108,7 +109,7 @@ async function execute(message, serverQueue) {
 		console.log(`${message.author.guild}`);
         message.channel.send('You need to be in a voice channel to play music!');
     }
-	const permissions = voiceChannel.permissionsFor(message.bot.user);
+	const permissions = voiceChannel.permissionsFor(message.client.user);
 	if (!permissions.has('CONNECT') || !permissions.has('SPEAK')) {
 		return message.channel.send('I need the permissions to join and speak in your voice channel!');
 	}
@@ -124,7 +125,7 @@ async function execute(message, serverQueue) {
 			voiceChannel: voiceChannel,
 			connection: null,
 			songs: [],
-			volume: 5,
+			volume: 3,
 			playing: true,
 		};
 

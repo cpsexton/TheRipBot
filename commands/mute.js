@@ -39,8 +39,7 @@ module.exports = {
             message.client.setTimeout(() =>  taggedUser.roles.remove(theMuteRole)
             .then(console.log(`${taggedUser.displayName} is no longer muted. They were muted for ${timeoutFromCommand} minutes by ${message.author.username}`)), timeoutAmount);  
         };
-        
-        
+
         function createMutedRole() {
             let theMuteRole = theGuild.roles.create({
                 data: {

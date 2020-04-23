@@ -27,7 +27,7 @@
 //                 const rollResult = Math.floor( Math.random() * Math.floor(numofsides) ) + 1;
 //                 return rollResult;
 //             };
-//             const totalRollValue = 
+//             const totalRollValue = ;
             
 //             consecutiveRolls();
 
