@@ -1,54 +1,30 @@
-// const Discord = require('discord.js');
-// const { Collection } = require('discord.js');
-// const bot = new Client();
-// bot.commands = new Collection();
+const { Client, Collection, MessageEmbed } = require('discord.js');
+const bot = new Client();
+bot.commands = new Collection();
  
-//         // $rolldice 4 1  rolldice with 4 sides only the one
+        // $rolldice 4 3  rolldice with 4SIDES on a total of 3DICE
  
-//     module.exports = {
-//         name: "rolldice",
-//         description: "rolls a die. user sets num of sides/faces and num of dice to be rolled",
+    module.exports = {
+        name: "rolldice",
+        description: "rolls a dice. user sets num of sides/faces and num of dice to be rolled",
      
-//         async execute(message, args) {
-//             const embed = new Discord.MessageEmbed();
+        execute(message, args) {
+            const numofsides = args[0];
+            const numofdice = args[1];
             
-//             if(!args[1] || !args[2]) {
-//                console.log(`User: ${message.author.username} attempted to rolldice but they did not provide both arguments.`);
-//                message.reply(' how many sides and how many dice would you like rolled?');   
-//                return;
-//             }; 
+            if(!numofsides || !numofdice || numofsides != parseInt(numofsides) || numofdice != parseInt(numofdice)) {
+               message.reply(' please enter a number*(1-99)* of sides and dice.\n( $rolldice 12 2 <- rolls 2 12-sided dice)');   
+               return;
+            }; 
+
+            const result = [];
+            const reducer = (a, b) => a + b;       
+
+                for (let count = numofdice; count > 0; count--) {
+                    let rollResult = Math.floor( Math.random() * Math.floor(numofsides) ) + 1;
+                    result.push(rollResult);
+                };
             
-            
-//             const theFinal = [ ];
-//             const numofsides = args[1];
-//             const numofdice = args[2];
-            
-//             function getRollResult() { 
-//                 const rollResult = Math.floor( Math.random() * Math.floor(numofsides) ) + 1;
-//                 return rollResult;
-//             };
-//             const totalRollValue = ;
-            
-//             consecutiveRolls();
-
-//             function consecutiveRolls(numofdice) {
-//                 let count = numofdice;
-//                 if (count = 0) {
-//                     return;
-//                 } else {
-//                     getRollResult()
-//                 }
-
-//                 count --,
-//                 consecutiveRolls()
-//             }
-
-// // for each roll result sent out by the getrollResult fuction add it to an array of 
-// // return it in code like with the back ticks
-
-//             return message.reply(` you rolled a ${theFinal}`)
-//         // faceupvalue   numofsides  numofdice
-         
-
-//     }
-// };
+            return message.reply(`you rolled:  ${result.join(', ')}   for a total of  ${result.reduce(reducer)}`);
+    }
+};
