@@ -13,7 +13,7 @@ module.exports = {
 
         if(timerAmount != parseInt(timerAmount) || timerAmount < 1 || timerAmount > 900) {
             console.log('User: ' + `${message.author.username}` + ' entered ' + timerAmount + ' instead of a number.');
-            message.reply(` please enter a number.\n (1- 900seconds)`);   
+            message.reply(` please enter a number.\n (1 - 900seconds)`);   
         return;
         };
 
