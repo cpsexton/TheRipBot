@@ -7,25 +7,25 @@ module.exports = {
     description: 'returns embed with list of commands',
     async execute(message) {
         const embed = new MessageEmbed();
-            message.channel.send(embed
-                .setColor('ORANGE')
-                .setTitle("Command Help:")
-                .addFields({ 
-                    name: "prefix $",
-                    value: "**Basic Commands**" 
-                },{
-                    name: "```hello``` ```online``` ```poll``` ```pfp``` ```serverinfo``` ```timer``` ```heal``` ```ping``` ```uptime``` ```whois``` ```covid```",
-                    value: "**Mod Commands**" 
-                },{
-                    name: "```kick``` ```ban``` ```unban``` ```prune``` ```mute``` ```warn```",
-                    value: "**Admin Commands**" 
-                },{
-                    name: "```sLogOn``` ```sLogOff``` ```status``` ```kill``` ```activity```",
-                    value: "Under Construction" 
-                },{
-                    name: "```about``` ```rolldice``` ```comic``` ```role``` ```profiles``` ```gamestats```",
-                    value: "kbye" 
-                })
-            )
+        message.channel.send(embed
+            .setColor('ORANGE')
+            .setTitle("Command Help:")
+            .addFields({
+                name: "prefix $",
+                value: "**Basic Commands**"
+            }, {
+                name: "```hello``` ```rolldice``` ```online``` ```poll``` ```date``` ```pfp``` ```serverinfo``` ```timer``` ```heal``` ```ping``` ```uptime``` ```whois``` ```covid```",
+                value: "**Mod Commands**"
+            }, {
+                name: "```kick``` ```ban``` ```unban``` ```prune``` ```mute``` ```warn```",
+                value: "**Admin Commands**"
+            }, {
+                name: "```sLogOn``` ```sLogOff``` ```status``` ```kill``` ```activity```",
+                value: "Under Construction"
+            }, {
+                name: "```about``` ```comic``` ```role``` ```profiles``` ```gamestats```",
+                value: "kbye"
+            })
+        )
     }
 };
