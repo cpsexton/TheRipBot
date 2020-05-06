@@ -3,11 +3,10 @@ const bot = new Client();
 
 bot.commands = new Collection();
 
-    // reacts to users message with whatup in emojis //
 module.exports = {
     name: 'hello',
     description: 'gets a what up from ya boi',
-    async execute(message) {  // needs to be an async function //
+    async execute(message) {
         try {
             await message.react('🇼');
             await message.react('🇭');
