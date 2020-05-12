@@ -20,11 +20,13 @@ module.exports = {
             .setColor(65280)
             .setTitle('**Server Information**')
             .setThumbnail(`${message.guild.iconURL()}`)
-            .addField("**Server name**", `${message.guild.name}`)
-            .addField("**Owner**", `${message.guild.owner}`)
-            .addField("**Total members**", `${message.guild.memberCount}`)
-            .addField("**Region**", `${message.guild.region}`)
-            .addField("**Roles**", `${roles()}`)
-        ) 
+            .addFields(
+                { name: "**Server name**", value: `${message.guild.name}` },
+                { name: "**Owner**", value: `${message.guild.owner}` },
+                { name: "**Total members**", value: `${message.guild.memberCount}` },
+                { name: "**Region**", value: `${message.guild.region}` },
+                { name: "**Roles**", value: `${roles()}` },
+            )
+        )
     }
 };
