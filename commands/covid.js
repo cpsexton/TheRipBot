@@ -4,19 +4,15 @@ bot.commands = new Collection();
 const embed = new MessageEmbed();
 const fetch = require("node-fetch");
 
-
 module.exports = {
 	name: "covid",
 	description: "current covid 19 information",
 
 	async execute(message, args) {
-
-
 		//fetch calls
 		const theReport = await fetch("https://covid19-server.chrismichael.now.sh/api/v1/AllReports").then((res) => res.json());
 		const theUsReport = await fetch("https://covid19-server.chrismichael.now.sh/api/v1/ReportsByCountries/us/").then((res) => res.json());
 		const usStatesReport = await fetch("https://covid19-server.chrismichael.now.sh/api/v1/CasesInAllUSStates/").then((res) => res.json());
-
 		//world
 		const totalDeaths = theReport.reports[0].table[0][0].TotalDeaths;
 		const totalConfirmedCases = theReport.reports[0].table[0][0].TotalCases;
@@ -29,10 +25,8 @@ module.exports = {
 		const totalUsRecovered = theUsReport.report.recovered;
 		//top 5 countries
 		const top5Countries = theReport.reports[0].table[0].slice(1, 6);
+
 		if (args[0] == "top5") {
-			console.log(
-				`Covid top 5 countries requested by ${message.author.username}`
-			);
 			return message.channel.send(
 				embed
 					.setTitle("Top 5 Affected Countries")
@@ -101,7 +95,7 @@ module.exports = {
 		}
 
 		//main covid response
-		await message.channel.send(
+		return await message.channel.send(
 			embed
 				.setTitle("Latest on Covid-19")
 				.setColor("RED")
@@ -125,7 +119,5 @@ module.exports = {
 				)
 				.setFooter("sources: CDC, WHO, Johns-Hopkins-CRC")
 		);
-
-		console.log(`Covid information requested by ${message.author.username}`);
 	},
 };
