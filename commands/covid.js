@@ -27,6 +27,7 @@ module.exports = {
 		const top5Countries = theReport.reports[0].table[0].slice(1, 6);
 
 		if (args[0] == "top5") {
+			console.log(args)
 			return message.channel.send(
 				embed
 					.setTitle("Top 5 Affected Countries")
@@ -61,7 +62,7 @@ module.exports = {
 		//top 5 states
 		const top5States = usStatesReport.data[0].table.slice(1, 6);
 		if (args[0] == "top5us") {
-			console.log(`Covid top 5 states requested by ${message.author.username}`);
+			console.log(args)
 			return message.channel.send(
 				embed
 					.setTitle("Top 5 Affected States - :flag_us:")
@@ -95,29 +96,31 @@ module.exports = {
 		}
 
 		//main covid response
-		return await message.channel.send(
-			embed
-				.setTitle("Latest on Covid-19")
-				.setColor("RED")
-				.setThumbnail(
-					"https://images.newscientist.com/wp-content/uploads/2020/02/11165812/c0481846-wuhan_novel_coronavirus_illustration-spl.jpg"
-				)
-				.addFields(
-					{ name: "**Total Confirmed Cases**", value: totalConfirmedCases },
-					{ name: "**Total Deaths**", value: totalDeaths },
-					{ name: "**Total Recovered**", value: totalRecovered },
-					{ name: "**Active Cases**", value: activeCases },
-					{ name: "**Severe/Critical Cases**", value: severeCases },
-					{ name: ":flag_us: :flag_us: :flag_us:", value: "**-USA-**" },
-					{ name: "**Cases**", value: totalUsCases, inline: true },
-					{ name: "**Deaths**", value: totalUsDeaths, inline: true },
-					{ name: "**Recovered**", value: totalUsRecovered, inline: true },
-					{
-						name: "*for further details use:*",
-						value: "*$covid top5,   $covid top5us*",
-					}
-				)
-				.setFooter("sources: CDC, WHO, Johns-Hopkins-CRC")
-		);
+		if (!args) {
+			await message.channel.send(
+				embed
+					.setTitle("Latest on Covid-19")
+					.setColor("RED")
+					.setThumbnail(
+						"https://images.newscientist.com/wp-content/uploads/2020/02/11165812/c0481846-wuhan_novel_coronavirus_illustration-spl.jpg"
+					)
+					.addFields(
+						{ name: "**Total Confirmed Cases**", value: totalConfirmedCases },
+						{ name: "**Total Deaths**", value: totalDeaths },
+						{ name: "**Total Recovered**", value: totalRecovered },
+						{ name: "**Active Cases**", value: activeCases },
+						{ name: "**Severe/Critical Cases**", value: severeCases },
+						{ name: ":flag_us: :flag_us: :flag_us:", value: "**-USA-**" },
+						{ name: "**Cases**", value: totalUsCases, inline: true },
+						{ name: "**Deaths**", value: totalUsDeaths, inline: true },
+						{ name: "**Recovered**", value: totalUsRecovered, inline: true },
+						{
+							name: "*for further details use:*",
+							value: "*$covid top5,   $covid top5us*",
+						}
+					)
+					.setFooter("sources: CDC, WHO, Johns-Hopkins-CRC")
+			)
+		};
 	},
 };
