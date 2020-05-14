@@ -25,7 +25,6 @@ module.exports = {
 		const totalUsRecovered = theUsReport.report.recovered;
 		const top5Countries = theReport.reports[0].table[0].slice(1, 6);
 		const top5States = usStatesReport.data[0].table.slice(1, 6);
-
 		//top 5 countries
 		if (args[0] == "top5") {
 			return message.channel.send(

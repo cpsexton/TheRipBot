@@ -6,10 +6,10 @@ module.exports = {
     name: 'activity',
     description: 'sets the bots presence',
     async execute(message, args, bot) {
-    
+
         const actType = args[0].toUpperCase();
         const actName = args.slice(1).join(' ');
-        const typeArr = ['PLAYING','STREAMING','LISTENING','WATCHING','CUSTOM_STATUS'];
+        const typeArr = ['PLAYING', 'STREAMING', 'LISTENING', 'WATCHING', 'CUSTOM_STATUS'];
 
         if (!typeArr.includes(actType)) {
             return message.reply(`**${actType.toLowerCase()}** is not an available activity. \n (playing, streaming, listening, watching)`)
@@ -23,6 +23,5 @@ module.exports = {
         });
 
         await message.reply('activity change successful')
-
     }
 };
