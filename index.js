@@ -43,34 +43,34 @@ bot.on("message", (message) => {
 
 	if (!message.content.startsWith(`${prefix}`)) return;
 	switch (command) {
-		case "hello": // reacts to message with emojis to say whatup //
-		case "help": // list of commands //
-		case "whois": // detailed information about requested user //
-		case "online": // searches and returns users that are online and offline //
-		case "pfp": // returns a users profile picture //
-		case "ping": // returns users and api's latency //
-		case "serverinfo": // detailed information on the current server //
-		case "heal": // heals with just a gaze //
-		case "date": // sends current dayofweek, month day year, time in EST //
+		case "hello":
+		case "help":
+		case "whois":
+		case "online":
+		case "pfp":
+		case "ping":
+		case "serverinfo":
+		case "heal":
+		case "date":
 			commandExe();
 			break;
 
-		case "rolldice": // rolls a die takes in number of sides and number of dice to roll //
-		case "covid": // detailed information about the virus //
-		case "poll": // starts a poll with custom reactions //
-		case "timer": // gets time from argument. starts a countdown. alerts users of start and finish  //
+		case "rolldice":
+		case "covid":
+		case "poll":
+		case "timer":
 			commandExeArgs();
 			break;
 
-		case "warn": // warns a user with reason. ADMIN ONLY //
-		case "mute": // mutes a user for a certain time. ADMIN ONLY //
-		case "kick": // kicks the specified user. ADMIN ONLY //
-		case "ban": // bans user. ADMIN ONLY //
-		case "unban": // unbans user. ADMIN ONLY //
-		case "prune": // deletes requested number of messages from the current channel. ADMIN ONLY //
-		case "kill": // puts bot offline and logs to console who issued the command. ADMIN ONLY //
-		case "activity": // changes bot presence and activity. ADMIN ONLY //
-		case "status": // changes bots status. ADMIN ONLY //
+		case "warn":
+		case "mute":
+		case "kick":
+		case "ban":
+		case "unban":
+		case "prune":
+		case "kill":
+		case "activity":
+		case "status":
 			// case 'sLogOn': 	// logs in to Steam as anonymous Steam User. ADMIN ONLY //  temporarily unavailable
 			// case 'sLogOff': 	// logs off Steam. ADMIN ONLY // temporarily unavailable
 			commandExeAdmin();
@@ -201,6 +201,7 @@ async function play(guild, song) {
 
 // token is hidden //
 bot.login(process.env.BOT_TOKEN);
+
 
 
 // copyright Christopher Sexton and Andrew Thiessen 2020
