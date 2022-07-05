@@ -23,7 +23,7 @@
   },
   "homepage": "https://github.com/cpsexton/TheRipBot#readme",
   "dependencies": {
-    "@discordjs/opus": "^0.1.0",
+    "@discordjs/opus": "^0.8.0",
     "brackify": "^1.0.1",
     "bytebuffer": "^5.0.1",
     "canvas": "^2.6.1",
